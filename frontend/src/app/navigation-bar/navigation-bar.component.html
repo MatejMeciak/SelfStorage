@@ -3,11 +3,11 @@
         <img src="../../assets/images/logo.png" routerLink="home" height="75" alt="logo">
         <div class="links">
             <ul>
-                <li *ngFor="let link of links" routerLink="{{link}}">{{ link }}</li>
+                <li *ngFor="let link of links" routerLink="{{link}}" routerLinkActive="active" >{{ link }}</li>
             </ul>
-            <div class="login" [@slider]="animate ? 'slide': ':enter'" (click)="toggle()" >
+            <div class="login" [@slider]="animate ? 'slide': null" (click)="toggle()" >
                 <mat-icon class="circle" [@slider]>east</mat-icon>
-                <div class="text">{{text}}</div>
+                <div class="text">LOGIN</div>
             </div>
         </div>
     </div>

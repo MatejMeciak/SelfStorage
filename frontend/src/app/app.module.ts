@@ -8,6 +8,7 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 import { HomePageComponent } from './home-page/home-page.component';
 import { MaterialModule } from './material.module';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { FileListComponent } from './file-list/file-list.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
     NavigationBarComponent,
     HomePageComponent,
     LoginFormComponent,
+    FileListComponent,
   ],
   imports: [
     MaterialModule,

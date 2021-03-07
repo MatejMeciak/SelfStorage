@@ -1,6 +1,6 @@
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { animate, group, keyframes, query, stagger, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { load } from '../animations';
 
 @Component({
@@ -25,16 +25,11 @@ import { load } from '../animations';
 })
 export class NavigationBarComponent implements OnInit {
 
-  page
-
   animate: boolean = false;
-
-  text: string = 'LOGIN';
 
   links: string[] = ['home', 'profile', 'files', 'search'];
 
-  constructor(private router: Router, private route: ActivatedRoute) { 
-    this.page = this.route.root.firstChild.snapshot.data['page']
+  constructor(private router: Router) { 
   }
 
   ngOnInit(): void {
@@ -43,6 +38,7 @@ export class NavigationBarComponent implements OnInit {
   toggle(): void {
     this.animate = true;
     setTimeout(() => { this.router.navigate(['/login']); this.animate = false; }, 300)
-    console.log(this.page)
   }
+
+
 }

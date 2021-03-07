@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { load } from '../animations';
 
 @Component({
@@ -9,7 +10,10 @@ import { load } from '../animations';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { 
+    const data = this.route.snapshot.data;
+    console.log(data);
+  }
 
   ngOnInit(): void {
   }

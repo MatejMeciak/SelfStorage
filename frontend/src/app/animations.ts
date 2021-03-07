@@ -1,8 +1,5 @@
-import { trigger, transition, style, animate, state } from '@angular/animations';
+import { trigger, transition, style, animate, state, query, group } from '@angular/animations';
 
-export let load = trigger('load', [
-    transition(':enter', [
-        style({ opacity: 0 }),
-        animate(650)
-    ])
+export const load = trigger('load', [
+    transition(':enter', [style({ opacity : 0}), animate(600)])
 ]);
