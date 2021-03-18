@@ -4,14 +4,10 @@ import com.appslab.CloudService.Services.UploadFileService;
 import com.appslab.CloudService.Models.UploadedFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -22,7 +18,7 @@ public class UploadFileController {
         this.uploadFileService = uploadFileService;
     }
 
-    @PostMapping("/file")
+    @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile);
         File file = uploadFileService.getDocStorageLocation().resolve(uploadedFile.getHash()).toFile();
