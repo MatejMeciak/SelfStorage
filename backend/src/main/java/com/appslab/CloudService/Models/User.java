@@ -1,5 +1,7 @@
-package com.appslab.CloudService.User;
+package com.appslab.CloudService.Models;
 
+
+import com.sun.istack.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +14,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected long id;
 
+    @NotNull
     protected String email;
+
+    @NotNull
     protected String password;
+
+    @NotNull
     protected String username;
 
     public long getId() {

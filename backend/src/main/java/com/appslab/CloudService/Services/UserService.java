@@ -1,4 +1,6 @@
-package com.appslab.CloudService.User;
+package com.appslab.CloudService.Services;
+
+import com.appslab.CloudService.Models.User;
 
 public interface UserService {
     void registrationUser(User user);

@@ -1,7 +1,9 @@
-package com.appslab.CloudService.User;
+package com.appslab.CloudService.Services.Services_Impl;
 
+import com.appslab.CloudService.Models.User;
+import com.appslab.CloudService.Repositories.UserRepository;
+import com.appslab.CloudService.Services.UserService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class UserServiceImpl implements UserService {
