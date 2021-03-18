@@ -3,12 +3,12 @@ nav {
     margin-top: 40px;
     margin-bottom: 50px;
     padding: 0 2.5em;
-    width: 90%;
+    width: 85%;
     min-width: 620px;
     background: #FFFFFF;
     border: 0.7px solid rgba(0, 0, 0, 0.15);
     box-sizing: border-box;
-    box-shadow: 0px 5px 21px 2px rgba(138, 138, 138, 0.2);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 10%);
     border-radius: 4px;
 }
 
@@ -47,14 +47,12 @@ mat-icon {
 
 .links {
     display: flex;
-    float: left;
     align-items: center;
     margin-left: auto;
 }
 
 .login { 
     display: flex;
-    float: right;
     width: 124px;
     height: 40px;
     position: relative;

@@ -1,6 +1,8 @@
 mat-card {
+    display: inline-grid;
+    margin: 15px;
     max-width: 180px;
-    border: 1px solid rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 3px;
     box-shadow: none !important;
 }
@@ -11,13 +13,22 @@ mat-card-content {
 
 mat-card-footer {
     height: 25%;
-    border-top: 1px solid rgba(0, 0, 0, 0.28);
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
     text-align: center;
     background-color: white;
 }
 
-h3 {
-    
+mat-icon {
+    color: rgba(0, 0, 0, 0.35);
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 5px;
+}
+
+h3, p {
+    margin: 0;
+    margin-top: 3px;
 }
 
 img {

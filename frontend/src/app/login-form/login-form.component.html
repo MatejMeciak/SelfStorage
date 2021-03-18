@@ -1,14 +1,21 @@
-<div class="container">
-    <h1>LOGIN</h1>
-    <form>
-        <mat-form-field appearance="outline">
-            <mat-label>Username</mat-label>
-            <input matInput type="text">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password">
-        </mat-form-field>
-        <button type="submit" mat-button>Login</button>
-    </form>
-</div>
+<mat-card>
+    <mat-card-header>
+        <h1>LOGIN</h1>
+    </mat-card-header>
+    <mat-card-content>
+        <form>
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input matInput type="text">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" type="password">
+            </mat-form-field>
+            <button type="submit" mat-button>Login</button>
+        </form>
+    </mat-card-content>
+    <mat-card-footer>
+        <p>Forgot your password?</p>
+    </mat-card-footer>
+</mat-card>

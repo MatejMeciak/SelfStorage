@@ -7,7 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FileListComponent implements OnInit {
 
-  file = { image: '../assets/images/bcg.png', filename: 'image'}
+  func
+
+  files = [{ image: '../assets/images/bcg.png', filename: 'image', uploadDate: '22.2.2022'},
+  { image: '../assets/images/bcg.png', filename: 'image', uploadDate: '22.2.2022'},
+  { image: '../assets/images/bcg.png', filename: 'image', uploadDate: '22.2.2022'},
+  { image: '../assets/images/bcg.png', filename: 'image', uploadDate: '22.2.2022'},
+  { image: '../assets/images/bcg.png', filename: 'image', uploadDate: '22.2.2022'},
+  { image: '../assets/images/bcg.png', filename: 'image', uploadDate: '22.2.2022'}]
 
   constructor() { }
 

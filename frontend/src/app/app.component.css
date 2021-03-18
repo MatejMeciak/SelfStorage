@@ -1,16 +1,7 @@
-mat-card {
+.container {
     position: relative;
-    background: #FFFFFF;
     margin: 0 auto;
     padding: 1.5em 4em;
-    width: 90%;
+    width: 85%;
     min-width: 620px;
-    border: 0.7px solid rgba(0, 0, 0, 0.15);
-    box-sizing: border-box;
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-}
-
-mat-card > * {
-    display:block;
 }

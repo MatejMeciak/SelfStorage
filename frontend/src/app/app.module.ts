@@ -9,6 +9,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { MaterialModule } from './material.module';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { FileListComponent } from './file-list/file-list.component';
+import { UserService } from './user.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { FileListComponent } from './file-list/file-list.component';
     AppRoutingModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

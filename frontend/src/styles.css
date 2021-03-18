@@ -8,15 +8,11 @@ body {
     height: 100%;
     margin: 0; 
     padding: 0; 
-}   
-
-.background {
-    position: fixed;
     height: 100%;
     width: 100%;
-    background-image: url("./assets/images/bcg.png");
+    background-image: url("./assets/images/main-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    overflow: auto;
-}
+    overflow: auto; 
+}   
