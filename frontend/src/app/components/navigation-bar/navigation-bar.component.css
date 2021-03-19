@@ -1,14 +1,12 @@
 nav {
-    margin: 0 auto;
-    margin-top: 40px;
-    margin-bottom: 50px;
+    margin: 40px auto 50px;
     padding: 0 2.5em;
     width: 85%;
     min-width: 620px;
     background: #FFFFFF;
-    border: 0.7px solid rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    box-shadow: 0 10px 30px rgb(0 0 0 / 10%);
     border-radius: 4px;
 }
 
@@ -22,7 +20,7 @@ ul {
     padding: 0;
 }
 
-li {   
+li {
     float: left;
     margin-right: 1.5em;
     color: rgba(0, 0, 0, 0.6);
@@ -51,7 +49,7 @@ mat-icon {
     margin-left: auto;
 }
 
-.login { 
+.login {
     display: flex;
     width: 124px;
     height: 40px;
@@ -83,7 +81,7 @@ mat-icon {
     position: absolute;
     background: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.308);
-    border-left-width: 0px;
+    border-left-width: 0;
     box-sizing: border-box;
     border-radius: 30px;
 }
@@ -94,7 +92,7 @@ mat-icon {
 }
 
 
-/* animations 
+/* animations
 
 .slide {
     animation: slide 0.3s linear forwards;
@@ -109,7 +107,7 @@ mat-icon {
 }
 
 
- 
+
 @keyframes slide {
     0% { transform: translate(0px); border-left-width: 1px; }
     100% { transform: translate(86px); border-left-width: 1px; }

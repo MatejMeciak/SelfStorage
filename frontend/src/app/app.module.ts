@@ -4,12 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import { MaterialModule } from './material.module';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { FileListComponent } from './file-list/file-list.component';
-import { UserService } from './user.service';
+import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { MaterialModule } from './material/material.module';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { FileListComponent } from './components/file-list/file-list.component';
+import { UserService } from './services/user.service';
+import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { UserService } from './user.service';
     HomePageComponent,
     LoginFormComponent,
     FileListComponent,
+    WelcomePageComponent,
   ],
   imports: [
     MaterialModule,

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { load } from '../animations';
+import { load } from '../../material/animations';
 
 @Component({
   selector: 'app-login-form',

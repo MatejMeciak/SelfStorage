@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { load } from '../animations';
+import { load } from '../../material/animations';
 
 @Component({
   selector: 'app-home-page',
@@ -10,7 +10,7 @@ import { load } from '../animations';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { 
+  constructor(private route: ActivatedRoute) {
     const data = this.route.snapshot.data;
     console.log(data);
   }
