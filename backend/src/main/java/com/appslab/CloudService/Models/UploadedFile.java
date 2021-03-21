@@ -3,11 +3,9 @@ package com.appslab.CloudService.Models;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import java.util.NoSuchElementException;
 
 @Entity
 public class UploadedFile {
@@ -30,7 +28,7 @@ public class UploadedFile {
 
     }
 
-    public UploadedFile(Long sizeFile, String nameFile, String location) {
+    public UploadedFile(Long sizeFile, String nameFile) {
         this.sizeFile = sizeFile;
         this.nameFile = nameFile;
     }

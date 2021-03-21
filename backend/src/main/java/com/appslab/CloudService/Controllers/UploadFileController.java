@@ -4,12 +4,11 @@ import com.appslab.CloudService.Services.UploadFileService;
 import com.appslab.CloudService.Models.UploadedFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.List;
 
-
+@RequestMapping("/file")
 @RestController
 public class UploadFileController {
     UploadFileService uploadFileService;
@@ -18,7 +17,7 @@ public class UploadFileController {
         this.uploadFileService = uploadFileService;
     }
 
-    @PostMapping("/upload")
+    @PostMapping("/")
     public String uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile);
         File file = uploadFileService.getDocStorageLocation().resolve(uploadedFile.getHash()).toFile();
@@ -32,16 +31,24 @@ public class UploadFileController {
         return "File is successfully uploaded";
     }
 
-    @GetMapping("/uploadedFiles")
+    @GetMapping("/")
     public List<UploadedFile> listOfFiles(){
-        List<UploadedFile> files = uploadFileService.listOfFiles();
-        return files;
+        return uploadFileService.listOfFiles();
     }
 
-    @GetMapping("/uploadedFiles/{id}")
-    public UploadedFile downloadFile(@PathVariable Long id){
-        UploadedFile findedFile = uploadFileService.findFileById(id).get();
-        return findedFile;
+    @GetMapping("/uploadedFile/{id}")
+    public String downloadFile(@PathVariable Long id) throws IOException{
+        try {
+            byte[] array = new byte[100000];
+            UploadedFile findedFile = uploadFileService.findFileById(id).get();
+            InputStream fileInputStream = new FileInputStream(findedFile.getNameFile());
+            fileInputStream.read(array);
+            String content = new String(array);
+            return content;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @DeleteMapping("/deleteFile/{id}")
