@@ -16,12 +16,12 @@ export class FileService {
     return this.http.get<File[]>(this.fileUrl);
   }
   getFile(id: number): Observable<File> {
-    return this.http.get<File>(this.fileUrl);
+    return this.http.get<File>(`${this.fileUrl}/${id}`);
   }
-  // (file: File): Observable<File> {
-  //  return this.http.post<File>(this.fileUrl);
-  // }
-  // updateFile(file: File): Observable<File> {
-  //  return this.http.put<File>(this.fileUrl);
-  // }
+  uploadFile(file: File): Observable<File> {
+    return this.http.post<File>(this.fileUrl, file);
+  }
+  updateFile(file: File): Observable<File> {
+    return this.http.put<File>(this.fileUrl, file);
+  }
 }

@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 const MaterialModules = [
   MatButtonModule,
@@ -15,10 +16,11 @@ const MaterialModules = [
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
+  MatGridListModule
 ];
 
 @NgModule({
   imports: [ MaterialModules ],
   exports: [ MaterialModules ]
 })
-export class MaterialModule {}
+export class MaterialModule { }
