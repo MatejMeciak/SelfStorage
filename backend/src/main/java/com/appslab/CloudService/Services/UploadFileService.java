@@ -13,6 +13,6 @@ public interface UploadFileService {
     List<UploadedFile> listOfFiles();
     Path getDocStorageLocation();
     UploadedFile uploadedFile(MultipartFile multipartFile);
-    void saveUploadedFileToDB(MultipartFile multipartFile);
+    void saveUploadedFileToDB(UploadedFile uploadedFile);
     Optional<UploadedFile> findFileById(Long fileID);
 }

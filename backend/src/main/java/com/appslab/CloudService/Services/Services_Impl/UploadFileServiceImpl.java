@@ -63,8 +63,8 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public void saveUploadedFileToDB(MultipartFile multipartFile){
-        saveFile(uploadedFile(multipartFile));
+    public void saveUploadedFileToDB(UploadedFile uploadedFile){
+        saveFile(uploadedFile);
     }
 
     @Override

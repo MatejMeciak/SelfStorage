@@ -2,13 +2,16 @@ package com.appslab.CloudService.Controllers;
 
 import com.appslab.CloudService.Services.UploadFileService;
 import com.appslab.CloudService.Models.UploadedFile;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.*;
 import java.util.List;
 
-@RequestMapping("/file")
+@RequestMapping("/api/file")
 @RestController
 public class UploadFileController {
     UploadFileService uploadFileService;
@@ -17,7 +20,7 @@ public class UploadFileController {
         this.uploadFileService = uploadFileService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public String uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile);
         File file = uploadFileService.getDocStorageLocation().resolve(uploadedFile.getHash()).toFile();
@@ -26,29 +29,21 @@ public class UploadFileController {
         multipartFile.getInputStream().transferTo(outputStream);
         outputStream.close();
 
-        uploadFileService.saveUploadedFileToDB(multipartFile);
+        uploadFileService.saveUploadedFileToDB(uploadedFile);
 
         return "File is successfully uploaded";
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<UploadedFile> listOfFiles(){
         return uploadFileService.listOfFiles();
     }
 
-    @GetMapping("/uploadedFile/{id}")
-    public String downloadFile(@PathVariable Long id) throws IOException{
-        try {
-            byte[] array = new byte[100000];
-            UploadedFile findedFile = uploadFileService.findFileById(id).get();
-            InputStream fileInputStream = new FileInputStream(findedFile.getNameFile());
-            fileInputStream.read(array);
-            String content = new String(array);
-            return content;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+    @GetMapping(value = "/{id}",produces = {MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.APPLICATION_PDF_VALUE})
+    public ResponseEntity<InputStreamResource> getFile(@PathVariable Long id) throws IOException{
+        UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
+        var file = new FileSystemResource("C:\\Users\\PC\\IdeaProjects\\cloud-service\\backend\\doc-uploads/"+uploadedFile.getHash());
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).contentType(MediaType.IMAGE_GIF).contentType(MediaType.IMAGE_JPEG).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(file.getInputStream()));
     }
 
     @DeleteMapping("/deleteFile/{id}")
