@@ -2,26 +2,28 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-import { File } from '../models/file';
+import { File as FileModel } from '../models/file';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
-  fileUrl = 'http://localhost:8080/api/file';
+  fileUrl = 'http://localhost:8080/file';
 
   constructor(private http: HttpClient) { }
 
-  getFiles(): Observable<File[]> {
-    return this.http.get<File[]>(this.fileUrl);
+  getFiles(): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(this.fileUrl);
   }
-  getFile(id: number): Observable<File> {
-    return this.http.get<File>(`${this.fileUrl}/${id}`);
+  getFile(id: number): Observable<FileModel> {
+    return this.http.get<FileModel>(`${this.fileUrl}/${id}`);
   }
-  uploadFile(file: File): Observable<File> {
-    return this.http.post<File>(this.fileUrl, file);
+  uploadFile(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(this.fileUrl, formData);
   }
-  updateFile(file: File): Observable<File> {
-    return this.http.put<File>(this.fileUrl, file);
+  updateFile(file: FileModel): Observable<FileModel> {
+    return this.http.put<FileModel>(this.fileUrl, file);
   }
 }

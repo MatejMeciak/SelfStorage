@@ -11,6 +11,8 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { FileListComponent } from './components/file-list/file-list.component';
 import { UserService } from './services/user.service';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+import { FileService } from './services/file.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,8 +28,9 @@ import { WelcomePageComponent } from './components/welcome-page/welcome-page.com
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule
   ],
-  providers: [UserService],
+  providers: [UserService, FileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

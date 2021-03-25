@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { load } from '../../material/animations';
+import {FileService} from '../../services/file.service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,12 +10,17 @@ import { load } from '../../material/animations';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) {
-    const data = this.route.snapshot.data;
-    console.log(data);
+  file;
+  constructor(private fileService: FileService) {
   }
 
   ngOnInit(): void {
+  }
+
+  onFileInput(files: FileList): void {
+    for (let i = 0; i < files.length; i++) {
+      this.fileService.uploadFile(files.item(i)).subscribe();
+    }
   }
 
 }
