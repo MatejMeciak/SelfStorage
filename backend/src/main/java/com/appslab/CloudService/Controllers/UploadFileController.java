@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RequestMapping("/api/file")
@@ -39,17 +42,20 @@ public class UploadFileController {
         return uploadFileService.listOfFiles();
     }
 
-    @GetMapping(value = "/{id}",produces = {MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.APPLICATION_PDF_VALUE})
+    @GetMapping(value = "/{id}",produces = {MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE})
     public ResponseEntity<InputStreamResource> getFile(@PathVariable Long id) throws IOException{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
         var file = new FileSystemResource("C:\\Users\\PC\\IdeaProjects\\cloud-service\\backend\\doc-uploads/"+uploadedFile.getHash());
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).contentType(MediaType.IMAGE_GIF).contentType(MediaType.IMAGE_JPEG).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(file.getInputStream()));
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).contentType(MediaType.IMAGE_GIF).contentType(MediaType.IMAGE_JPEG).body(new InputStreamResource(file.getInputStream()));
     }
 
-    @DeleteMapping("/deleteFile/{id}")
-    public String deleteFile(@PathVariable Long id ){
+    @DeleteMapping("/{id}")
+    public String deleteFile(@PathVariable Long id)throws Exception{
+        UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
+        Path deletingFile = Paths.get("C:\\Users\\PC\\IdeaProjects\\cloud-service\\backend\\doc-uploads/"+uploadedFile.getHash());
+        Files.delete(deletingFile);
         uploadFileService.deleteFile(id);
-        return "File is successfully deleted";
+        return "File is succesfully deleted";
     }
 
 }
