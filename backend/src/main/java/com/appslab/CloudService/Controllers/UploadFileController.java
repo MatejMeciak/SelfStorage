@@ -42,11 +42,11 @@ public class UploadFileController {
         return uploadFileService.listOfFiles();
     }
 
-    @GetMapping(value = "/{id}",produces = {MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE})
+    @GetMapping(value = "/{id}")
     public ResponseEntity<InputStreamResource> getFile(@PathVariable Long id) throws IOException{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
-        var file = new FileSystemResource("C:\\Users\\PC\\IdeaProjects\\cloud-service\\backend\\doc-uploads/"+uploadedFile.getHash());
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).contentType(MediaType.IMAGE_GIF).contentType(MediaType.IMAGE_JPEG).body(new InputStreamResource(file.getInputStream()));
+        FileSystemResource file = new FileSystemResource("C:\\Users\\PC\\IdeaProjects\\cloud-service\\backend\\doc-uploads/"+uploadedFile.getHash());
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
     }
 
     @DeleteMapping("/{id}")
