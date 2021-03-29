@@ -5,7 +5,10 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.PreparedStatement;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Entity
 public class UploadedFile {
@@ -22,15 +25,12 @@ public class UploadedFile {
 
     protected String mimeType;
 
+    protected Long date;
+
     public static final int RADIX = 16;
 
     public UploadedFile() {
 
-    }
-
-    public UploadedFile(Long sizeFile, String nameFile) {
-        this.sizeFile = sizeFile;
-        this.nameFile = nameFile;
     }
 
     public Long getSizeFile() {
@@ -74,6 +74,14 @@ public class UploadedFile {
 
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
+    }
+
+    public Long getDate() {
+        return date;
+    }
+
+    public void setDate() {
+        this.date  = Calendar.getInstance().getTime().getTime();
     }
 
 }

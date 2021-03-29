@@ -54,6 +54,7 @@ public class UploadFileServiceImpl implements UploadFileService {
             uploadedFile.setNameFile(multipartFile.getOriginalFilename());
             uploadedFile.setSizeFile(multipartFile.getSize());
             uploadedFile.setMimeType(multipartFile.getContentType());
+            uploadedFile.setDate();
             uploadedFile.setHash();
             return uploadedFile;
         } catch (NoSuchAlgorithmException e) {
@@ -72,5 +73,9 @@ public class UploadFileServiceImpl implements UploadFileService {
         return fileRepositoryDB.findById(fileID);
     }
 
+    @Override
+    public Path pathToSpecificFile(UploadedFile uploadedFile) {
+        return getDocStorageLocation().resolve(uploadedFile.getHash());
+    }
 
 }

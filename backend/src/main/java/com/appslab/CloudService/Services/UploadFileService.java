@@ -15,4 +15,5 @@ public interface UploadFileService {
     UploadedFile uploadedFile(MultipartFile multipartFile);
     void saveUploadedFileToDB(UploadedFile uploadedFile);
     Optional<UploadedFile> findFileById(Long fileID);
+    Path pathToSpecificFile(UploadedFile uploadedFile);
 }

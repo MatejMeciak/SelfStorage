@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @RequestMapping("/api/file")
@@ -24,7 +22,7 @@ public class UploadFileController {
     }
 
     @PostMapping
-    public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public String uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile);
         File file = uploadFileService.getDocStorageLocation().resolve(uploadedFile.getHash()).toFile();
         file.createNewFile();
@@ -34,7 +32,7 @@ public class UploadFileController {
 
         uploadFileService.saveUploadedFileToDB(uploadedFile);
 
-        return uploadedFile;
+        return "File is successfully uploaded";
     }
 
     @GetMapping
@@ -42,20 +40,18 @@ public class UploadFileController {
         return uploadFileService.listOfFiles();
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<InputStreamResource> getFile(@PathVariable Long id) throws IOException{
+    @GetMapping("/{id}")
+    public ResponseEntity<InputStreamResource> getFile(@PathVariable Long id) throws Exception{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
-        FileSystemResource file = new FileSystemResource("C:\\Users\\PC\\IdeaProjects\\cloud-service\\backend\\doc-uploads/"+uploadedFile.getHash());
+        FileSystemResource file = new FileSystemResource(uploadFileService.pathToSpecificFile(uploadedFile));
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteFile(@PathVariable Long id)throws Exception{
+    public void deleteFile(@PathVariable Long id) throws Exception{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
-        Path deletingFile = Paths.get("C:\\Users\\PC\\IdeaProjects\\cloud-service\\backend\\doc-uploads/"+uploadedFile.getHash());
-        Files.delete(deletingFile);
+        Files.delete(uploadFileService.pathToSpecificFile(uploadedFile));
         uploadFileService.deleteFile(id);
-        return "File is successfully deleted";
     }
 
 }
