@@ -8,11 +8,11 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { MaterialModule } from './material/material.module';
 import { LoginFormComponent } from './components/login-form/login-form.component';
-import { FileListComponent } from './components/file-list/file-list.component';
 import { UserService } from './services/user.service';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { FileService } from './services/file.service';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { FileCardComponent } from './components/file-card/file-card.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +20,8 @@ import {HttpClientModule} from '@angular/common/http';
     NavigationBarComponent,
     HomePageComponent,
     LoginFormComponent,
-    FileListComponent,
     WelcomePageComponent,
+    FileCardComponent,
   ],
   imports: [
     MaterialModule,

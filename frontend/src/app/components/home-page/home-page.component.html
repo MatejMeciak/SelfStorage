@@ -1,18 +1,16 @@
 <div class="container">
-  <h1>Here you can upload your content.</h1>
+  <h1>Here you can upload your content</h1>
   <mat-form-field appearance="fill">
     <mat-label>Choose an option</mat-label>
     <mat-select>
-      <mat-option value="option1"><mat-label>File</mat-label>
-        <button mat-raised-button (click)="fileInput.click()">
-          {{ file ? file.name : 'Select' }}
-        </button>
+      <mat-option (click)="fileInput.click()"><mat-label>File: </mat-label>
+        <span>
+          {{ file ? file.nameFile : 'Select' }}
+        </span>
         <input hidden type="file" #fileInput (change)="onFileInput(fileInput.files)" /></mat-option>
       <mat-option value="option2">Link from internet</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
-<mat-card-title><h1>Recent files</h1></mat-card-title>
-<mat-card-content>
-    <app-file-list></app-file-list>
-</mat-card-content>
+<h1>Recent files</h1>
+<div class="wrap"><app-file-card *ngFor="let file of files" [file]="file"></app-file-card></div>

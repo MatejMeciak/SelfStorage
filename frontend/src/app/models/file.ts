@@ -1,5 +1,6 @@
 export interface File {
   id: number;
-  sizeFile;
+  sizeFile: number;
   nameFile: string;
+  imageUrl: string;
 }
