@@ -24,7 +24,7 @@ public class UploadFileController {
     }
 
     @PostMapping
-    public String uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile);
         File file = uploadFileService.getDocStorageLocation().resolve(uploadedFile.getHash()).toFile();
         file.createNewFile();
@@ -34,7 +34,7 @@ public class UploadFileController {
 
         uploadFileService.saveUploadedFileToDB(uploadedFile);
 
-        return "File is successfully uploaded";
+        return uploadedFile;
     }
 
     @GetMapping
@@ -55,7 +55,7 @@ public class UploadFileController {
         Path deletingFile = Paths.get("C:\\Users\\PC\\IdeaProjects\\cloud-service\\backend\\doc-uploads/"+uploadedFile.getHash());
         Files.delete(deletingFile);
         uploadFileService.deleteFile(id);
-        return "File is succesfully deleted";
+        return "File is successfully deleted";
     }
 
 }
