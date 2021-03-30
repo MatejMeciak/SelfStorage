@@ -7,7 +7,6 @@ import com.appslab.CloudService.Services.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -55,7 +54,7 @@ public class UploadFileServiceImpl implements UploadFileService {
             uploadedFile.setSizeFile(multipartFile.getSize());
             uploadedFile.setMimeType(multipartFile.getContentType());
             uploadedFile.setDate();
-            uploadedFile.setHash();
+            uploadedFile.setOriginalFileName();
             return uploadedFile;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -75,7 +74,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public Path pathToSpecificFile(UploadedFile uploadedFile) {
-        return getDocStorageLocation().resolve(uploadedFile.getHash());
+        return getDocStorageLocation().resolve(uploadedFile.getOriginalFileName());
     }
 
 }

@@ -1,14 +1,10 @@
 package com.appslab.CloudService.Models;
 
 import javax.persistence.*;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 @Entity
 public class UploadedFile {
@@ -20,14 +16,12 @@ public class UploadedFile {
 
     protected String nameFile;
 
-    @Column(name = "hash", nullable = false, unique = true)
-    protected String hash;
+    @Column(name = "originalFileName", nullable = false, unique = true)
+    protected String originalFileName;
 
     protected String mimeType;
 
     protected Long date;
-
-    public static final int RADIX = 16;
 
     public UploadedFile() {
 
@@ -57,15 +51,15 @@ public class UploadedFile {
         this.id = id;
     }
 
-    public String getHash() {
-        return hash;
+    public String getOriginalFileName() {
+        return originalFileName;
     }
 
-    public void setHash() throws NoSuchAlgorithmException {
-        String transformed = this.nameFile + this.mimeType + new Date().getTime();
-        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-        messageDigest.update(transformed.getBytes(StandardCharsets.UTF_8));
-        this.hash = new BigInteger(1, messageDigest.digest()).toString(RADIX);
+    public void setOriginalFileName() throws NoSuchAlgorithmException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date now = new Date();
+        String date = dateFormat.format(now);
+        this.originalFileName = this.nameFile+"_"+date;
     }
 
     public String getMimeType() {
@@ -80,7 +74,7 @@ public class UploadedFile {
         return date;
     }
 
-    public void setDate() {
+    public void setDate(){
         this.date  = Calendar.getInstance().getTime().getTime();
     }
 

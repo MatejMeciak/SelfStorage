@@ -22,9 +22,9 @@ public class UploadFileController {
     }
 
     @PostMapping
-    public String uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile);
-        File file = uploadFileService.getDocStorageLocation().resolve(uploadedFile.getHash()).toFile();
+        File file = uploadFileService.getDocStorageLocation().resolve(uploadedFile.getOriginalFileName()).toFile();
         file.createNewFile();
         FileOutputStream outputStream = new FileOutputStream(file);
         multipartFile.getInputStream().transferTo(outputStream);
@@ -32,7 +32,7 @@ public class UploadFileController {
 
         uploadFileService.saveUploadedFileToDB(uploadedFile);
 
-        return "File is successfully uploaded";
+        return uploadedFile;
     }
 
     @GetMapping
