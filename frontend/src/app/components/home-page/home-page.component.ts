@@ -14,7 +14,7 @@ export class HomePageComponent implements OnInit {
   files: File[];
   selectedFile: File;
   constructor(private fileService: FileService) {
-    this.fileService.getFiles().subscribe(files => this.files = files.slice(0, 4));
+    this.fileService.getFiles().subscribe(files => this.files = files.slice(0, 5));
   }
 
   ngOnInit(): void {

@@ -3,11 +3,8 @@
   <mat-form-field appearance="fill">
     <mat-label>Choose an option</mat-label>
     <mat-select>
-      <mat-option (click)="fileInput.click()"><mat-label>File: </mat-label>
-        <span>
-          {{ file ? file.nameFile : 'Select' }}
-        </span>
-        <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)" /></mat-option>
+      <mat-option (click)="fileInput.click()"><mat-label>File from device</mat-label>
+        <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/></mat-option>
       <mat-option value="option2">Link from internet</mat-option>
     </mat-select>
   </mat-form-field>
@@ -15,4 +12,5 @@
 <h1>Recent files</h1>
 <div class="wrap"><app-file-card *ngFor="let file of files" [file]="file" (click)="selectedFile = file"></app-file-card></div>
 
-<app-file-detail [file]="selectedFile" (closeFile)="selectedFile = null" *ngIf="selectedFile"></app-file-detail>
+<app-file-detail [file]="selectedFile" (closeEvent)="selectedFile = $event" *ngIf="selectedFile"></app-file-detail>
+
