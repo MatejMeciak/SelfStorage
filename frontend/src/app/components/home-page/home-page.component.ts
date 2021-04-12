@@ -12,8 +12,9 @@ import { File } from '../../models/file';
 export class HomePageComponent implements OnInit {
   file: File;
   files: File[];
+  selectedFile: File;
   constructor(private fileService: FileService) {
-    this.fileService.getFiles().subscribe(files => this.files = files);
+    this.fileService.getFiles().subscribe(files => this.files = files.slice(0, 4));
   }
 
   ngOnInit(): void {

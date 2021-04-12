@@ -35,4 +35,10 @@ img {
   margin-bottom: 0;
 }
 h3 {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.date-time {
+  font-size: 12px;
 }

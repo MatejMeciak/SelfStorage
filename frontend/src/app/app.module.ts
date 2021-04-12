@@ -13,6 +13,9 @@ import { WelcomePageComponent } from './components/welcome-page/welcome-page.com
 import { FileService } from './services/file.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FileCardComponent } from './components/file-card/file-card.component';
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import { FilesComponent } from './components/files/files.component';
+import { FileDetailComponent } from './components/file-detail/file-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { FileCardComponent } from './components/file-card/file-card.component';
     LoginFormComponent,
     WelcomePageComponent,
     FileCardComponent,
+    RegistrationFormComponent,
+    FilesComponent,
+    FileDetailComponent,
   ],
   imports: [
     MaterialModule,

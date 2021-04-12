@@ -3,4 +3,5 @@ export interface File {
   sizeFile: number;
   nameFile: string;
   imageUrl: string;
+  date: number;
 }

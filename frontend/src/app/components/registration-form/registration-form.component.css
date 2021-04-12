@@ -1,8 +1,8 @@
 mat-card {
-    width: fit-content;
-    margin: 0 auto;
-    padding: 3.5em;
-    position: relative;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 4em;
+  position: relative;
 }
 mat-form-field {
   display: block;
@@ -16,16 +16,16 @@ mat-card-content {
   align-items: center;
 }
 h1 {
-  color: #ffa500;
-  border-left: 5px solid orange;
-  padding-left: 1.6em;
+  color: #35A4DB;
+  border-left: 5px solid #35A4DB;
+  padding-left: 1.8em;
   position: absolute;
   left: 0;
   top: 15px;
 }
 
 .footer-text {
-  color: #969696;
+  color: #35A4DB;
   text-align: center;
 }
 
@@ -34,5 +34,6 @@ button {
   margin: 0 auto;
   width: 8em;
   height: 3em;
-  color: orange;
+  color: #35A4DB;
 }
+

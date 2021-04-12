@@ -3,12 +3,16 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import {FilesComponent} from './components/files/files.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+  { path: '', component: WelcomePageComponent },
   { path: 'home', component: HomePageComponent },
-  { path: 'welcome', component: WelcomePageComponent },
   { path: 'login', component: LoginFormComponent },
+  { path: 'registration', component: RegistrationFormComponent },
+  { path: 'files', component: FilesComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
