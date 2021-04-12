@@ -1,0 +1,46 @@
+.background-detail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  margin: auto;
+  border-radius: 4px;
+}
+
+img {
+  border-radius: 4px 0 0 4px;
+  left: 0;
+  height: 75vh;
+  border-right: 1px solid black;
+}
+
+.side-block {
+  padding: 1.2em;
+  width: 225px;
+}
+
+mat-icon {
+  position: absolute;
+  top: 12px;
+  right: 32px;
+  font-size: 42px;
+  color: #e2e2e2;
+  cursor: pointer;
+}
+
+span {
+  font-weight: bold;
+}
