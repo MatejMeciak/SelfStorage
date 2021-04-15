@@ -10,7 +10,6 @@ import { File } from '../../models/file';
   animations: [ load ]
 })
 export class HomePageComponent implements OnInit {
-  file: File;
   files: File[];
   selectedFile: File;
   constructor(private fileService: FileService) {

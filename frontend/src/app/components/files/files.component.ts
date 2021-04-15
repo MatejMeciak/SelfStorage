@@ -10,11 +10,10 @@ import {FileService} from '../../services/file.service';
 export class FilesComponent implements OnInit {
 
   files: File[];
-  constructor(private fileService: FileService) {
-    this.fileService.getFiles().subscribe(files => this.files = files);
-  }
+  constructor(private fileService: FileService) { }
 
   ngOnInit(): void {
+    this.fileService.getFiles().subscribe(files => this.files = files);
   }
 
 }

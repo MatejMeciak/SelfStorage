@@ -15,7 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: fit-content;
+  height: 75vh;
   margin: auto;
   border-radius: 4px;
 }
@@ -23,8 +23,8 @@
 img {
   border-radius: 4px 0 0 4px;
   left: 0;
-  height: 75vh;
   border-right: 1px solid black;
+  height: 75vh;
 }
 
 .side-block {

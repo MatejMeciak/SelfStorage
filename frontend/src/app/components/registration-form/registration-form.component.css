@@ -1,14 +1,14 @@
 mat-card {
   width: fit-content;
   margin: 0 auto;
-  padding: 4em;
+  padding: 5em;
   position: relative;
 }
 mat-form-field {
   display: block;
 }
 mat-card-header {
-  height: 60px;
+  height: 35px;
 }
 mat-card-content {
   display: flex;
@@ -18,10 +18,10 @@ mat-card-content {
 h1 {
   color: #35A4DB;
   border-left: 5px solid #35A4DB;
-  padding-left: 1.8em;
+  padding-left: 2.3em;
   position: absolute;
   left: 0;
-  top: 15px;
+  top: 25px;
 }
 
 .footer-text {

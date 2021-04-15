@@ -2,9 +2,9 @@
   <div class="container">
     <img src="http://localhost:8080/api/file/{{file.id}}" alt="{{file.nameFile}}">
     <div class="side-block">
-      <p><span>File name:</span> {{file.nameFile  }}</p>
-      <p><span>File size:</span> {{file.sizeFile | filesize}}</p>
-      <p><span>Uploaded date:</span> {{file.date}}</p>
+      <p><span>File name:</span> {{ file.nameFile }}</p>
+      <p><span>File size:</span> {{ file.sizeFile | number:'1.0-0' }} kB</p>
+      <p><span>Uploaded date:</span> {{ file.date | date : 'MMM d y hh:mm' }}</p>
     </div>
   </div>
   <mat-icon (click)="closeFile()">close</mat-icon>
