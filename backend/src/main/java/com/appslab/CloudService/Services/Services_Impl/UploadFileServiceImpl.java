@@ -7,6 +7,9 @@ import com.appslab.CloudService.Services.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,11 +27,6 @@ public class UploadFileServiceImpl implements UploadFileService {
         this.fileRepositoryDB = fileRepositoryDB;
         this.docStorageLocation = Paths.get(documentStorageProperty.getUploadDirectory()).toAbsolutePath().normalize();
         Files.createDirectories(this.docStorageLocation);
-    }
-
-    @Override
-    public void saveFile(UploadedFile file) {
-        fileRepositoryDB.save(file);
     }
 
     @Override
@@ -64,7 +62,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public void saveUploadedFileToDB(UploadedFile uploadedFile){
-        saveFile(uploadedFile);
+        fileRepositoryDB.save(uploadedFile);
     }
 
     @Override
@@ -77,4 +75,17 @@ public class UploadFileServiceImpl implements UploadFileService {
         return getDocStorageLocation().resolve(uploadedFile.getOriginalFileName());
     }
 
+    @Override
+    public void savingFileToStorage(UploadedFile uploadedFile, MultipartFile multipartFile) throws Exception{
+        File file = getDocStorageLocation().resolve(uploadedFile.getOriginalFileName()).toFile();
+        file.createNewFile();
+        FileOutputStream outputStream = new FileOutputStream(file);
+        multipartFile.getInputStream().transferTo(outputStream);
+        outputStream.close();
+    }
+
+    @Override
+    public List<UploadedFile> findSearchingFiles(String keyword) {
+        return fileRepositoryDB.findByNameFile(keyword);
+    }
 }

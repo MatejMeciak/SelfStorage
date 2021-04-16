@@ -4,11 +4,11 @@ import com.appslab.CloudService.Services.UploadFileService;
 import com.appslab.CloudService.Models.UploadedFile;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.*;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -22,14 +22,9 @@ public class UploadFileController {
     }
 
     @PostMapping
-    public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile) throws Exception {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile);
-        File file = uploadFileService.getDocStorageLocation().resolve(uploadedFile.getOriginalFileName()).toFile();
-        file.createNewFile();
-        FileOutputStream outputStream = new FileOutputStream(file);
-        multipartFile.getInputStream().transferTo(outputStream);
-        outputStream.close();
-
+        uploadFileService.savingFileToStorage(uploadedFile,multipartFile);
         uploadFileService.saveUploadedFileToDB(uploadedFile);
 
         return uploadedFile;
@@ -54,4 +49,8 @@ public class UploadFileController {
         uploadFileService.deleteFile(id);
     }
 
+    @GetMapping("/search/")
+    public List<UploadedFile> uploadedFile(@Param("keyword") String keyword){
+        return uploadFileService.findSearchingFiles(keyword);
+    }
 }

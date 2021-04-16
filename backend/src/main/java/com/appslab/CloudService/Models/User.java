@@ -3,33 +3,21 @@ package com.appslab.CloudService.Models;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected long id;
+public class User{
 
     @NotNull
+    @NotEmpty
     protected String email;
 
     @NotNull
+    @NotEmpty
     protected String password;
 
     @NotNull
+    @NotEmpty
     protected String username;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -54,4 +42,5 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
 }

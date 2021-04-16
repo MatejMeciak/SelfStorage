@@ -57,10 +57,9 @@ public class UploadedFile {
 
     public void setOriginalFileName() throws NoSuchAlgorithmException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-        long nanoSecond = System.nanoTime();
         Date now = new Date();
         String date = dateFormat.format(now);
-        this.originalFileName = this.nameFile+"_"+date+nanoSecond;
+        this.originalFileName = this.nameFile+"_"+date;
     }
 
     public String getMimeType() {
