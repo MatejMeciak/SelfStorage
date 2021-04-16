@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; margin: 0; }
+html, body { height: 100%; margin: 0; box-sizing: border-box;}
 
 body {
     font-family: 'Noto Sans JP', sans-serif;
@@ -13,4 +13,8 @@ body {
     background-size: cover;
     background-position: center;
     overflow: auto;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }

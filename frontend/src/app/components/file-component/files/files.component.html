@@ -1,0 +1,13 @@
+<div class="file-header">
+  <h1>Your files</h1>
+  <mat-icon>search</mat-icon>
+  <mat-icon>more_vert</mat-icon>
+</div>
+<div class="categories">
+  <div>All</div>
+  <div>Folders</div>
+  <div>Files</div>
+  <div>Links</div>
+</div>
+<div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="selectedFile=file"></app-file-card></div>
+<app-file-detail [file]="selectedFile" (closeEvent)="selectedFile=$event" *ngIf="selectedFile"></app-file-detail>

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {File} from '../../models/file';
+import {File} from '../../../models/file';
 
 @Component({
   selector: 'app-file-detail',

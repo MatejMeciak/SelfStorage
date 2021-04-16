@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {File} from '../../models/file';
-import {FileService} from '../../services/file.service';
+import {File} from '../../../models/file';
+import {FileService} from '../../../services/file.service';
 
 @Component({
   selector: 'app-files',
@@ -9,6 +9,7 @@ import {FileService} from '../../services/file.service';
 })
 export class FilesComponent implements OnInit {
 
+  selectedFile: File;
   files: File[];
   constructor(private fileService: FileService) { }
 

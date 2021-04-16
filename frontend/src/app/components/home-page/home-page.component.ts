@@ -12,11 +12,10 @@ import { File } from '../../models/file';
 export class HomePageComponent implements OnInit {
   files: File[];
   selectedFile: File;
-  constructor(private fileService: FileService) {
-    this.fileService.getFiles().subscribe(files => this.files = files.slice(0, 5));
-  }
+  constructor(private fileService: FileService) {}
 
   ngOnInit(): void {
+    this.fileService.getFiles().subscribe(files => this.files = files.slice(0, 5));
   }
 
   onFileInput(files: FileList): void {
