@@ -14,7 +14,7 @@ public class UploadedFile {
 
     protected Long sizeFile;
 
-    protected String nameFile;
+    protected String fileName;
 
     @Column(name = "originalFileName", nullable = false, unique = true)
     protected String originalFileName;
@@ -35,12 +35,12 @@ public class UploadedFile {
         this.sizeFile = sizeFile;
     }
 
-    public String getNameFile() {
-        return nameFile;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setNameFile(String nameFile) {
-        this.nameFile = nameFile;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public Long getId() {
@@ -60,7 +60,7 @@ public class UploadedFile {
         Date now = new Date();
         Long nanoSeconds = System.nanoTime();
         String date = dateFormat.format(now);
-        this.originalFileName = this.nameFile+"_"+date+nanoSeconds;
+        this.originalFileName = this.fileName +"_"+date+nanoSeconds;
     }
 
     public String getMimeType() {

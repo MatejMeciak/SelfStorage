@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,7 +47,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     public UploadedFile uploadedFile(MultipartFile multipartFile) {
         try {
             UploadedFile uploadedFile = new UploadedFile();
-            uploadedFile.setNameFile(multipartFile.getOriginalFilename());
+            uploadedFile.setFileName(multipartFile.getOriginalFilename());
             uploadedFile.setSizeFile(multipartFile.getSize());
             uploadedFile.setMimeType(multipartFile.getContentType());
             uploadedFile.setDate();
@@ -86,6 +85,6 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public List<UploadedFile> findSearchingFiles(String keyword) {
-        return fileRepositoryDB.findByNameFile(keyword);
+        return fileRepositoryDB.findByFileName(keyword);
     }
 }
