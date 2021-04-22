@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {File} from '../../../models/file';
-import {FileService} from '../../../services/file.service';
+import { File } from '../../../models/file';
+import { FileService } from '../../../services/file.service';
 
 @Component({
   selector: 'app-files',
@@ -16,5 +16,4 @@ export class FilesComponent implements OnInit {
   ngOnInit(): void {
     this.fileService.getFiles().subscribe(files => this.files = files);
   }
-
 }

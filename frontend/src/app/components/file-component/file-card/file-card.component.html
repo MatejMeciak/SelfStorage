@@ -1,9 +1,9 @@
 <div class="card">
   <div class="card-content">
-    <img src="http://localhost:8080/api/file/{{file.id}}" alt="{{ file.nameFile }}">
+    <img src="{{ getFileUrl(file.id) }}" alt="{{ file.fileName }}">
   </div>
   <div class="card-footer">
-    <h3>{{ file.nameFile | slice:0: 20 }}</h3>
+    <h3>{{ file.fileName | slice:0: 20 }}</h3>
     <p class="date-time">{{ file.date | date : 'MMM d y hh:mm'}}</p>
   </div>
 </div>

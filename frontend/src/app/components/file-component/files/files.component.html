@@ -10,4 +10,4 @@
   <div>Links</div>
 </div>
 <div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="selectedFile=file"></app-file-card></div>
-<app-file-detail [file]="selectedFile" (closeEvent)="selectedFile=$event" *ngIf="selectedFile"></app-file-detail>
+<app-file-detail [file]="selectedFile"  (closeEvent)="selectedFile=$event" *ngIf="selectedFile"></app-file-detail>

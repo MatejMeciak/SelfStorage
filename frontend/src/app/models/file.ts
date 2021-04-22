@@ -1,7 +1,7 @@
 export interface File {
   id: number;
   sizeFile: number;
-  nameFile: string;
+  fileName: string;
   date: number;
 }
 
