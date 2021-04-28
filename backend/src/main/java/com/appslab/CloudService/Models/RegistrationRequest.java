@@ -1,31 +1,11 @@
 package com.appslab.CloudService.Models;
 
 
-import com.sun.istack.NotNull;
-
-import javax.validation.constraints.NotEmpty;
-
-public class User{
-
-    @NotNull
-    @NotEmpty
-    protected String email;
-
-    @NotNull
-    @NotEmpty
+public class RegistrationRequest {
     protected String password;
-
-    @NotNull
-    @NotEmpty
     protected String username;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    protected String firstName;
+    protected String lastName;
 
     public String getPassword() {
         return password;
@@ -43,4 +23,19 @@ public class User{
         this.username = username;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

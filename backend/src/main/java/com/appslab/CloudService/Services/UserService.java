@@ -1,8 +1,9 @@
 package com.appslab.CloudService.Services;
 
-import com.appslab.CloudService.Models.User;
+import com.appslab.CloudService.Models.RegistrationRequest;
 
 public interface UserService {
-    void getRegistrationUser(User user);
-    void loginUser(User user);
+    void createUser(RegistrationRequest registrationRequest);
+    Boolean userAlreadyExists(RegistrationRequest registrationRequest);
+    Long getSpecifyUserId();
 }

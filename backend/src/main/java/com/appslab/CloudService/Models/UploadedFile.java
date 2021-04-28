@@ -16,12 +16,19 @@ public class UploadedFile {
 
     protected String fileName;
 
-    @Column(name = "originalFileName", nullable = false, unique = true)
+    @Column(name = "originalFileName", nullable = false)
     protected String originalFileName;
 
     protected String mimeType;
 
     protected Long date;
+
+    @JoinColumn(name = "customUser_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    protected CustomUser customUser;
+
+    @Column(name = "customUser_id")
+    protected Long customUserId;
 
     public UploadedFile() {
 
@@ -77,6 +84,14 @@ public class UploadedFile {
 
     public void setDate(){
         this.date  = Calendar.getInstance().getTime().getTime();
+    }
+
+    public Long getCustomUserId() {
+        return customUserId;
+    }
+
+    public void setCustomUserId(Long customUserId) {
+        this.customUserId = customUserId;
     }
 
 }
