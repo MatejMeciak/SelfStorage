@@ -1,0 +1,23 @@
+<div class="container">
+  <h1>Search for public files</h1>
+  <form>
+    <mat-form-field class="example-full-width">
+      <mat-label>Enter File Name</mat-label>
+      <input type="text"
+             #searchBox
+             placeholder="Search"
+             aria-label="Enter File Name"
+             matInput
+             [matAutocomplete]="auto"
+             (input)="inputChange(searchBox.value)">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let file of files | async" [value]="file.fileName">
+          {{file.fileName}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+<div class="file-grid"><app-file-card *ngFor="let file of files | async" [file]="file" (click)="selectedFile=file"></app-file-card></div>
+<app-file-detail [file]="selectedFile" (closeEvent)="selectedFile=$event" *ngIf="selectedFile"></app-file-detail>
+

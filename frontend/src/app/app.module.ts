@@ -16,6 +16,7 @@ import { FileCardComponent } from './components/file-component/file-card/file-ca
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { FilesComponent } from './components/file-component/files/files.component';
 import { FileDetailComponent } from './components/file-component/file-detail/file-detail.component';
+import { SearchPageComponent } from './components/search-page/search-page.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { FileDetailComponent } from './components/file-component/file-detail/fil
     RegistrationFormComponent,
     FilesComponent,
     FileDetailComponent,
+    SearchPageComponent,
   ],
   imports: [
     MaterialModule,

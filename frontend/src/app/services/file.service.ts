@@ -35,4 +35,8 @@ export class FileService {
   downloadFile(file: FileModel): Observable<Blob> {
     return this.http.get(`${this.fileUrl}/${file.id}`, { responseType: 'blob' });
   }
+
+  searchFile(keyword: string): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.fileUrl}/search/?keyword=${keyword}`);
+  }
 }
