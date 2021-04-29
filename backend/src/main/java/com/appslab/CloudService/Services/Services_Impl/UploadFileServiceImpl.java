@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,19 +47,14 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public UploadedFile uploadedFile(MultipartFile multipartFile) {
-        try {
             UploadedFile uploadedFile = new UploadedFile();
             uploadedFile.setFileName(multipartFile.getOriginalFilename());
             uploadedFile.setSizeFile(multipartFile.getSize());
             uploadedFile.setMimeType(multipartFile.getContentType());
             uploadedFile.setDate();
-            uploadedFile.setOriginalFileName();
             uploadedFile.setCustomUserId(userService.getSpecifyUserId());
+            uploadedFile.setUuid();
             return uploadedFile;
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override
@@ -75,12 +69,12 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public Path pathToSpecificFile(UploadedFile uploadedFile) {
-        return getDocStorageLocation().resolve(uploadedFile.getOriginalFileName());
+        return getDocStorageLocation().resolve(uploadedFile.getUuid().toString());
     }
 
     @Override
     public void savingFileToStorage(UploadedFile uploadedFile, MultipartFile multipartFile) throws Exception{
-        File file = getDocStorageLocation().resolve(uploadedFile.getOriginalFileName()).toFile();
+        File file = getDocStorageLocation().resolve(uploadedFile.getUuid().toString()).toFile();
         file.createNewFile();
         FileOutputStream outputStream = new FileOutputStream(file);
         multipartFile.getInputStream().transferTo(outputStream);
@@ -90,5 +84,10 @@ public class UploadFileServiceImpl implements UploadFileService {
     @Override
     public List<UploadedFile> findSearchingFiles(String keyword,Long customUserId) {
         return fileRepositoryDB.findByFileName(keyword,customUserId);
+    }
+
+    @Override
+    public void saveEditFile(UploadedFile uploadedFile) {
+        fileRepositoryDB.save(uploadedFile);
     }
 }

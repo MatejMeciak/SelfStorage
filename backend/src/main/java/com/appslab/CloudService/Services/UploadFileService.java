@@ -16,4 +16,5 @@ public interface UploadFileService {
     Path pathToSpecificFile(UploadedFile uploadedFile);
     void savingFileToStorage(UploadedFile uploadedFile, MultipartFile multipartFile) throws Exception;
     List<UploadedFile> findSearchingFiles(String searchingFiles, Long customUserId);
+    void saveEditFile(UploadedFile uploadedFile);
 }

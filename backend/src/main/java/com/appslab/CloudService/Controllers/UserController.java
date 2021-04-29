@@ -24,6 +24,4 @@ public class UserController {
             return "user with this username already exists";
         }
     }
-
-
 }

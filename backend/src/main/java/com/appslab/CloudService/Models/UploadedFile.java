@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 public class UploadedFile {
@@ -12,12 +13,11 @@ public class UploadedFile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    protected UUID uuid;
+
     protected Long sizeFile;
 
     protected String fileName;
-
-    @Column(name = "originalFileName", nullable = false)
-    protected String originalFileName;
 
     protected String mimeType;
 
@@ -58,18 +58,6 @@ public class UploadedFile {
         this.id = id;
     }
 
-    public String getOriginalFileName() {
-        return originalFileName;
-    }
-
-    public void setOriginalFileName() throws NoSuchAlgorithmException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-        Date now = new Date();
-        Long nanoSeconds = System.nanoTime();
-        String date = dateFormat.format(now);
-        this.originalFileName = this.fileName +"_"+date+nanoSeconds;
-    }
-
     public String getMimeType() {
         return mimeType;
     }
@@ -83,7 +71,7 @@ public class UploadedFile {
     }
 
     public void setDate(){
-        this.date  = Calendar.getInstance().getTime().getTime();
+        this.date = Calendar.getInstance().getTime().getTime();
     }
 
     public Long getCustomUserId() {
@@ -94,5 +82,11 @@ public class UploadedFile {
         this.customUserId = customUserId;
     }
 
-}
+    public UUID getUuid() {
+        return uuid;
+    }
 
+    public void setUuid() {
+        this.uuid = UUID.randomUUID();
+    }
+}

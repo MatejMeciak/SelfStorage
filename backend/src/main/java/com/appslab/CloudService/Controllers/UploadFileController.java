@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/api/file")
 @RestController
@@ -51,18 +53,29 @@ public class UploadFileController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteFile(@PathVariable Long id) throws Exception{
+    public String deleteFile(@PathVariable Long id) throws Exception{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
         if (uploadedFile.getCustomUserId()== userService.getSpecifyUserId())
         {
             Files.delete(uploadFileService.pathToSpecificFile(uploadedFile));
             uploadFileService.deleteFile(id);
+            return "File was succesfully deleted.";
         }
+        return null;
     }
 
     @GetMapping("/search/")
     public List<UploadedFile> uploadedFile(@Param("keyword") String keyword){
         Long specifiUserId = userService.getSpecifyUserId();
         return uploadFileService.findSearchingFiles(keyword,specifiUserId);
+    }
+
+    @GetMapping("/edit")
+    public String saveEditFile(@RequestBody UploadedFile uploadedFile) throws NoSuchAlgorithmException {
+        Long idFile = uploadedFile.getId();
+        UploadedFile uploadedFile1 = uploadFileService.findFileById(idFile).get();
+        uploadedFile1.setFileName(uploadedFile.getFileName());
+        uploadFileService.saveEditFile(uploadedFile1);
+        return "File was succesfully rename.";
     }
 }
