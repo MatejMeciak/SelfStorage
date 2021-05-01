@@ -1,10 +1,7 @@
 package com.appslab.CloudService.Models;
 
 import javax.persistence.*;
-import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +19,8 @@ public class UploadedFile {
     protected String mimeType;
 
     protected Long date;
+
+    protected String link;
 
     @JoinColumn(name = "customUser_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -88,5 +87,13 @@ public class UploadedFile {
 
     public void setUuid() {
         this.uuid = UUID.randomUUID();
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

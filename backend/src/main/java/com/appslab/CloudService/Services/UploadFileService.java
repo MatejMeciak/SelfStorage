@@ -8,13 +8,22 @@ import java.util.Optional;
 
 public interface UploadFileService {
     void deleteFile(Long id);
+
     List<UploadedFile> listOfFiles(Long customUserId);
+
     Path getDocStorageLocation();
+
     UploadedFile uploadedFile(MultipartFile multipartFile);
+
     void saveUploadedFileToDB(UploadedFile uploadedFile);
+
     Optional<UploadedFile> findFileById(Long fileID);
+
     Path pathToSpecificFile(UploadedFile uploadedFile);
+
     void savingFileToStorage(UploadedFile uploadedFile, MultipartFile multipartFile) throws Exception;
+
     List<UploadedFile> findSearchingFiles(String searchingFiles, Long customUserId);
+
     void saveEditFile(UploadedFile uploadedFile);
 }
