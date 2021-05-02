@@ -10,7 +10,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FileService {
   fileUrl = `${environment.apiUrl}/file`;
-
   constructor(private http: HttpClient) {
   }
 

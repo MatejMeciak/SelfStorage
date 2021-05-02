@@ -37,3 +37,11 @@ button {
   color: #35A4DB;
 }
 
+.flex {
+  display: flex;
+  gap: 1em;
+}
+.flex > mat-form-field {
+  width: 120px;
+}
+

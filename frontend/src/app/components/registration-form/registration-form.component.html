@@ -3,29 +3,37 @@
     <h1>REGISTER</h1>
   </mat-card-header>
   <mat-card-content>
-    <form>
+    <form [formGroup]="registerGroup" (ngSubmit)="register()">
+      <div class="flex">
+        <mat-form-field appearance="outline">
+          <mat-label>FirstName</mat-label>
+          <label>
+            <input formControlName="firstName" matInput type="text">
+          </label>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>LastName</mat-label>
+          <label>
+            <input formControlName="lastName" matInput type="text">
+          </label>
+        </mat-form-field>
+      </div>
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
         <label>
-          <input matInput type="text">
-        </label>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <label>
-          <input matInput type="email">
+          <input formControlName="username" matInput type="text">
         </label>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
         <label>
-          <input matInput type="password">
+          <input formControlName="password" matInput type="password">
         </label>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Repeat Password</mat-label>
         <label>
-          <input matInput type="password">
+          <input formControlName="password" matInput type="password">
         </label>
       </mat-form-field>
       <button type="submit" mat-stroked-button>Register</button>

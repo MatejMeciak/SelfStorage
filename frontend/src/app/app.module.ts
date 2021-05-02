@@ -11,12 +11,15 @@ import { LoginFormComponent } from './components/login-form/login-form.component
 import { UserService } from './services/user.service';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { FileService } from './services/file.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FileCardComponent } from './components/file-component/file-card/file-card.component';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { FilesComponent } from './components/file-component/files/files.component';
 import { FileDetailComponent } from './components/file-component/file-detail/file-detail.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
+import {AuthService} from './services/auth.service';
+import {AuthInterceptor} from './interceptor/auth.interceptor';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,9 +39,16 @@ import { SearchPageComponent } from './components/search-page/search-page.compon
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [UserService, FileService],
+  providers: [ UserService, FileService, AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
