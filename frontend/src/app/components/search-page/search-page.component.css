@@ -21,10 +21,10 @@ app-file-card {
 
 .filter {
   width: 150px;
-  height: 4em;
+  height: 3em;
   background-color: white;
   border-radius: 15px;
-  line-height: 4em;
+  line-height: 3em;
   padding: 0 1.5em;
   transition: all 150ms ease-out;
 }

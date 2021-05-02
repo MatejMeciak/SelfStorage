@@ -5,7 +5,11 @@
       <p><span>File name:</span> {{ file.fileName }}</p>
       <p><span>File size:</span> {{ file.sizeFile / 1000 | number: '1.0-2' }} kB</p>
       <p><span>Uploaded date:</span> {{ file.date | date : 'MMM d y hh:mm' }}</p>
-      <mat-icon (click)="downloadFile()">download</mat-icon>
+      <div class="options">
+        <mat-icon (click)="downloadFile()">download</mat-icon>
+        <mat-icon (click)="openDialog()">more_vert</mat-icon>
+        <mat-icon (click)="closeFile()">close</mat-icon>
+      </div>
     </div>
   </div>
 </div>

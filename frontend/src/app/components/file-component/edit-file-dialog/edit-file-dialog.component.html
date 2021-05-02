@@ -1,0 +1,8 @@
+<div mat-dialog-content>
+  <mat-label><b>Enter new file name</b></mat-label>
+  <input matInput [(ngModel)]="data.fileName" type="text">
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.fileName">Ok</button>
+</div>

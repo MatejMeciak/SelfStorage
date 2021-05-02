@@ -28,7 +28,7 @@ export class FileService {
   }
 
   updateFile(file: FileModel): Observable<FileModel> {
-    return this.http.put<FileModel>(this.fileUrl, file);
+    return this.http.put<FileModel>(`${this.fileUrl}/edit`, file);
   }
 
   downloadFile(file: FileModel): Observable<Blob> {

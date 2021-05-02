@@ -3,6 +3,8 @@ import { File } from '../../../models/file';
 import { environment } from '../../../../environments/environment';
 import { FileService } from '../../../services/file.service';
 import * as fileSaver from 'file-saver';
+import {MatDialog} from '@angular/material/dialog';
+import {EditFileDialogComponent} from '../edit-file-dialog/edit-file-dialog.component';
 
 @Component({
   selector: 'app-file-detail',
@@ -13,18 +15,29 @@ export class FileDetailComponent implements OnInit {
 
   @Input() file: File;
   @Output() closeEvent = new EventEmitter<File>();
-  constructor( private fileService: FileService) { }
+  constructor(private fileService: FileService, private dialog: MatDialog) { }
 
   ngOnInit(): void { }
-  closeFile(): void {
-    this.closeEvent.emit(null);
-  }
   getFileUrl(id: number): string {
     return `${environment.apiUrl}/file/${id}`;
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EditFileDialogComponent, { data: this.file });
+    dialogRef.afterClosed().subscribe(newFileName => {
+      this.file.fileName = newFileName;
+      this.editFile();
+      });
+  }
+
+  closeFile(): void {
+    this.closeEvent.emit(null);
   }
   downloadFile(): void {
     this.fileService.downloadFile(this.file).subscribe(blob => {
       fileSaver.saveAs(blob, this.file.fileName);
     });
+  }
+  editFile(): void {
+    this.fileService.updateFile(this.file).subscribe();
   }
 }

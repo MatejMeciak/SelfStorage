@@ -31,11 +31,15 @@ img {
   padding: 1.2em;
   width: 225px;
 }
-
-mat-icon {
+.options {
   position: absolute;
+  display: flex;
+  gap: 1em;
   top: 12px;
   right: 32px;
+}
+
+mat-icon {
   font-size: 42px;
   color: #e2e2e2;
   cursor: pointer;

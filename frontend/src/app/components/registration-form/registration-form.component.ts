@@ -24,6 +24,7 @@ export class RegistrationFormComponent implements OnInit {
   }
   register(): void {
     if (this.registerGroup.valid) {
+      console.log('true');
       const username = this.registerGroup.value.username;
       const password = this.registerGroup.value.password;
       const firstName = this.registerGroup.value.firstName;

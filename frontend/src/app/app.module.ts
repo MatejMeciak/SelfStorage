@@ -17,9 +17,10 @@ import { RegistrationFormComponent } from './components/registration-form/regist
 import { FilesComponent } from './components/file-component/files/files.component';
 import { FileDetailComponent } from './components/file-component/file-detail/file-detail.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
-import {AuthService} from './services/auth.service';
-import {AuthInterceptor} from './interceptor/auth.interceptor';
-import {ReactiveFormsModule} from '@angular/forms';
+import { AuthService } from './services/auth.service';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditFileDialogComponent } from './components/file-component/edit-file-dialog/edit-file-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     FilesComponent,
     FileDetailComponent,
     SearchPageComponent,
+    EditFileDialogComponent,
   ],
   imports: [
     MaterialModule,
@@ -40,7 +42,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [ UserService, FileService, AuthService,
     {
