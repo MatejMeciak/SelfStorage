@@ -69,23 +69,23 @@ public class UploadFileController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteFile(@PathVariable Long id) throws Exception{
+    public UploadedFile deleteFile(@PathVariable Long id) throws Exception{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
         if (uploadedFile.getCustomUserId()== userService.getSpecifyUserId())
         {
             Files.delete(uploadFileService.pathToSpecificFile(uploadedFile));
             uploadFileService.deleteFile(id);
-            return "File was succesfully deleted.";
+            return uploadedFile;
         }
         return null;
     }
 
     @PutMapping("/edit")
-    public String saveEditFile(@RequestBody UploadedFile uploadedFile) throws NoSuchAlgorithmException {
+    public UploadedFile saveEditFile(@RequestBody UploadedFile uploadedFile) throws NoSuchAlgorithmException {
         Long idFile = uploadedFile.getId();
         UploadedFile uploadedFile1 = uploadFileService.findFileById(idFile).get();
         uploadedFile1.setFileName(uploadedFile.getFileName());
         uploadFileService.saveEditFile(uploadedFile1);
-        return "File was succesfully rename.";
+        return uploadedFile1;
     }
 }

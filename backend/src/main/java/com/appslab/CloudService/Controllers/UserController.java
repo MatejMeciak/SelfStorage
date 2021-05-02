@@ -15,13 +15,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/registration")
-    public String registration(@RequestBody RegistrationRequest registrationRequest){
+    @PostMapping("/api/registration")
+    public RegistrationRequest registration(@RequestBody RegistrationRequest registrationRequest){
         if(userService.userAlreadyExists(registrationRequest)!=true){
-            return "registration is succesfully";
+            return registrationRequest;
         }
         else {
-            return "user with this username already exists";
+            return null;
         }
     }
 }
