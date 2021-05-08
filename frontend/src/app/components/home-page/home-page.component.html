@@ -5,7 +5,7 @@
     <mat-select>
       <mat-option (click)="fileInput.click()"><mat-label>File from device</mat-label>
         <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/></mat-option>
-      <mat-option value="option2">Link from internet</mat-option>
+      <mat-option (click)="openDialog()" value="option2">Link from internet</mat-option>
     </mat-select>
   </mat-form-field>
 </div>

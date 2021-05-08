@@ -1,7 +1,8 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { animate, group, keyframes, query, stagger, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { load } from '../../material/animations';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -25,18 +26,25 @@ import { load } from '../../material/animations';
 })
 export class NavigationBarComponent implements OnInit {
 
+  isAuthed: boolean;
   animate = false;
 
   links: string[] = ['home', 'profile', 'files', 'search'];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
+    // redone with Observable
+    this.isAuthed = this.authService.isLoggedIn();
   }
 
   toggle(): void {
     this.animate = true;
-    setTimeout(() => { this.router.navigate(['/login']); this.animate = false; }, 300);
+    this.isAuthed = this.authService.isLoggedIn();
+    if (this.isAuthed) { this.authService.logout(); }
+    else {
+      setTimeout(() => { this.router.navigate(['login']); this.animate = false; }, 300);
+    }
   }
 
 

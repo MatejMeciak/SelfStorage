@@ -6,15 +6,16 @@ import { WelcomePageComponent } from './components/welcome-page/welcome-page.com
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { FilesComponent } from './components/file-component/files/files.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
+import { AuthGuardService } from './guard/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: WelcomePageComponent },
-  { path: 'home', component: HomePageComponent },
+  { path: 'home', component: HomePageComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginFormComponent },
   { path: 'registration', component: RegistrationFormComponent },
-  { path: 'files', component: FilesComponent },
-  { path: 'search', component: SearchPageComponent },
-  { path: '**', redirectTo: '' },
+  { path: 'files', component: FilesComponent, canActivate: [AuthGuardService] },
+  { path: 'search', component: SearchPageComponent, canActivate: [AuthGuardService] },
+  { path: '**', redirectTo: ''},
 ];
 
 @NgModule({

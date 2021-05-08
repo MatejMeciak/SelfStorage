@@ -7,7 +7,7 @@
             </ul>
             <div class="login" [@slider]="animate ? 'slide': null" (click)="toggle()" >
                 <mat-icon class="circle" [@slider]>east</mat-icon>
-                <div class="text">LOGIN</div>
+                <div class="text">{{ !isAuthed ? "LOGIN" : "LOGOUT" }}</div>
             </div>
         </div>
     </div>

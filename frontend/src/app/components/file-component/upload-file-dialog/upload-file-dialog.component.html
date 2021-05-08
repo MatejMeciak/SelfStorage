@@ -1,0 +1,15 @@
+<mat-dialog-content>
+  <p>Creating file from link</p>
+  <mat-form-field>
+    <mat-label>Enter File Name</mat-label>
+    <input matInput [(ngModel)]="data.fileName">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Enter File Link</mat-label>
+    <input matInput [(ngModel)]="data.link">
+  </mat-form-field>
+</mat-dialog-content>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data">Ok</button>
+</div>

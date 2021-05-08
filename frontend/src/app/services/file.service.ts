@@ -27,6 +27,10 @@ export class FileService {
     return this.http.post<FileModel>(this.fileUrl, formData);
   }
 
+  uploadLinkFile(file: FileModel): Observable<FileModel> {
+    return this.http.post<FileModel>(`${this.fileUrl}/uploadLink`, file);
+  }
+
   updateFile(file: FileModel): Observable<FileModel> {
     return this.http.put<FileModel>(`${this.fileUrl}/edit`, file);
   }

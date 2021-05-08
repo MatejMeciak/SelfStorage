@@ -8,7 +8,6 @@ import { NavigationBarComponent } from './components/navigation-bar/navigation-b
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { MaterialModule } from './material/material.module';
 import { LoginFormComponent } from './components/login-form/login-form.component';
-import { UserService } from './services/user.service';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { FileService } from './services/file.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -21,6 +20,7 @@ import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditFileDialogComponent } from './components/file-component/edit-file-dialog/edit-file-dialog.component';
+import { UploadFileDialogComponent } from './components/file-component/upload-file-dialog/upload-file-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +35,7 @@ import { EditFileDialogComponent } from './components/file-component/edit-file-d
     FileDetailComponent,
     SearchPageComponent,
     EditFileDialogComponent,
+    UploadFileDialogComponent,
   ],
   imports: [
     MaterialModule,
@@ -45,7 +46,7 @@ import { EditFileDialogComponent } from './components/file-component/edit-file-d
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [ UserService, FileService, AuthService,
+  providers: [ FileService, AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
