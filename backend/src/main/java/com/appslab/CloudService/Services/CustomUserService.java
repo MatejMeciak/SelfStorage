@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserService implements UserDetailsService {
-    UserRepository userRepository;
+    private UserRepository userRepository;
     private String USER_NOT_FOUND = "user with username %s not found";
 
     public CustomUserService(UserRepository userRepository) {

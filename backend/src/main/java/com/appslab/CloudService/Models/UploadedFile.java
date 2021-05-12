@@ -22,12 +22,21 @@ public class UploadedFile {
 
     protected String link;
 
+    protected Boolean access=false;
+
     @JoinColumn(name = "customUser_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     protected CustomUser customUser;
 
     @Column(name = "customUser_id")
     protected Long customUserId;
+
+    @JoinColumn(name = "folder_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    protected Folder folder;
+
+    @Column(name = "folder_id")
+    protected Long folderId;
 
     public UploadedFile() {
 
@@ -95,5 +104,21 @@ public class UploadedFile {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public Boolean getAccess() {
+        return access;
+    }
+
+    public void setAccess(Boolean access) {
+        this.access = access;
+    }
+
+    public Long getFolderId() {
+        return folderId;
+    }
+
+    public void setFolderId(Long folderId) {
+        this.folderId = folderId;
     }
 }

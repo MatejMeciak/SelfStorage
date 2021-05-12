@@ -13,7 +13,7 @@ public interface UploadFileService {
 
     Path getDocStorageLocation();
 
-    UploadedFile uploadedFile(MultipartFile multipartFile);
+    UploadedFile uploadedFile(MultipartFile multipartFile,Boolean access);
 
     void saveUploadedFileToDB(UploadedFile uploadedFile);
 
@@ -26,4 +26,6 @@ public interface UploadFileService {
     List<UploadedFile> findSearchingFiles(String searchingFiles, Long customUserId);
 
     void saveEditFile(UploadedFile uploadedFile);
+
+    List<UploadedFile> findSearchingFilesInPublicList(String keyword,Boolean access);
 }

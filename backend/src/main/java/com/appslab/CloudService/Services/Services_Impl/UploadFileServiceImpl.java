@@ -46,7 +46,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public UploadedFile uploadedFile(MultipartFile multipartFile) {
+    public UploadedFile uploadedFile(MultipartFile multipartFile,Boolean access) {
             UploadedFile uploadedFile = new UploadedFile();
             uploadedFile.setFileName(multipartFile.getOriginalFilename());
             uploadedFile.setSizeFile(multipartFile.getSize());
@@ -54,6 +54,10 @@ public class UploadFileServiceImpl implements UploadFileService {
             uploadedFile.setDate();
             uploadedFile.setCustomUserId(userService.getSpecifyUserId());
             uploadedFile.setUuid();
+            if (access==null){
+                uploadedFile.setAccess(false);
+            }
+            else{uploadedFile.setAccess(access);}
             return uploadedFile;
     }
 
@@ -89,5 +93,10 @@ public class UploadFileServiceImpl implements UploadFileService {
     @Override
     public void saveEditFile(UploadedFile uploadedFile) {
         fileRepositoryDB.save(uploadedFile);
+    }
+
+    @Override
+    public List<UploadedFile> findSearchingFilesInPublicList(String keyword,Boolean access) {
+        return fileRepositoryDB.findByFileName(keyword,access);
     }
 }

@@ -18,9 +18,9 @@ import java.util.List;
 @RequestMapping("/api/file")
 @RestController
 public class UploadFileController {
-    UploadFileService uploadFileService;
-    UserService userService;
-    FileRepositoryDB fileRepositoryDB;
+    private UploadFileService uploadFileService;
+    private UserService userService;
+    private FileRepositoryDB fileRepositoryDB;
 
     public UploadFileController(UploadFileService uploadFileService, UserService userService, FileRepositoryDB fileRepositoryDB) {
         this.uploadFileService = uploadFileService;
@@ -51,9 +51,20 @@ public class UploadFileController {
         return uploadFileService.findSearchingFiles(keyword,specifiUserId);
     }
 
+    @GetMapping("/allFiles")
+    public List<UploadedFile> publicFiles(){
+        return fileRepositoryDB.findByAccess(true);
+    }
+
+    @GetMapping("/allFiles/search/")
+    public List<UploadedFile> searchingInPublicFiles(@Param("keyword") String keyword){
+        Boolean access = true;
+        return uploadFileService.findSearchingFilesInPublicList(keyword,access);
+    }
+
     @PostMapping
-    public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile) throws Exception {
-        UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile);
+    public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam(required = false) Boolean access) throws Exception {
+        UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile,access);
         uploadFileService.savingFileToStorage(uploadedFile,multipartFile);
         uploadFileService.saveUploadedFileToDB(uploadedFile);
 
