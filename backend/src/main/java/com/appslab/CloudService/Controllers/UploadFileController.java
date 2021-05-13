@@ -37,7 +37,7 @@ public class UploadFileController {
     @GetMapping("/{id}")
     public ResponseEntity<InputStreamResource> getFile(@PathVariable Long id) throws Exception{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
-        if(uploadedFile.getCustomUserId()==userService.getSpecifyUserId())
+        if(uploadedFile.getCustomUserId().equals(userService.getSpecifyUserId()))
         {
             FileSystemResource file = new FileSystemResource(uploadFileService.pathToSpecificFile(uploadedFile));
             return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
@@ -82,7 +82,7 @@ public class UploadFileController {
     @DeleteMapping("/{id}")
     public UploadedFile deleteFile(@PathVariable Long id) throws Exception{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
-        if (uploadedFile.getCustomUserId()== userService.getSpecifyUserId())
+        if (uploadedFile.getCustomUserId().equals(userService.getSpecifyUserId()))
         {
             Files.delete(uploadFileService.pathToSpecificFile(uploadedFile));
             uploadFileService.deleteFile(id);

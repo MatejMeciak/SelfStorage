@@ -11,41 +11,50 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/file")
+@RequestMapping("/api/folder")
 public class FolderController {
-    private FolderService folderService;
-    private UploadFileService uploadFileService;
-    private FileRepositoryDB fileRepositoryDB;
-    private UserService userService;
+    private final FolderService folderService;
+    private final UploadFileService uploadFileService;
+    private final FileRepositoryDB fileRepositoryDB;
+    private final UserService userService;
 
-    public FolderController(FolderService folderService, UploadFileService uploadFileService, FileRepositoryDB fileRepositoryDB) {
+    public FolderController(FolderService folderService, UploadFileService uploadFileService, FileRepositoryDB fileRepositoryDB,UserService userService) {
         this.folderService = folderService;
         this.uploadFileService = uploadFileService;
         this.fileRepositoryDB = fileRepositoryDB;
+        this.userService = userService;
     }
 
-    @PostMapping("/folder")
+    @PostMapping
     public void createNewFolder(@RequestBody Folder folder){
         folderService.createFolder(folder);
     }
 
-    @GetMapping("/folder/{folderName}")
-    public List<UploadedFile> showContentInFolder(@PathVariable String folderName){
-         Long folderId = folderService.findFolderByFolderName(folderName).get().getId();
-         return fileRepositoryDB.findByFolderId(folderId);
+    @GetMapping("/{id}")
+    public List<UploadedFile> showContentInFolder(@PathVariable Long id){
+         Long folderId = folderService.findFolderById(id).get().getId();
+         if(folderService.findFolderById(id).get().getCustomUserId().equals(userService.getSpecifyUserId()))
+         {
+             return fileRepositoryDB.findByFolderId(folderId);
+         }
+         return null;
     }
 
-    @PutMapping("/folder/{folderName}")
-    public void addFileToFolder( @PathVariable String folderName, @RequestBody UploadedFile uploadedFile){
-        Folder folder = folderService.findFolderByFolderName(folderName).get();
+    @PutMapping("/{id}")
+    public UploadedFile addFileToFolder(@PathVariable Long id, @RequestBody UploadedFile uploadedFile){
+        Folder folder = folderService.findFolderById(id).get();
         UploadedFile uploadedFile1 = uploadFileService.findFileById(uploadedFile.getId()).get();
-        uploadedFile1.setFolderId(folder.getId());
-        uploadFileService.saveEditFile(uploadedFile1);
+        if (folder.getCustomUserId().equals(userService.getSpecifyUserId()))
+        {
+            uploadedFile1.setFolderId(folder.getId());
+            uploadFileService.saveEditFile(uploadedFile1);
+            return uploadedFile1;
+        }
+        return null;
     }
 
-    @GetMapping("/search/folders")
-    public List<Folder> folders(@Param("keyword") String keyword){
-        Long specifiUserId = userService.getSpecifyUserId();
-        return null;
+    @GetMapping("/search")
+    public List<Folder> searchingfolders(@Param("keyword") String keyword){
+        return folderService.searchingFoldersByFolderName(keyword);
     }
 }

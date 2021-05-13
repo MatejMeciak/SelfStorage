@@ -25,7 +25,7 @@ public class Folder {
     protected CustomUser customUser;
 
     @Column(name = "user_id")
-    protected Long userId;
+    protected Long customUserId;
 
     public Folder() {
     }
@@ -52,5 +52,21 @@ public class Folder {
 
     public void setDate() {
         this.date = Calendar.getInstance().getTime().getTime();
+    }
+
+    public Long getCustomUserId() {
+        return customUserId;
+    }
+
+    public void setCustomUserId(Long customUserId) {
+        this.customUserId = customUserId;
+    }
+
+    public Boolean getAccess() {
+        return access;
+    }
+
+    public void setAccess(Boolean access) {
+        this.access = access;
     }
 }
