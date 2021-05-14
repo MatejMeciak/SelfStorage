@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { load } from '../../material/animations';
+import { load } from '../../../material/animations';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

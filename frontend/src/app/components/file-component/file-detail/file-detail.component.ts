@@ -23,10 +23,9 @@ export class FileDetailComponent implements OnInit {
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(EditFileDialogComponent, { data: this.file });
-    dialogRef.afterClosed().subscribe(newFileName => {
-      this.file.fileName = newFileName;
-      this.editFile();
-      });
+    dialogRef.afterClosed().subscribe(newFile => {
+      this.editFile(newFile);
+    });
   }
 
   closeFile(): void {
@@ -37,7 +36,7 @@ export class FileDetailComponent implements OnInit {
       fileSaver.saveAs(blob, this.file.fileName);
     });
   }
-  editFile(): void {
-    this.fileService.updateFile(this.file).subscribe();
+  editFile(newFile: File): void {
+    this.fileService.updateFile(newFile).subscribe();
   }
 }

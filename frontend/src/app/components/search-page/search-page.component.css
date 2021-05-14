@@ -20,14 +20,19 @@ app-file-card {
 }
 
 .filter {
-  width: 150px;
+  width: 185px;
   height: 3em;
   background-color: white;
-  border-radius: 15px;
+  border-radius: 12px;
   line-height: 3em;
   padding: 0 1.5em;
   transition: all 150ms ease-out;
 }
+.filter:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+
 .search {
   display: flex;
   justify-content: center;

@@ -18,7 +18,7 @@
         </mat-autocomplete>
       </mat-form-field>
     </form>
-    <div class="filter">Show All Files</div>
+    <div class="filter" matRipple (click)="allPublicFiles()">Show Shared Files</div>
   </div>
 </div>
 <div class="file-grid"><app-file-card *ngFor="let file of files | async" [file]="file" (click)="selectedFile=file"></app-file-card></div>

@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { animate, group, keyframes, query, stagger, state, style, transition, trigger } from '@angular/animations';
+import { animate, group, keyframes, query, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { load } from '../../material/animations';
 import {AuthService} from '../../services/auth.service';
@@ -34,16 +34,16 @@ export class NavigationBarComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-    // redone with Observable
-    this.isAuthed = this.authService.isLoggedIn();
+    this.authService.token.subscribe(() => this.isAuthed = this.authService.isLoggedIn());
   }
 
   toggle(): void {
+    // TODO redone animation setTimeout
     this.animate = true;
     this.isAuthed = this.authService.isLoggedIn();
-    if (this.isAuthed) { this.authService.logout(); }
+    if (this.isAuthed) { this.authService.logout(); this.router.navigateByUrl('/'); }
     else {
-      setTimeout(() => { this.router.navigate(['login']); this.animate = false; }, 300);
+      setTimeout(() => { this.router.navigateByUrl('/login'); this.animate = false; }, 300);
     }
   }
 

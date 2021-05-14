@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { FileService } from '../../services/file.service';
-import { debounceTime, distinctUntilChanged, mergeMap } from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, mergeMap} from 'rxjs/operators';
 import { File } from '../../models/file';
 
 @Component({
@@ -20,15 +20,14 @@ export class SearchPageComponent implements OnInit {
     this.files = this.searchKeyword.pipe(
       debounceTime(250),
       distinctUntilChanged(),
-      mergeMap((keyword: string) => this.fileService.searchFile(keyword)),
+      mergeMap((keyword: string) => this.fileService.searchPublicFiles(keyword)),
     );
   }
-
   inputChange(keyword: string): void {
     this.searchKeyword.next(keyword);
   }
 
-  search(): void {
-
+  allPublicFiles(): void {
+    this.files = this.fileService.getPublicFiles();
   }
 }

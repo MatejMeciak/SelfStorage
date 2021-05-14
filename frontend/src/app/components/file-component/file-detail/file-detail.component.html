@@ -3,8 +3,9 @@
     <img src="{{ getFileUrl(file.id) }}" alt="{{file.fileName}}">
     <div class="side-block">
       <p><span>File name:</span> {{ file.fileName }}</p>
-      <p><span>File size:</span> {{ file.sizeFile / 1000 | number: '1.0-2' }} kB</p>
+      <p *ngIf="file.sizeFile"><span>File size:</span> {{ file.sizeFile / 1000 | number: '1.0-2' }} kB</p>
       <p><span>Uploaded date:</span> {{ file.date | date : 'MMM d y hh:mm' }}</p>
+      <p><span>Is public:</span> {{ file.access }}</p>
       <div class="options">
         <mat-icon (click)="downloadFile()">download</mat-icon>
         <mat-icon (click)="openDialog()">more_vert</mat-icon>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -10,14 +10,14 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
   authUrl = `${environment.apiUrl}`;
-  token: string;
-  constructor( private readonly http: HttpClient ) { }
+  token: BehaviorSubject<string> = new BehaviorSubject(null);
+  constructor(private readonly http: HttpClient) { }
   getToken(): string {
-    return this.token;
+    return this.token.getValue();
   }
 
   isLoggedIn(): boolean {
-    return !!this.token;
+    return !!this.getToken();
   }
 
   login(username: string, password: string): Observable<any> {
@@ -31,12 +31,12 @@ export class AuthService {
       withCredentials: true
     };
     return this.http.get(`${this.authUrl}/file`, options).pipe(
-      tap(() => this.token = token)
+      tap(() => this.token.next(token))
     );
   }
 
   logout(): void {
-    this.token = null;
+    this.token.next(null);
   }
   register(username: string, password: string, firstName: string, lastName: string): Observable<any> {
     const user = { username, password, firstName, lastName };

@@ -13,12 +13,14 @@ export class FileService {
   constructor(private http: HttpClient) {
   }
 
-  getFiles(): Observable<FileModel[]> {
+  getUserFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(this.fileUrl);
   }
-
-  getFile(id: number): Observable<FileModel> {
+  getUserFile(id: number): Observable<FileModel> {
     return this.http.get<FileModel>(`${this.fileUrl}/${id}`);
+  }
+  getPublicFiles(): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.fileUrl}/allFiles`);
   }
 
   uploadFile(file: File): Observable<FileModel> {
@@ -38,8 +40,10 @@ export class FileService {
   downloadFile(file: FileModel): Observable<Blob> {
     return this.http.get(`${this.fileUrl}/${file.id}`, { responseType: 'blob' });
   }
-
-  searchFile(keyword: string): Observable<FileModel[]> {
+  searchUserFiles(keyword: string): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/search/?keyword=${keyword}`);
+  }
+  searchPublicFiles(keyword: string): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.fileUrl}/allFiles/search/?keyword=${keyword}`);
   }
 }

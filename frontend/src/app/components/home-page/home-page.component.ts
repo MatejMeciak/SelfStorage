@@ -14,11 +14,11 @@ import {UploadFileDialogComponent} from '../file-component/upload-file-dialog/up
 export class HomePageComponent implements OnInit {
   files: File[];
   selectedFile: File;
-  fileLink: File = { fileName: 'customFile', id: null, sizeFile: null, date: null, link: '' };
+  fileLink: File = { fileName: 'customFile', id: null, sizeFile: null, date: null, link: '', access: false };
   constructor(private fileService: FileService,  private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.fileService.getFiles().subscribe(files => this.files = files.slice(0, 5));
+    this.fileService.getUserFiles().subscribe(files => this.files = files.slice(0, 5));
   }
 
   onFileInput(files: FileList): void {

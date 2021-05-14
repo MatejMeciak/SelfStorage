@@ -10,6 +10,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatRippleModule } from '@angular/material/core';
 
 const MaterialModules = [
   MatButtonModule,
@@ -25,6 +27,8 @@ const MaterialModules = [
   MatSelectModule,
   MatAutocompleteModule,
   MatDialogModule,
+  MatSlideToggleModule,
+  MatRippleModule
 ];
 
 @NgModule({

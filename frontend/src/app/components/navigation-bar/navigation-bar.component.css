@@ -65,9 +65,7 @@ mat-icon {
     color: rgba(0, 0, 0, 0.6);
     font-size: 14px;
     font-weight: 580;
-    position: absolute;
-    right: 30px;
-    top: 10px;
+    margin-left: 49px;
 }
 
 .login:hover, img:hover {

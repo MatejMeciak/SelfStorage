@@ -3,6 +3,7 @@ export interface File {
   sizeFile: number;
   fileName: string;
   date: number;
+  access: boolean;
   link?: string;
 }
 
