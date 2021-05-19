@@ -5,5 +5,6 @@ export interface File {
   date: number;
   access: boolean;
   link?: string;
+  mimeType: string;
 }
 

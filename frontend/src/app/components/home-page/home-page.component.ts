@@ -14,7 +14,7 @@ import {UploadFileDialogComponent} from '../file-component/upload-file-dialog/up
 export class HomePageComponent implements OnInit {
   files: File[];
   selectedFile: File;
-  fileLink: File = { fileName: 'customFile', id: null, sizeFile: null, date: null, link: '', access: false };
+  fileLink: File = { fileName: 'customFile', id: null, sizeFile: null, date: null, link: '', access: false, mimeType: 'null' }; // TODO mimeType cannot be null
   constructor(private fileService: FileService,  private dialog: MatDialog) { }
 
   ngOnInit(): void {

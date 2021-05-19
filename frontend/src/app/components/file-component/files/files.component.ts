@@ -12,6 +12,7 @@ export class FilesComponent implements OnInit {
 
   selectedFile: File;
   files: File[];
+
   folders: Folder[];
   constructor(private fileService: FileService) { }
 
