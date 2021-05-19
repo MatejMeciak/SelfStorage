@@ -2,6 +2,7 @@ package com.appslab.CloudService.Models;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -12,7 +13,7 @@ public class UploadedFile {
 
     protected UUID uuid;
 
-    protected Long sizeFile;
+    protected Long fileSize;
 
     protected String fileName;
 
@@ -38,16 +39,20 @@ public class UploadedFile {
     @Column(name = "folder_id")
     protected Long folderId;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "users_files",joinColumns = @JoinColumn(name = "uploadedFile_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
+    protected List<CustomUser> customUsers;
+
     public UploadedFile() {
 
     }
 
-    public Long getSizeFile() {
-        return sizeFile;
+    public Long getFileSize() {
+        return fileSize;
     }
 
-    public void setSizeFile(Long sizeFile) {
-        this.sizeFile = sizeFile;
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
     }
 
     public String getFileName() {
@@ -120,5 +125,13 @@ public class UploadedFile {
 
     public void setFolderId(Long folderId) {
         this.folderId = folderId;
+    }
+
+    public List<CustomUser> getCustomUsers() {
+        return customUsers;
+    }
+
+    public void setCustomUsers(List<CustomUser> customUsers) {
+        this.customUsers = customUsers;
     }
 }

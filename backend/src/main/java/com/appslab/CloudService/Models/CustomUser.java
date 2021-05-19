@@ -37,6 +37,9 @@ public class CustomUser implements UserDetails {
     @OneToMany
     protected List<UploadedFile> uploadedFiles;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    protected List<UploadedFile> uploadedFiles1;
+
     public CustomUser() {
     }
 
@@ -86,6 +89,14 @@ public class CustomUser implements UserDetails {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<UploadedFile> getUploadedFiles1() {
+        return uploadedFiles1;
+    }
+
+    public void setUploadedFiles1(List<UploadedFile> uploadedFiles1) {
+        this.uploadedFiles1 = uploadedFiles1;
     }
 
     @Override

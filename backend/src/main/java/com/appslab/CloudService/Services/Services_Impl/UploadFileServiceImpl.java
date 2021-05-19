@@ -6,6 +6,10 @@ import com.appslab.CloudService.Repositories.FileRepositoryDB;
 import com.appslab.CloudService.Services.UploadFileService;
 import com.appslab.CloudService.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
@@ -49,7 +53,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     public UploadedFile uploadedFile(MultipartFile multipartFile,Boolean access) {
             UploadedFile uploadedFile = new UploadedFile();
             uploadedFile.setFileName(multipartFile.getOriginalFilename());
-            uploadedFile.setSizeFile(multipartFile.getSize());
+            uploadedFile.setFileSize(multipartFile.getSize());
             uploadedFile.setMimeType(multipartFile.getContentType());
             uploadedFile.setDate();
             uploadedFile.setCustomUserId(userService.getSpecifyUserId());
@@ -77,7 +81,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public void savingFileToStorage(UploadedFile uploadedFile, MultipartFile multipartFile) throws Exception{
+    public void saveFileToStorage(UploadedFile uploadedFile, MultipartFile multipartFile) throws Exception{
         File file = getDocStorageLocation().resolve(uploadedFile.getUuid().toString()).toFile();
         file.createNewFile();
         FileOutputStream outputStream = new FileOutputStream(file);
@@ -86,7 +90,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public List<UploadedFile> findSearchingFiles(String keyword,Long customUserId) {
+    public List<UploadedFile> findSearchFiles(String keyword,Long customUserId) {
         return fileRepositoryDB.findByFileName(keyword,customUserId);
     }
 
@@ -96,7 +100,23 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public List<UploadedFile> findSearchingFilesInPublicList(String keyword,Boolean access) {
+    public List<UploadedFile> findSearchFilesInPublicList(String keyword,Boolean access) {
         return fileRepositoryDB.findByFileName(keyword,access);
     }
+
+    @Override
+    public ResponseEntity getFile(UploadedFile uploadedFile) throws Exception{
+        if(uploadedFile.getCustomUserId().equals(userService.getSpecifyUserId())&uploadedFile.getAccess().equals(false))
+        {
+            FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
+        }
+        else if(uploadedFile.getAccess().equals(true))
+        {
+            FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
+        }
+        return null;
+    }
+
 }

@@ -54,7 +54,7 @@ public class FolderController {
     }
 
     @GetMapping("/search")
-    public List<Folder> searchingfolders(@Param("keyword") String keyword){
-        return folderService.searchingFoldersByFolderName(keyword);
+    public List<Folder> searchfolders(@Param("keyword") String keyword){
+        return folderService.searchFoldersByFolderName(keyword);
     }
 }

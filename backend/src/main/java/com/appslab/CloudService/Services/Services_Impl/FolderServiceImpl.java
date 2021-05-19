@@ -33,7 +33,7 @@ public class FolderServiceImpl implements FolderService {
     }
 
     @Override
-    public List<Folder> searchingFoldersByFolderName(String keyword) {
+    public List<Folder> searchFoldersByFolderName(String keyword) {
         Long customUserId = userService.getSpecifyUserId();
         return folderRepository.findByFolderName(keyword,customUserId);
     }

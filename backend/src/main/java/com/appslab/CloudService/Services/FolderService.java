@@ -11,5 +11,5 @@ public interface FolderService {
 
     Optional<Folder> findFolderById(Long id);
 
-    List<Folder> searchingFoldersByFolderName(String keyword);
+    List<Folder> searchFoldersByFolderName(String keyword);
 }

@@ -1,6 +1,8 @@
 package com.appslab.CloudService.Services;
 
 import com.appslab.CloudService.Models.UploadedFile;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Path;
 import java.util.List;
@@ -21,11 +23,13 @@ public interface UploadFileService {
 
     Path pathToSpecificFile(UploadedFile uploadedFile);
 
-    void savingFileToStorage(UploadedFile uploadedFile, MultipartFile multipartFile) throws Exception;
+    void saveFileToStorage(UploadedFile uploadedFile, MultipartFile multipartFile) throws Exception;
 
-    List<UploadedFile> findSearchingFiles(String searchingFiles, Long customUserId);
+    List<UploadedFile> findSearchFiles(String searchFiles, Long customUserId);
 
     void saveEditFile(UploadedFile uploadedFile);
 
-    List<UploadedFile> findSearchingFilesInPublicList(String keyword,Boolean access);
+    List<UploadedFile> findSearchFilesInPublicList(String keyword,Boolean access);
+
+    ResponseEntity<InputStreamResource> getFile(UploadedFile uploadedFile) throws Exception;
 }
