@@ -5,7 +5,6 @@ import com.appslab.CloudService.Services.UploadFileService;
 import com.appslab.CloudService.Models.UploadedFile;
 import com.appslab.CloudService.Services.UserService;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
@@ -31,10 +30,10 @@ public class UploadFileController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getFile(@PathVariable Long id) throws Exception{
+    public Object getFile(@PathVariable Long id) throws Exception{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
 
-        return uploadFileService.getFile(uploadedFile);
+        return uploadFileService.returnUploadedFileOrLink(uploadedFile);
     }
 
     @GetMapping("/search")
@@ -85,11 +84,20 @@ public class UploadFileController {
 
     @PutMapping("/edit")
     public UploadedFile saveEditFile(@RequestBody UploadedFile uploadedFile){
-        Long idFile = uploadedFile.getId();
-        UploadedFile uploadedFile1 = uploadFileService.findFileById(idFile).get();
+        UploadedFile uploadedFile1 = uploadFileService.findFileById(uploadedFile.getId()).get();
         uploadedFile1.setFileName(uploadedFile.getFileName());
         uploadedFile1.setAccess(uploadedFile.getAccess());
         uploadFileService.saveEditFile(uploadedFile1);
         return uploadedFile1;
+    }
+
+    @PutMapping("/share")
+    public void saveEditFileWithUser(@RequestBody UploadedFile uploadedFile, @RequestParam String username){
+        uploadFileService.saveEditFileWithUser(username, uploadedFile);
+    }
+
+    @GetMapping("/share/myFiles")
+    public List<UploadedFile> getShareFiles(){
+        return uploadFileService.returnShareFiles();
     }
 }

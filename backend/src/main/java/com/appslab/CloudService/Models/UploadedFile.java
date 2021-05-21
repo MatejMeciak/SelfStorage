@@ -131,7 +131,7 @@ public class UploadedFile {
         return customUsers;
     }
 
-    public void setCustomUsers(List<CustomUser> customUsers) {
-        this.customUsers = customUsers;
+    public void setCustomUsers(CustomUser customUser) {
+        this.customUsers.add(customUser);
     }
 }

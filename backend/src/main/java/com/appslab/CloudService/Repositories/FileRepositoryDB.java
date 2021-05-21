@@ -1,5 +1,6 @@
 package com.appslab.CloudService.Repositories;
 
+import com.appslab.CloudService.Models.CustomUser;
 import com.appslab.CloudService.Models.UploadedFile;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -18,4 +19,8 @@ public interface FileRepositoryDB extends CrudRepository<UploadedFile,Long> {
     List<UploadedFile> findByAccess(Boolean access);
 
     List<UploadedFile> findByFolderId(Long folderId);
+
+    List<UploadedFile> findByCustomUsers(CustomUser customUser);
+
+    Boolean existsByCustomUsers(CustomUser customUser);
 }

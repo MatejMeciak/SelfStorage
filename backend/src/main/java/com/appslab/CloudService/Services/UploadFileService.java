@@ -1,5 +1,6 @@
 package com.appslab.CloudService.Services;
 
+import com.appslab.CloudService.Models.CustomUser;
 import com.appslab.CloudService.Models.UploadedFile;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
@@ -32,4 +33,10 @@ public interface UploadFileService {
     List<UploadedFile> findSearchFilesInPublicList(String keyword,Boolean access);
 
     ResponseEntity<InputStreamResource> getFile(UploadedFile uploadedFile) throws Exception;
+
+    void saveEditFileWithUser(String username, UploadedFile uploadedFile);
+
+    Object returnUploadedFileOrLink(UploadedFile uploadedFile);
+
+    List<UploadedFile> returnShareFiles();
 }

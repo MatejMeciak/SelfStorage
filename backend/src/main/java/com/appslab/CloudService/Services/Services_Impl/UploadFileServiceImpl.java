@@ -1,8 +1,10 @@
 package com.appslab.CloudService.Services.Services_Impl;
 
 import com.appslab.CloudService.FileProperty.DocumentStorageProperty;
+import com.appslab.CloudService.Models.CustomUser;
 import com.appslab.CloudService.Models.UploadedFile;
 import com.appslab.CloudService.Repositories.FileRepositoryDB;
+import com.appslab.CloudService.Repositories.UserRepository;
 import com.appslab.CloudService.Services.UploadFileService;
 import com.appslab.CloudService.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,15 @@ public class UploadFileServiceImpl implements UploadFileService {
     private FileRepositoryDB fileRepositoryDB;
     private Path docStorageLocation;
     private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
-    public UploadFileServiceImpl(FileRepositoryDB fileRepositoryDB, DocumentStorageProperty documentStorageProperty, UserService userService) throws Exception {
+    public UploadFileServiceImpl(FileRepositoryDB fileRepositoryDB, DocumentStorageProperty documentStorageProperty, UserService userService, UserRepository userRepository) throws Exception {
         this.fileRepositoryDB = fileRepositoryDB;
         this.userService = userService;
         this.docStorageLocation = Paths.get(documentStorageProperty.getUploadDirectory()).toAbsolutePath().normalize();
         Files.createDirectories(this.docStorageLocation);
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -119,4 +123,35 @@ public class UploadFileServiceImpl implements UploadFileService {
         return null;
     }
 
+    @Override
+    public void saveEditFileWithUser(String username, UploadedFile uploadedFile) {
+        CustomUser user = userRepository.findByUsername(username).get();
+        UploadedFile uploadedFile1 = findFileById(uploadedFile.getId()).get();
+        if(!uploadedFile1.getCustomUsers().contains(user))
+        {
+            uploadedFile1.setCustomUsers(user);
+            saveEditFile(uploadedFile1);
+        }
+    }
+
+    @Override
+    public Object returnUploadedFileOrLink(UploadedFile uploadedFile) {
+        if(uploadedFile.getLink()==null){
+            try {
+                return getFile(uploadedFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            return uploadedFile;
+        }
+        return null;
+    }
+
+    @Override
+    public List<UploadedFile> returnShareFiles() {
+        CustomUser customUser = userRepository.findById(userService.getSpecifyUserId()).get();
+        return fileRepositoryDB.findByCustomUsers(customUser);
+    }
 }
