@@ -25,11 +25,6 @@ public class FolderController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public void createNewFolder(@RequestBody Folder folder){
-        folderService.createFolder(folder);
-    }
-
     @GetMapping("/{id}")
     public List<UploadedFile> showContentInFolder(@PathVariable Long id){
          Long folderId = folderService.findFolderById(id).get().getId();
@@ -38,6 +33,21 @@ public class FolderController {
              return fileRepositoryDB.findByFolderId(folderId);
          }
          return null;
+    }
+
+    @GetMapping("/search")
+    public List<Folder> searchfolders(@Param("keyword") String keyword){
+        return folderService.searchFoldersByFolderName(keyword);
+    }
+
+    @GetMapping("/allFolder")
+    public List<Folder> getAllFolders(){
+        return folderService.getAllFolder();
+    }
+
+    @PostMapping
+    public void createNewFolder(@RequestBody Folder folder){
+        folderService.createFolder(folder);
     }
 
     @PutMapping("/{id}")
@@ -51,10 +61,5 @@ public class FolderController {
             return uploadedFile1;
         }
         return null;
-    }
-
-    @GetMapping("/search")
-    public List<Folder> searchfolders(@Param("keyword") String keyword){
-        return folderService.searchFoldersByFolderName(keyword);
     }
 }

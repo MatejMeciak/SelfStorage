@@ -3,7 +3,6 @@ package com.appslab.CloudService.Repositories;
 import com.appslab.CloudService.Models.Folder;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,4 +12,6 @@ public interface FolderRepository extends CrudRepository<Folder,Long> {
 
     @Query("SELECT u FROM Folder u WHERE u.folderName LIKE %?1% AND u.customUserId = ?2")
     List<Folder> findByFolderName(String keyword, Long customUserId);
+
+    List<Folder> findByCustomUserId(Long userId);
 }

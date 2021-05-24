@@ -37,4 +37,9 @@ public class FolderServiceImpl implements FolderService {
         Long customUserId = userService.getSpecifyUserId();
         return folderRepository.findByFolderName(keyword,customUserId);
     }
+
+    @Override
+    public List<Folder> getAllFolder() {
+        return folderRepository.findByCustomUserId(userService.getSpecifyUserId());
+    }
 }

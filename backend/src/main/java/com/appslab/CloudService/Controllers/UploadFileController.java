@@ -53,6 +53,11 @@ public class UploadFileController {
         return uploadFileService.findSearchFilesInPublicList(keyword,access);
     }
 
+    @GetMapping("/share/myFiles")
+    public List<UploadedFile> getShareFiles(){
+        return uploadFileService.returnShareFiles();
+    }
+
     @PostMapping
     public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam(required = false) Boolean access) throws Exception {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile,access);
@@ -85,19 +90,17 @@ public class UploadFileController {
     @PutMapping("/edit")
     public UploadedFile saveEditFile(@RequestBody UploadedFile uploadedFile){
         UploadedFile uploadedFile1 = uploadFileService.findFileById(uploadedFile.getId()).get();
-        uploadedFile1.setFileName(uploadedFile.getFileName());
-        uploadedFile1.setAccess(uploadedFile.getAccess());
-        uploadFileService.saveEditFile(uploadedFile1);
+        if(uploadedFile1.getCustomUserId().equals(userService.getSpecifyUserId()))
+        {
+            uploadedFile1.setFileName(uploadedFile.getFileName());
+            uploadedFile1.setAccess(uploadedFile.getAccess());
+            uploadFileService.saveEditFile(uploadedFile1);
+       }
         return uploadedFile1;
     }
 
     @PutMapping("/share")
     public void saveEditFileWithUser(@RequestBody UploadedFile uploadedFile, @RequestParam String username){
         uploadFileService.saveEditFileWithUser(username, uploadedFile);
-    }
-
-    @GetMapping("/share/myFiles")
-    public List<UploadedFile> getShareFiles(){
-        return uploadFileService.returnShareFiles();
     }
 }
