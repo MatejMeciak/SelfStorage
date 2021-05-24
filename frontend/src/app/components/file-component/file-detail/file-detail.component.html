@@ -7,7 +7,7 @@
       <p><span>Uploaded date:</span> {{ file.date | date : 'MMM d y hh:mm' }}</p>
       <p><span>Is public:</span> {{ file.access }}</p>
       <div class="options">
-        <mat-icon (click)="downloadFile()">download</mat-icon>
+        <mat-icon (click)="downloadFile()">file_download</mat-icon>
         <mat-icon (click)="openDialog()">more_vert</mat-icon>
         <mat-icon (click)="closeFile()">close</mat-icon>
       </div>

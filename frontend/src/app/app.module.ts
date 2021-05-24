@@ -21,6 +21,7 @@ import { AuthInterceptor } from './auth/interceptor/auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditFileDialogComponent } from './components/file-component/edit-file-dialog/edit-file-dialog.component';
 import { UploadFileDialogComponent } from './components/file-component/upload-file-dialog/upload-file-dialog.component';
+import { CreateFolderDialogComponent } from './components/file-component/create-folder-dialog/create-folder-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { UploadFileDialogComponent } from './components/file-component/upload-fi
     SearchPageComponent,
     EditFileDialogComponent,
     UploadFileDialogComponent,
+    CreateFolderDialogComponent,
   ],
   imports: [
     MaterialModule,

@@ -1,5 +1,21 @@
 <div class="file-header">
   <h1>Your files</h1>
+  <mat-icon class="upload-button" [matMenuTriggerFor]="menu">add</mat-icon>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="fileInput.click()">
+      <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/>
+      <mat-icon>post_add</mat-icon>
+      <span>Upload file from device</span>
+    </button>
+    <button mat-menu-item (click)="openLinkDialog()">
+      <mat-icon>launch</mat-icon>
+      <span>Upload file by link</span>
+    </button>
+    <button mat-menu-item (click)="openFolderDialog()">
+      <mat-icon>folder</mat-icon>
+      <span>Create folder</span>
+    </button>
+  </mat-menu>
   <mat-icon>search</mat-icon>
   <mat-icon>more_vert</mat-icon>
 </div>
@@ -9,5 +25,11 @@
   <div>Files</div>
   <div>Links</div>
 </div>
-<div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="selectedFile=file"></app-file-card></div>
-<app-file-detail [file]="selectedFile"  (closeEvent)="selectedFile=$event" *ngIf="selectedFile"></app-file-detail>
+<div *ngIf="files || folders; else elseBlock">
+  <div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="selectedFile=file"></app-file-card></div>
+  <div class="file-grid"><app-file-card *ngFor="let folder of folders" [folder]="folder"></app-file-card></div>
+  <app-file-detail [file]="selectedFile"  (closeEvent)="selectedFile=$event" *ngIf="selectedFile"></app-file-detail>
+</div>
+<ng-template #elseBlock>
+  <p>No data</p>
+</ng-template>

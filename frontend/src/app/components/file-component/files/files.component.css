@@ -31,8 +31,12 @@ mat-icon:hover {
   transform: scale(1.02);
 }
 
+
+div mat-icon {
+  margin-left: 1em;
+}
 mat-icon:first-of-type {
-  margin-left: auto;
+  margin-left: auto !important;
 }
 
 .categories {
@@ -51,5 +55,3 @@ mat-icon:first-of-type {
   padding: 0 1.5em;
   transition: all 150ms ease-out;
 }
-
-

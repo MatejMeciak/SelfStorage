@@ -9,13 +9,12 @@ import { SearchPageComponent } from './components/search-page/search-page.compon
 import { AuthGuardService } from './auth/guard/auth-guard.service';
 
 const routes: Routes = [
-  { path: '', component: WelcomePageComponent },
-  { path: 'home', component: HomePageComponent, canActivate: [AuthGuardService] },
+  { path: 'home', component: WelcomePageComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'registration', component: RegistrationFormComponent },
   { path: 'files', component: FilesComponent, canActivate: [AuthGuardService] },
   { path: 'search', component: SearchPageComponent },
-  { path: '**', redirectTo: ''},
+  { path: '**', redirectTo: 'home'},
 ];
 
 @NgModule({

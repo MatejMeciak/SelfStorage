@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" *ngIf="file; else elseBlock">
   <div class="card-content">
     <img src="{{ fileUrl }}" alt="{{ file.fileName }}">
   </div>
@@ -7,3 +7,14 @@
     <p class="date-time">{{ file.date | date : 'MMM d y hh:mm'}}</p>
   </div>
 </div>
+<ng-template #elseBlock>
+  <div class="card">
+    <div class="card-content">
+      <img src="./assets/images/folder_icon.png" alt="{{ folder.folderName }}">
+    </div>
+    <div class="card-footer">
+      <h3>{{ folder.folderName | slice:0: 20 }}</h3>
+      <p class="date-time">{{ folder.date | date : 'MMM d y hh:mm'}}</p>
+    </div>
+  </div>
+</ng-template>

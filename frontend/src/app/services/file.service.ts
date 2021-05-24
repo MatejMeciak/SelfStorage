@@ -4,14 +4,17 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { File as FileModel } from '../models/file';
 import { HttpClient } from '@angular/common/http';
+import {Folder} from '../models/folder';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
-  fileUrl = `${environment.apiUrl}/file`;
   constructor(private http: HttpClient) {
   }
+  fileUrl = `${environment.apiUrl}/file`;
+
+  folderUrl = `${environment.apiUrl}/folder`;
 
   getUserFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(this.fileUrl);
@@ -45,5 +48,19 @@ export class FileService {
   }
   searchPublicFiles(keyword: string): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/allFiles/search/?keyword=${keyword}`);
+  }
+  // folders
+
+  getFolder(): Observable<Folder[]> {
+    return this.http.get<Folder[]>(this.folderUrl);
+  }
+  createFolder(folder: Folder): Observable<Folder[]> {
+    return this.http.post<Folder[]>(this.folderUrl, folder);
+  }
+  updateFolder(folder: Folder): Observable<Folder[]> {
+    return this.http.put<Folder[]>(this.folderUrl, folder);
+  }
+  searchFolders(keyword: string): Observable<Folder[]> {
+    return this.http.get<Folder[]>(`${this.folderUrl}/search/?keyword=${keyword}`);
   }
 }

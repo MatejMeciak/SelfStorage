@@ -30,6 +30,10 @@ h1 {
   color: #969696;
   text-align: center;
 }
+.footer-text:hover {
+  color: #222222;
+  cursor: pointer;
+}
 
 button {
   display: block;
