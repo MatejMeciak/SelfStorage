@@ -1,9 +1,9 @@
-<div (window:keydown.escape)="closeFile()" class="background-detail">
+<!-- <div (window:keydown.escape)="closeFile()" class="background-detail">
   <div class="container">
     <img src="{{ fileUrl }}" alt="{{file.fileName}}">
     <div class="side-block">
       <p><span>File name:</span> {{ file.fileName }}</p>
-      <p *ngIf="file.sizeFile"><span>File size:</span> {{ file.sizeFile / 1000 | number: '1.0-2' }} kB</p>
+      <p *ngIf="file.fileSize"><span>File size:</span> {{ file.fileSize / 1000 | number: '1.0-2' }} kB</p>
       <p><span>Uploaded date:</span> {{ file.date | date : 'MMM d y hh:mm' }}</p>
       <p><span>Is public:</span> {{ file.access }}</p>
       <div class="options">
@@ -13,4 +13,32 @@
       </div>
     </div>
   </div>
+</div> -->
+<div class="options">
+  <mat-icon class="menu" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="downloadFile()">
+      <mat-icon>file_download</mat-icon>
+      <span>Download file</span>
+    </button>
+    <button mat-menu-item (click)="openEditFileDialog()">
+      <mat-icon>edit</mat-icon>
+      <span>Edit file</span>
+    </button>
+    <button mat-menu-item (click)="openMoveToFolderDialog()">
+      <mat-icon>drive_folder_upload</mat-icon>
+      <span>Move or copy file to folder</span>
+    </button>
+    <button mat-menu-item (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+      <span>Close</span>
+    </button>
+  </mat-menu>
+
 </div>
+
+<mat-dialog-content (window:keydown.escape)="closeDialog()">
+  <div>
+    <img src="{{ fileUrl }}" alt="{{file.fileName}}">
+  </div>
+</mat-dialog-content>

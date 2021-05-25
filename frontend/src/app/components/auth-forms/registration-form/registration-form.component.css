@@ -1,6 +1,6 @@
 mat-card {
   width: fit-content;
-  margin: 0 auto;
+  margin: 6em auto 0;
   padding: 5em;
   position: relative;
 }

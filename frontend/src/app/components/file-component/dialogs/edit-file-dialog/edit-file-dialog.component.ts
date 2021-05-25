@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { File } from '../../../models/file';
+import { File } from '../../../../models/file';
+import {FileService} from '../../../../services/file.service';
+import {Folder} from '../../../../models/folder';
 
 @Component({
   selector: 'app-edit-file-dialog',
@@ -8,6 +10,7 @@ import { File } from '../../../models/file';
   styleUrls: ['./edit-file-dialog.component.css']
 })
 export class EditFileDialogComponent implements OnInit {
+
 
   constructor(
     private dialogRef: MatDialogRef<EditFileDialogComponent>,

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { File as FileModel } from '../models/file';
+import { File as FileModel} from '../models/file';
 import { HttpClient } from '@angular/common/http';
 import {Folder} from '../models/folder';
 
@@ -37,6 +37,7 @@ export class FileService {
   }
 
   updateFile(file: FileModel): Observable<FileModel> {
+    delete file['customUsers'];
     return this.http.put<FileModel>(`${this.fileUrl}/edit`, file);
   }
 
@@ -51,14 +52,19 @@ export class FileService {
   }
   // folders
 
-  getFolder(): Observable<Folder[]> {
-    return this.http.get<Folder[]>(this.folderUrl);
+  getFolderFiles(id: number): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.folderUrl}/${id}`);
+  }
+
+  getFolders(): Observable<Folder[]> {
+    return this.http.get<Folder[]>(`${this.folderUrl}/allFolder`);
   }
   createFolder(folder: Folder): Observable<Folder[]> {
     return this.http.post<Folder[]>(this.folderUrl, folder);
   }
-  updateFolder(folder: Folder): Observable<Folder[]> {
-    return this.http.put<Folder[]>(this.folderUrl, folder);
+  updateFolder(folderId: Folder, file: FileModel): Observable<Folder[]> {
+    delete file['customUsers'];
+    return this.http.put<Folder[]>(`${this.folderUrl}/${folderId}`, file);
   }
   searchFolders(keyword: string): Observable<Folder[]> {
     return this.http.get<Folder[]>(`${this.folderUrl}/search/?keyword=${keyword}`);

@@ -43,7 +43,6 @@ mat-icon:first-of-type {
   display: grid;
   grid-template-columns: 70px auto auto auto;
   grid-gap: 1.5rem;
-  margin-bottom: 2em;
 }
 
 .categories > div {

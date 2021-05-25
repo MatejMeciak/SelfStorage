@@ -18,3 +18,12 @@ body {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+
+.custom-dialog .mat-dialog-container, .custom-dialog .mat-dialog-content {
+  padding: 0;
+  max-height: none;
+  overflow: hidden;
+}
+
+

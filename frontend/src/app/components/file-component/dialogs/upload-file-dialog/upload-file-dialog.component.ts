@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {File} from '../../../models/file';
+import {File} from '../../../../models/file';
 
 @Component({
   selector: 'app-upload-file-dialog',
@@ -11,7 +11,7 @@ export class UploadFileDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<UploadFileDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: File
+    @Inject(MAT_DIALOG_DATA) public file: File
   ) { }
 
   ngOnInit(): void {

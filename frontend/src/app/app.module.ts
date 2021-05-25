@@ -19,9 +19,11 @@ import { SearchPageComponent } from './components/search-page/search-page.compon
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './auth/interceptor/auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditFileDialogComponent } from './components/file-component/edit-file-dialog/edit-file-dialog.component';
-import { UploadFileDialogComponent } from './components/file-component/upload-file-dialog/upload-file-dialog.component';
-import { CreateFolderDialogComponent } from './components/file-component/create-folder-dialog/create-folder-dialog.component';
+import { EditFileDialogComponent } from './components/file-component/dialogs/edit-file-dialog/edit-file-dialog.component';
+import { UploadFileDialogComponent } from './components/file-component/dialogs/upload-file-dialog/upload-file-dialog.component';
+import { CreateFolderDialogComponent } from './components/file-component/dialogs/create-folder-dialog/create-folder-dialog.component';
+import { MoveToFolderDialogComponent } from './components/file-component/dialogs/move-to-folder-dialog/move-to-folder-dialog.component';
+import { FolderComponent } from './components/file-component/folder/folder.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { CreateFolderDialogComponent } from './components/file-component/create-
     EditFileDialogComponent,
     UploadFileDialogComponent,
     CreateFolderDialogComponent,
+    MoveToFolderDialogComponent,
+    FolderComponent,
   ],
   imports: [
     MaterialModule,

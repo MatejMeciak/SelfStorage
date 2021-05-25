@@ -3,7 +3,7 @@ import { load } from '../../material/animations';
 import { FileService } from '../../services/file.service';
 import { File } from '../../models/file';
 import {MatDialog} from '@angular/material/dialog';
-import {UploadFileDialogComponent} from '../file-component/upload-file-dialog/upload-file-dialog.component';
+import {UploadFileDialogComponent} from '../file-component/dialogs/upload-file-dialog/upload-file-dialog.component';
 
 @Component({
   selector: 'app-home-page',
@@ -14,7 +14,6 @@ import {UploadFileDialogComponent} from '../file-component/upload-file-dialog/up
 export class HomePageComponent implements OnInit {
   files: File[];
   selectedFile: File;
-  fileLink: File = { fileName: 'customFile', id: null, sizeFile: null, date: null, link: '', access: false, mimeType: 'null' }; // TODO mimeType cannot be null
   constructor(private fileService: FileService,  private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -22,12 +21,10 @@ export class HomePageComponent implements OnInit {
   }
 
   onFileInput(files: FileList): void {
-    for (let i = 0; i < files.length; i++) {
-      this.fileService.uploadFile(files.item(i)).subscribe(file => this.files.push(file));
-    }
+
   }
   openDialog(): void {
-    const dialogRef = this.dialog.open(UploadFileDialogComponent, { data: this.fileLink });
+    const dialogRef = this.dialog.open(UploadFileDialogComponent, { data: { } as File });
     dialogRef.afterClosed().subscribe(file => {
       this.uploadLinkFile(file);
     });

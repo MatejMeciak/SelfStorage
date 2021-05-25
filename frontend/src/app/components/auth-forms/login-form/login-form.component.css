@@ -1,8 +1,8 @@
 mat-card {
-    width: fit-content;
-    margin: 0 auto;
-    padding: 5em;
-    position: relative;
+  width: fit-content;
+  padding: 5em;
+  position: relative;
+  margin: 6em auto 0;
 }
 mat-form-field {
   display: block;

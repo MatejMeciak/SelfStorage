@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { File } from '../../../models/file';
 import { FileService } from '../../../services/file.service';
 import { Folder } from '../../../models/folder';
-import {UploadFileDialogComponent} from '../upload-file-dialog/upload-file-dialog.component';
+import {UploadFileDialogComponent} from '../dialogs/upload-file-dialog/upload-file-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {CreateFolderDialogComponent} from '../create-folder-dialog/create-folder-dialog.component';
+import {CreateFolderDialogComponent} from '../dialogs/create-folder-dialog/create-folder-dialog.component';
+import {FileDetailComponent} from '../file-detail/file-detail.component';
 
 @Component({
   selector: 'app-files',
@@ -13,14 +14,15 @@ import {CreateFolderDialogComponent} from '../create-folder-dialog/create-folder
 })
 export class FilesComponent implements OnInit {
 
-  selectedFile: File;
   files: File[];
   folders: Folder[];
+
+  folderFiles: File[];
   constructor(private fileService: FileService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.fileService.getUserFiles().subscribe(files => this.files = files);
-    this.fileService.getFolder().subscribe(folders => this.folders = folders);
+    this.fileService.getFolders().subscribe(folders => this.folders = folders);
   }
   onFileInput(files: FileList): void {
     for (let i = 0; i < files.length; i++) {
@@ -38,5 +40,9 @@ export class FilesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(folder => {
       this.fileService.createFolder(folder).subscribe();
     });
+  }
+
+  openDetailDialogOf(file: File): void {
+    this.dialog.open(FileDetailComponent, { data: file, panelClass: 'custom-dialog' });
   }
 }

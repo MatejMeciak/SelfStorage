@@ -1,0 +1,16 @@
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Move/Copy to</mat-label>
+      <mat-select [(value)]="data.folder">
+        <mat-option *ngFor="let folder of folders" [value]="folder">
+          {{folder.folderName}}
+        </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <br>
+  <mat-slide-toggle></mat-slide-toggle>
+</mat-dialog-content>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data">Submit</button>
+</div>

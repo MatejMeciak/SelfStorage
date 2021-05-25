@@ -7,6 +7,7 @@ import { RegistrationFormComponent } from './components/auth-forms/registration-
 import { FilesComponent } from './components/file-component/files/files.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { AuthGuardService } from './auth/guard/auth-guard.service';
+import {FolderComponent} from './components/file-component/folder/folder.component';
 
 const routes: Routes = [
   { path: 'home', component: WelcomePageComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationFormComponent },
   { path: 'files', component: FilesComponent, canActivate: [AuthGuardService] },
   { path: 'search', component: SearchPageComponent },
+  { path: 'folder/:id', component: FolderComponent, canActivate: [AuthGuardService]},
   { path: '**', redirectTo: 'home'},
 ];
 

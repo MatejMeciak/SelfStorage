@@ -26,9 +26,10 @@
   <div>Links</div>
 </div>
 <div *ngIf="files || folders; else elseBlock">
-  <div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="selectedFile=file"></app-file-card></div>
-  <div class="file-grid"><app-file-card *ngFor="let folder of folders" [folder]="folder"></app-file-card></div>
-  <app-file-detail [file]="selectedFile"  (closeEvent)="selectedFile=$event" *ngIf="selectedFile"></app-file-detail>
+  <h2>Folders</h2>
+  <div class="file-grid"><app-file-card *ngFor="let folder of folders" [folder]="folder" [routerLink]="['/folder', folder.id]"></app-file-card></div>
+  <h2>Files</h2>
+  <div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="openDetailDialogOf(file)"></app-file-card></div>
 </div>
 <ng-template #elseBlock>
   <p>No data</p>

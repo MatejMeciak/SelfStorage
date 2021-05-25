@@ -1,10 +1,12 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, Inject} from '@angular/core';
 import { File } from '../../../models/file';
 import { FileService } from '../../../services/file.service';
 import * as fileSaver from 'file-saver';
-import {MatDialog} from '@angular/material/dialog';
-import {EditFileDialogComponent} from '../edit-file-dialog/edit-file-dialog.component';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {EditFileDialogComponent} from '../dialogs/edit-file-dialog/edit-file-dialog.component';
 import { getFileUrl } from '../../../utils/utils';
+import {MoveToFolderDialogComponent} from '../dialogs/move-to-folder-dialog/move-to-folder-dialog.component';
+import {Folder} from '../../../models/folder';
 
 @Component({
   selector: 'app-file-detail',
@@ -13,30 +15,39 @@ import { getFileUrl } from '../../../utils/utils';
 })
 export class FileDetailComponent implements OnInit {
 
-  @Input() file: File;
-  @Output() closeEvent = new EventEmitter<File>();
-  constructor(private fileService: FileService, private dialog: MatDialog) { }
+  folder: Folder;
+  constructor(
+    private fileService: FileService, private dialog: MatDialog,
+    private dialogRef: MatDialogRef<FileDetailComponent>,
+    @Inject(MAT_DIALOG_DATA) public file: File
+  ) { }
 
   get fileUrl(): string {
     return getFileUrl(this.file);
   }
+
   ngOnInit(): void { }
-  openDialog(): void {
+
+  openEditFileDialog(): void {
     const dialogRef = this.dialog.open(EditFileDialogComponent, { data: this.file });
     dialogRef.afterClosed().subscribe(newFile => {
-      this.editFile(newFile);
+      this.fileService.updateFile(newFile).subscribe();
+    });
+  }
+  openMoveToFolderDialog(): void {
+    const dialogRef = this.dialog.open(MoveToFolderDialogComponent, { data: {file: this.file, folder: this.folder} });
+    dialogRef.afterClosed().subscribe(data => {
+      this.fileService.updateFolder(data.folder.id, data.file).subscribe();
     });
   }
 
-  closeFile(): void {
-    this.closeEvent.emit(null);
-  }
   downloadFile(): void {
     this.fileService.downloadFile(this.file).subscribe(blob => {
       fileSaver.saveAs(blob, this.file.fileName);
     });
   }
-  editFile(newFile: File): void {
-    this.fileService.updateFile(newFile).subscribe();
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 }

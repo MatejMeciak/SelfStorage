@@ -1,6 +1,6 @@
 export interface File {
   id: number;
-  sizeFile: number;
+  fileSize: number;
   fileName: string;
   date: number;
   access: boolean;
