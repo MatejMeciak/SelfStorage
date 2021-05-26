@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestMapping("/api/file")
 @RestController
@@ -58,6 +59,13 @@ public class UploadFileController {
         return uploadFileService.returnShareFiles();
     }
 
+    @GetMapping("/getAllLinks")
+    public List<UploadedFile> getAllLinks(){
+        List<UploadedFile> uploadedFiles = uploadFileService.listOfFiles(userService.getSpecifyUserId());
+        List<UploadedFile> uploadedFileWithLink = uploadedFiles.stream().filter(y->y.getLink()!=null).collect(Collectors.toList());
+        return uploadedFileWithLink;
+    }
+
     @PostMapping
     public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam(required = false) Boolean access) throws Exception {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile,access);
@@ -80,7 +88,9 @@ public class UploadFileController {
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
         if (uploadedFile.getCustomUserId().equals(userService.getSpecifyUserId()))
         {
-            Files.delete(uploadFileService.pathToSpecificFile(uploadedFile));
+            if (uploadedFile.getUuid()!=null){
+                Files.delete(uploadFileService.pathToSpecificFile(uploadedFile));
+            }
             uploadFileService.deleteFile(id);
             return uploadedFile;
         }

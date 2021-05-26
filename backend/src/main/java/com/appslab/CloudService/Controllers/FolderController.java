@@ -45,6 +45,15 @@ public class FolderController {
         return folderService.getAllFolder();
     }
 
+    @GetMapping("/getFolder/{id}")
+    public Folder getFolder(@PathVariable Long id){
+        Folder folder = folderService.findFolderById(id).get();
+        if(folderService.findFolderById(id).get().getCustomUserId().equals(userService.getSpecifyUserId())){
+            return folder;
+        }
+        return null;
+    }
+
     @PostMapping
     public void createNewFolder(@RequestBody Folder folder){
         folderService.createFolder(folder);
@@ -62,4 +71,15 @@ public class FolderController {
         }
         return null;
     }
+
+    @DeleteMapping("/{id}")
+    public Folder deleteFolder(@PathVariable Long id){
+        Folder folder = folderService.findFolderById(id).get();
+        if (folder.getCustomUserId().equals(userService.getSpecifyUserId())) {
+            folderService.deleteFolder(id);
+            return folder;
+        }
+        return null;
+    }
+
 }

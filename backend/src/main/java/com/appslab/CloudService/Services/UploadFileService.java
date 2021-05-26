@@ -1,6 +1,5 @@
 package com.appslab.CloudService.Services;
 
-import com.appslab.CloudService.Models.CustomUser;
 import com.appslab.CloudService.Models.UploadedFile;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;

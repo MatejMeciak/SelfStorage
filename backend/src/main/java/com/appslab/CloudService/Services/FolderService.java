@@ -14,4 +14,6 @@ public interface FolderService {
     List<Folder> searchFoldersByFolderName(String keyword);
 
     List<Folder> getAllFolder();
+
+    void deleteFolder(Long id);
 }

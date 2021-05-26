@@ -42,4 +42,9 @@ public class FolderServiceImpl implements FolderService {
     public List<Folder> getAllFolder() {
         return folderRepository.findByCustomUserId(userService.getSpecifyUserId());
     }
+
+    @Override
+    public void deleteFolder(Long id) {
+        folderRepository.deleteById(id);
+    }
 }
