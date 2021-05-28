@@ -2,10 +2,9 @@ package com.appslab.CloudService.Controllers;
 
 import com.appslab.CloudService.Models.RegistrationRequest;
 import com.appslab.CloudService.Services.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@RequestMapping("/api")
 @RestController
 public class UserController {
 
@@ -15,7 +14,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/api/registration")
+    @PostMapping("/registration")
     public RegistrationRequest registration(@RequestBody RegistrationRequest registrationRequest){
         if(userService.userAlreadyExists(registrationRequest)!=true){
             return registrationRequest;
@@ -23,5 +22,10 @@ public class UserController {
         else {
             return null;
         }
+    }
+
+    @PutMapping("/changePassword")
+    public void changePassword(@RequestParam String password){
+        userService.changePassword(password);
     }
 }

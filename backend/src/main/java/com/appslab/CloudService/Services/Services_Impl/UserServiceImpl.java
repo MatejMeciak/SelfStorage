@@ -46,4 +46,11 @@ public class UserServiceImpl implements UserService{
         Optional<CustomUser> user = userRepository.findByUsername(username);
         return user.get().getId();
     }
+
+    @Override
+    public void changePassword(String password) {
+        CustomUser customUser = userRepository.findById(getSpecifyUserId()).get();
+        customUser.setPassword(passwordEncoder.encode(password));
+        userRepository.save(customUser);
+    }
 }

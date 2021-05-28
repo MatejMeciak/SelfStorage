@@ -8,4 +8,6 @@ public interface UserService {
     Boolean userAlreadyExists(RegistrationRequest registrationRequest);
 
     Long getSpecifyUserId();
+
+    void changePassword(String password);
 }
