@@ -14,6 +14,8 @@ import {FileDetailComponent} from '../file-detail/file-detail.component';
 })
 export class FilesComponent implements OnInit {
 
+  active = 'all';
+
   files: File[];
   folders: Folder[];
 
@@ -43,6 +45,12 @@ export class FilesComponent implements OnInit {
   }
 
   openDetailDialogOf(file: File): void {
-    this.dialog.open(FileDetailComponent, { data: file, panelClass: 'custom-dialog' });
+    const dialogRef = this.dialog.open(FileDetailComponent, { data: file, panelClass: 'custom-dialog' });
+    dialogRef.afterClosed().subscribe(deleteFile => {
+      if (deleteFile) {
+        this.fileService.deleteFile(file).subscribe(() =>
+          this.fileService.getUserFiles().subscribe(files => this.files = files));
+      }
+    });
   }
 }

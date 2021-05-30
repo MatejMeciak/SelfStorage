@@ -44,6 +44,9 @@ export class FileService {
   downloadFile(file: FileModel): Observable<Blob> {
     return this.http.get(`${this.fileUrl}/${file.id}`, { responseType: 'blob' });
   }
+  deleteFile(file: FileModel): Observable<FileModel> {
+    return this.http.delete<FileModel>(`${this.fileUrl}/${file.id}`);
+  }
   searchUserFiles(keyword: string): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/search/?keyword=${keyword}`);
   }
@@ -55,7 +58,9 @@ export class FileService {
   getFolderFiles(id: number): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.folderUrl}/${id}`);
   }
-
+  getFolder(id: number): Observable<Folder> {
+    return this.http.get<Folder>(`${this.folderUrl}/getFolder/${id}`);
+  }
   getFolders(): Observable<Folder[]> {
     return this.http.get<Folder[]>(`${this.folderUrl}/allFolder`);
   }
@@ -68,5 +73,8 @@ export class FileService {
   }
   searchFolders(keyword: string): Observable<Folder[]> {
     return this.http.get<Folder[]>(`${this.folderUrl}/search/?keyword=${keyword}`);
+  }
+  deleteFolder(folder: Folder): Observable<Folder> {
+    return this.http.delete<Folder>(`${this.folderUrl}/${folder.id}`);
   }
 }

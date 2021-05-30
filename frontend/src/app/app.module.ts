@@ -24,6 +24,7 @@ import { UploadFileDialogComponent } from './components/file-component/dialogs/u
 import { CreateFolderDialogComponent } from './components/file-component/dialogs/create-folder-dialog/create-folder-dialog.component';
 import { MoveToFolderDialogComponent } from './components/file-component/dialogs/move-to-folder-dialog/move-to-folder-dialog.component';
 import { FolderComponent } from './components/file-component/folder/folder.component';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { FolderComponent } from './components/file-component/folder/folder.compo
     CreateFolderDialogComponent,
     MoveToFolderDialogComponent,
     FolderComponent,
+    ProfilePageComponent,
   ],
   imports: [
     MaterialModule,

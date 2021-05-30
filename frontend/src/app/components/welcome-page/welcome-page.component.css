@@ -4,20 +4,23 @@ section {
 }
 p {
   color: #5d5858;
-  font-weight: 400;
+  font-weight: 500;
+  margin: 24px;
+  font-size: 16px;
 }
 
 .section-header {
   width: 70%;
-  margin-top: 40px;
+  margin-top: 65px;
 }
 .section-header h1 {
   color: white;
   font-size: 46px;
   font-weight: 300;
-  margin: 8px;
+  margin: 0;
+
   -webkit-text-stroke: 1px #F8F8F8;
-  text-shadow: 0 1px 4px #23430C;
+  text-shadow: 0 1px 7px #b2a7a7;
 }
 
 .section-main {

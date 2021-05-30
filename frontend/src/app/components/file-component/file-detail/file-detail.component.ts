@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter, Inject} from '@angular/core';
+import {Component,  OnInit, Inject} from '@angular/core';
 import { File } from '../../../models/file';
 import { FileService } from '../../../services/file.service';
 import * as fileSaver from 'file-saver';
@@ -34,8 +34,14 @@ export class FileDetailComponent implements OnInit {
       this.fileService.updateFile(newFile).subscribe();
     });
   }
+  openCopyToFolderDialog(): void {
+    const dialogRef = this.dialog.open(MoveToFolderDialogComponent, { data: {file: this.file, folder: this.folder, action: 'copy'} });
+    dialogRef.afterClosed().subscribe(data => {
+      this.fileService.updateFolder(data.folder.id, data.file).subscribe();
+    });
+  }
   openMoveToFolderDialog(): void {
-    const dialogRef = this.dialog.open(MoveToFolderDialogComponent, { data: {file: this.file, folder: this.folder} });
+    const dialogRef = this.dialog.open(MoveToFolderDialogComponent, { data: {file: this.file, folder: this.folder, action: 'move'} });
     dialogRef.afterClosed().subscribe(data => {
       this.fileService.updateFolder(data.folder.id, data.file).subscribe();
     });
@@ -46,8 +52,7 @@ export class FileDetailComponent implements OnInit {
       fileSaver.saveAs(blob, this.file.fileName);
     });
   }
-
-  closeDialog(): void {
-    this.dialogRef.close();
+  closeDialog(deleteFile: boolean): void {
+    this.dialogRef.close(deleteFile);
   }
 }

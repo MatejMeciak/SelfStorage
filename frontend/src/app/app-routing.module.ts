@@ -1,5 +1,4 @@
 import { LoginFormComponent } from './components/auth-forms/login-form/login-form.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
@@ -8,6 +7,7 @@ import { FilesComponent } from './components/file-component/files/files.componen
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { AuthGuardService } from './auth/guard/auth-guard.service';
 import {FolderComponent} from './components/file-component/folder/folder.component';
+import {ProfilePageComponent} from './components/profile-page/profile-page.component';
 
 const routes: Routes = [
   { path: 'home', component: WelcomePageComponent },
@@ -15,8 +15,9 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationFormComponent },
   { path: 'files', component: FilesComponent, canActivate: [AuthGuardService] },
   { path: 'search', component: SearchPageComponent },
-  { path: 'folder/:id', component: FolderComponent, canActivate: [AuthGuardService]},
-  { path: '**', redirectTo: 'home'},
+  { path: 'profile', component: ProfilePageComponent },
+  { path: 'folder/:id', component: FolderComponent, canActivate: [AuthGuardService] },
+  { path: '**', redirectTo: 'home' },
 ];
 
 @NgModule({

@@ -25,10 +25,11 @@ app-file-card:hover {
 }
 .categories > div:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transform: scale(1.02);
+  background-color: #ffd969;
+  box-sizing: border-box;
 }
 mat-icon:hover {
-  transform: scale(1.02);
+  cursor: pointer;
 }
 
 
@@ -50,7 +51,15 @@ mat-icon:first-of-type {
   height: 4em;
   background-color: white;
   border-radius: 15px;
-  line-height: 4em;
-  padding: 0 1.5em;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 1.4em;
   transition: all 150ms ease-out;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #ffd969;
+  border: #ffb900 2px solid;
 }

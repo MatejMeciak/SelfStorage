@@ -1,1 +1,27 @@
-<app-file-card *ngFor="let file of files" [file]="file"></app-file-card>
+<div class="file-header">
+  <h1>{{ folder.folderName }}</h1>
+  <mat-icon class="upload-button" [matMenuTriggerFor]="menu">add</mat-icon>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="fileInput.click()">
+      <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/>
+      <mat-icon>post_add</mat-icon>
+      <span>Upload file from device</span>
+    </button>
+    <button mat-menu-item (click)="openLinkDialog()">
+      <mat-icon>launch</mat-icon>
+      <span>Upload file by link</span>
+    </button>
+    <button mat-menu-item (click)="openFolderDialog()">
+      <mat-icon>folder</mat-icon>
+      <span>Create folder</span>
+    </button>
+  </mat-menu>
+  <mat-icon>more_vert</mat-icon>
+</div>
+<div *ngIf="files; else elseBlock">
+  <h2>Files</h2>
+  <div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="openDetailDialogOf(file)"></app-file-card></div>
+</div>
+<ng-template #elseBlock>
+  <p>No data</p>
+</ng-template>

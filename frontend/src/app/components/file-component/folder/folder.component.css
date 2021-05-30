@@ -1,0 +1,30 @@
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-gap: 1.5rem;
+  justify-self: stretch;
+}
+.file-header {
+  padding: 5px;
+  margin-bottom: 1em;
+  display: flex;
+  align-items: baseline;
+}
+app-file-card {
+  width: 100%;
+  transition: all 150ms ease-out;
+  border-radius: 15px;
+}
+app-file-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+mat-icon:hover {
+  transform: scale(1.02);
+}
+div mat-icon {
+  margin-left: 1em;
+}
+mat-icon:first-of-type {
+  margin-left: auto !important;
+}

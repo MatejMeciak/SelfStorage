@@ -1,35 +1,39 @@
 <div class="file-header">
   <h1>Your files</h1>
-  <mat-icon class="upload-button" [matMenuTriggerFor]="menu">add</mat-icon>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="fileInput.click()">
-      <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/>
-      <mat-icon>post_add</mat-icon>
-      <span>Upload file from device</span>
-    </button>
-    <button mat-menu-item (click)="openLinkDialog()">
-      <mat-icon>launch</mat-icon>
-      <span>Upload file by link</span>
-    </button>
-    <button mat-menu-item (click)="openFolderDialog()">
-      <mat-icon>folder</mat-icon>
-      <span>Create folder</span>
-    </button>
-  </mat-menu>
-  <mat-icon>search</mat-icon>
-  <mat-icon>more_vert</mat-icon>
+    <mat-icon class="upload-button" [matMenuTriggerFor]="menu">add</mat-icon>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="fileInput.click()">
+        <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/>
+        <mat-icon>post_add</mat-icon>
+        <span>Upload file from device</span>
+      </button>
+      <button mat-menu-item (click)="openLinkDialog()">
+        <mat-icon>launch</mat-icon>
+        <span>Upload file by link</span>
+      </button>
+      <button mat-menu-item (click)="openFolderDialog()">
+        <mat-icon>folder</mat-icon>
+        <span>Create folder</span>
+      </button>
+    </mat-menu>
+    <mat-icon>search</mat-icon>
+    <mat-icon>more_vert</mat-icon>
 </div>
 <div class="categories">
-  <div>All</div>
-  <div>Folders</div>
-  <div>Files</div>
+  <div (click)="active='all'" [ngClass]="{'active': active === 'all'}">All</div>
+  <div (click)="active='folders'" [ngClass]="{'active': active === 'folders'}">Folders</div>
+  <div (click)="active='files'" [ngClass]="{'active': active === 'files'}">Files</div>
   <div>Links</div>
 </div>
 <div *ngIf="files || folders; else elseBlock">
-  <h2>Folders</h2>
-  <div class="file-grid"><app-file-card *ngFor="let folder of folders" [folder]="folder" [routerLink]="['/folder', folder.id]"></app-file-card></div>
-  <h2>Files</h2>
-  <div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="openDetailDialogOf(file)"></app-file-card></div>
+    <div *ngIf="active === 'folders' || active === 'all'">
+      <h2>Folders</h2>
+      <div class="file-grid"><app-file-card *ngFor="let folder of folders" [folder]="folder" [routerLink]="['/folder', folder.id]"></app-file-card></div>
+    </div>
+      <div *ngIf="active === 'files' || active === 'all'">
+        <h2>Files</h2>
+        <div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="openDetailDialogOf(file)"></app-file-card></div>
+      </div>
 </div>
 <ng-template #elseBlock>
   <p>No data</p>

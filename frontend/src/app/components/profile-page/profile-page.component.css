@@ -1,0 +1,13 @@
+.container {
+  margin-top: 5em;
+}
+.flexbox {
+  display: flex;
+}
+.files {
+  width: 100%;
+}
+mat-card {
+  width: 420px;
+  height: 600px;
+}
