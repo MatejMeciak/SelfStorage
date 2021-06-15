@@ -1,13 +1,69 @@
 .container {
   margin-top: 5em;
+
 }
 .flexbox {
   display: flex;
 }
 .files {
   width: 100%;
+  margin: 0 1.5em 1.5em;
 }
 mat-card {
-  width: 420px;
-  height: 600px;
+  border-radius: 15px;
+  width: 600px;
+}
+
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-gap: 1.5rem;
+  justify-self: stretch;
+}
+
+.image {
+  background-image: url('https://www.hardiagedcare.com.au/wp-content/uploads/2019/02/default-avatar-profile-icon-vector-18942381.jpg');
+  background-size: cover;
+  position: absolute;
+  top: -55px;
+  width: 125px;
+  height: 125px;
+}
+mat-card-header {
+  display: flex;
+  justify-content: center;
+}
+mat-card-title {
+  font-size: 42px !important;
+  color: #7DC5E4;
+  margin-top: 70px;
+  margin-bottom: 20px !important;
+}
+.flexbox {
+  margin-top: 2em;
+  display: flex;
+  justify-content: center;
+  gap: 2.5em;
+}
+mat-icon {
+  color: #7DC5E4;
+  font-size: 48px;
+}
+.column p {
+  font-weight: 600;
+  color: rgba(0, 0 ,0 ,0.4);
+}
+mat-card-actions{
+  display: flex;
+  gap: 0.8em;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+mat-card-actions button {
+  width: 90%;
+  background: #7DC5E4;
+  border-radius: 16px;
+  color: white;
 }

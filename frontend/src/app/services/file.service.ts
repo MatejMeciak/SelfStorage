@@ -41,6 +41,9 @@ export class FileService {
     return this.http.put<FileModel>(`${this.fileUrl}/edit`, file);
   }
 
+  getSharedFiles(): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.fileUrl}/share/myFiles`);
+  }
   downloadFile(file: FileModel): Observable<Blob> {
     return this.http.get(`${this.fileUrl}/${file.id}`, { responseType: 'blob' });
   }

@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService{
         customUser.setPassword(passwordEncoder.encode(password));
         userRepository.save(customUser);
     }
+
+    @Override
+    public CustomUser getUser() {
+        return this.userRepository.findById(getSpecifyUserId()).get();
+    }
 }

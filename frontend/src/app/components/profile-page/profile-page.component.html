@@ -3,9 +3,35 @@
   <div class="flexbox">
     <div class="files">
       <p>Shared files with other users</p>
+      <div class="file-grid"><app-file-card *ngFor="let file of sharedFiles" [file]="file"></app-file-card></div>
     </div>
     <mat-card>
-      profile
+      <mat-card-header>
+        <div mat-card-avatar class="image"></div>
+        <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
+        <mat-card-subtitle style="text-align: center">@{{user.username}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="flexbox">
+          <div class="column">
+            <mat-icon>insert_drive_file</mat-icon>
+            <p>35 files</p>
+          </div>
+          <div class="column">
+            <mat-icon>folder</mat-icon>
+            <p>6 folders</p>
+          </div>
+          <div class="column">
+            <mat-icon>link</mat-icon>
+            <p>12 files</p>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>ADD FRIEND</button>
+        <button mat-button>CHANGE PASSWORD</button>
+        <button mat-button>CHANGE PROFILE IMAGE</button>
+      </mat-card-actions>
     </mat-card>
   </div>
 </div>

@@ -104,6 +104,7 @@ public class UploadFileController {
         {
             uploadedFile1.setFileName(uploadedFile.getFileName());
             uploadedFile1.setAccess(uploadedFile.getAccess());
+            uploadedFile1.setLink(uploadedFile.getLink());
             uploadFileService.saveEditFile(uploadedFile1);
        }
         return uploadedFile1;

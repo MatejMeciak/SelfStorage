@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationFormComponent },
   { path: 'files', component: FilesComponent, canActivate: [AuthGuardService] },
   { path: 'search', component: SearchPageComponent },
-  { path: 'profile', component: ProfilePageComponent },
+  { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuardService] },
   { path: 'folder/:id', component: FolderComponent, canActivate: [AuthGuardService] },
   { path: '**', redirectTo: 'home' },
 ];

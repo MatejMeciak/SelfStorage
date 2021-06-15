@@ -46,6 +46,9 @@ export class FileDetailComponent implements OnInit {
       this.fileService.updateFolder(data.folder.id, data.file).subscribe();
     });
   }
+  shareWithDialog(): void {
+    // TODO
+  }
 
   downloadFile(): void {
     this.fileService.downloadFile(this.file).subscribe(blob => {

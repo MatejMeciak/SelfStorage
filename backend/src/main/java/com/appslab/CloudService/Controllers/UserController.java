@@ -1,5 +1,6 @@
 package com.appslab.CloudService.Controllers;
 
+import com.appslab.CloudService.Models.CustomUser;
 import com.appslab.CloudService.Models.RegistrationRequest;
 import com.appslab.CloudService.Services.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,11 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/user")
+    public CustomUser getUser() {
+        return this.userService.getUser();
     }
 
     @PostMapping("/registration")
