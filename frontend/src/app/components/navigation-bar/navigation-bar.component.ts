@@ -1,30 +1,12 @@
 import { NavigationEnd, Router} from '@angular/router';
-import { animate, group, keyframes, query, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { load } from '../../material/animations';
 import {AuthService} from '../../services/auth.service';
 import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
-  styleUrls: ['./navigation-bar.component.css'],
-  animations: [
-    load,
-    trigger('slider', [
-      transition('* => slide', [
-        group([
-          query('.text', style({ opacity: 0 })),
-          query('mat-icon', animate('300ms ease',
-            style({ transform: 'translateX(86px)', borderLeftWidth: '1px' }))),
-          animate(300, keyframes([
-            style({ backgroundColor: 'white', offset: 0.3}),
-            style({ backgroundColor: 'orange', offset: 1})
-          ])),
-        ]),
-      ]),
-    ])
-  ]
+  styleUrls: ['./navigation-bar.component.css']
 })
 export class NavigationBarComponent implements OnInit {
 
