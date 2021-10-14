@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { load } from '../../material/animations';
 import { FileService } from '../../services/file.service';
 import { File } from '../../models/file';
 import {MatDialog} from '@angular/material/dialog';
@@ -8,8 +7,7 @@ import {UploadFileDialogComponent} from '../file-component/dialogs/upload-file-d
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css'],
-  animations: [ load ]
+  styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
   files: File[];

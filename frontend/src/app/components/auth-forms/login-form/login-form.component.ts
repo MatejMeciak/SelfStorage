@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { load } from '../../../material/animations';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import { Router } from '@angular/router';
@@ -7,8 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.css'],
-  animations: [ load ]
+  styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
 
