@@ -23,12 +23,13 @@ Aplikácia, ktorá slúži na ukladanie súborov do úložiska na server a násl
 
 **Druhý štvrťrok**
 - [ ] Zabezpečenie
-- [ ] Sťahovanie videií z linkov
+- [ ] Vytvoriť práva pre admina a používateľa
 - [ ] Obľúbené súbory
 
 **Tretí štvrťrok**
 - [ ] Prispôbiť na používanie cez mobil
 - [ ] Optimalizácia
+- [ ] Sťahovanie videií z linkov
 
 **Posledný štvrťrok**
 - [ ] Hostnuť to na servery
