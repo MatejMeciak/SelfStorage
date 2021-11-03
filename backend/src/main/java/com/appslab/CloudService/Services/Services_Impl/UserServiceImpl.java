@@ -1,7 +1,7 @@
 package com.appslab.CloudService.Services.Services_Impl;
 
 import com.appslab.CloudService.Models.CustomUser;
-import com.appslab.CloudService.Models.RegistrationRequest;
+import com.appslab.CloudService.DTO.RegistrationRequestDTO;
 import com.appslab.CloudService.Repositories.UserRepository;
 import com.appslab.CloudService.Services.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,13 +22,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void createUser(RegistrationRequest registrationRequest){
+    public void createUser(RegistrationRequestDTO registrationRequest){
         CustomUser customUser = new CustomUser(passwordEncoder.encode(registrationRequest.getPassword()), registrationRequest.getUsername(), registrationRequest.getFirstName(), registrationRequest.getLastName());
         userRepository.save(customUser);
     }
 
     @Override
-    public Boolean userAlreadyExists(RegistrationRequest registrationRequest) {
+    public Boolean userAlreadyExists(RegistrationRequestDTO registrationRequest) {
         Boolean username = userRepository.existsByUsername(registrationRequest.getUsername());
         if (username != true){
             createUser(registrationRequest);

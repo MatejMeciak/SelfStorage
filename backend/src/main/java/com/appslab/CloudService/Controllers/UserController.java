@@ -1,7 +1,7 @@
 package com.appslab.CloudService.Controllers;
 
 import com.appslab.CloudService.Models.CustomUser;
-import com.appslab.CloudService.Models.RegistrationRequest;
+import com.appslab.CloudService.DTO.RegistrationRequestDTO;
 import com.appslab.CloudService.Services.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +21,9 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public RegistrationRequest registration(@RequestBody RegistrationRequest registrationRequest){
-        if(userService.userAlreadyExists(registrationRequest)!=true){
-            return registrationRequest;
+    public RegistrationRequestDTO registration(@RequestBody RegistrationRequestDTO registrationRequestDTO){
+        if(userService.userAlreadyExists(registrationRequestDTO)!=true){
+            return registrationRequestDTO;
         }
         else {
             return null;

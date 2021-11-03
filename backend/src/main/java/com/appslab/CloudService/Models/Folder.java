@@ -69,4 +69,12 @@ public class Folder {
     public void setAccess(Boolean access) {
         this.access = access;
     }
+
+    public List<UploadedFile> getUploadedFileList() {
+        return uploadedFileList;
+    }
+
+    public void setUploadedFileList(List<UploadedFile> uploadedFileList) {
+        this.uploadedFileList = uploadedFileList;
+    }
 }

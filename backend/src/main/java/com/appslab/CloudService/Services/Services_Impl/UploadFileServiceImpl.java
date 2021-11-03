@@ -39,13 +39,22 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public void deleteFile(Long id) {
-        fileRepositoryDB.deleteById(id);
+    public UploadedFile deleteFile(Long id) throws Exception{
+        UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
+        if (uploadedFile.getCustomUserId().equals(userService.getSpecifyUserId()))
+        {
+            if (uploadedFile.getUuid()!= null){
+                Files.delete(pathToSpecificFile(uploadedFile));
+            }
+            fileRepositoryDB.deleteById(id);
+            return uploadedFile;
+        }
+        return null;
     }
 
     @Override
-    public List<UploadedFile> listOfFiles(Long customUserId) {
-        return fileRepositoryDB.findByCustomUserId(customUserId);
+    public List<UploadedFile> getListOfMyFiles() {
+        return fileRepositoryDB.findByCustomUserId(userService.getSpecifyUserId());
     }
 
     @Override
@@ -62,10 +71,9 @@ public class UploadFileServiceImpl implements UploadFileService {
             uploadedFile.setDate();
             uploadedFile.setCustomUserId(userService.getSpecifyUserId());
             uploadedFile.setUuid();
-            if (access==null){
-                uploadedFile.setAccess(false);
+            if (access!=null){
+                uploadedFile.setAccess(access);
             }
-            else{uploadedFile.setAccess(access);}
             return uploadedFile;
     }
 
@@ -94,13 +102,20 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public List<UploadedFile> findSearchFiles(String keyword,Long customUserId) {
-        return fileRepositoryDB.findByFileName(keyword,customUserId);
+    public List<UploadedFile> findSearchFiles(String keyword) {
+        return fileRepositoryDB.findByFileName(keyword,userService.getSpecifyUserId());
     }
 
     @Override
-    public void saveEditFile(UploadedFile uploadedFile) {
-        fileRepositoryDB.save(uploadedFile);
+    public UploadedFile saveEditFile(UploadedFile uploadedFile) {
+        UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
+        if(uploadedFile1.getCustomUserId().equals(userService.getSpecifyUserId()))
+        {
+            uploadedFile1.setFileName(uploadedFile.getFileName());
+            uploadedFile1.setAccess(uploadedFile.getAccess());
+            fileRepositoryDB.save(uploadedFile1);
+        }
+        return uploadedFile1;
     }
 
     @Override
@@ -126,33 +141,40 @@ public class UploadFileServiceImpl implements UploadFileService {
     @Override
     public void saveEditFileWithUser(String username, UploadedFile uploadedFile) {
         CustomUser user = userRepository.findByUsername(username).get();
-        UploadedFile uploadedFile1 = findFileById(uploadedFile.getId()).get();
-        if(!uploadedFile1.getCustomUsers().contains(user))
+        UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
+        if(!uploadedFile1.getFriends().contains(user))
         {
-            uploadedFile1.setCustomUsers(user);
-            saveEditFile(uploadedFile1);
+            uploadedFile1.setFriends(user);
+            fileRepositoryDB.save(uploadedFile1);
         }
     }
 
-    @Override
-    public Object returnUploadedFileOrLink(UploadedFile uploadedFile) {
-        if(uploadedFile.getLink()==null){
-            try {
-                return getFile(uploadedFile);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        else{
-            return uploadedFile;
-        }
-        return null;
-    }
+//    @Override
+//    public Object returnUploadedFileOrLink(UploadedFile uploadedFile) {
+//        //if(uploadedFile.getLink()==null){
+//            try {
+//                return this.getFile(uploadedFile);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        //}
+//        //else{
+//           // return uploadedFile;
+//        //}
+//        //return null;
+//    }
 
     @Override
     public List<UploadedFile> returnShareFiles() {
         CustomUser customUser = userRepository.findById(userService.getSpecifyUserId()).get();
         return fileRepositoryDB.findByCustomUsers(customUser);
     }
+
+    @Override
+    public List<UploadedFile> getPublicFiles() {
+        return fileRepositoryDB.findByAccess(true);
+    }
+
 
 }

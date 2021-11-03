@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UploadFileService {
-    void deleteFile(Long id);
+    UploadedFile deleteFile(Long id) throws Exception;
 
-    List<UploadedFile> listOfFiles(Long customUserId);
+    List<UploadedFile> getListOfMyFiles();
 
     Path getDocStorageLocation();
 
@@ -25,9 +25,9 @@ public interface UploadFileService {
 
     void saveFileToStorage(UploadedFile uploadedFile, MultipartFile multipartFile) throws Exception;
 
-    List<UploadedFile> findSearchFiles(String searchFiles, Long customUserId);
+    List<UploadedFile> findSearchFiles(String searchFiles);
 
-    void saveEditFile(UploadedFile uploadedFile);
+    UploadedFile saveEditFile(UploadedFile uploadedFile);
 
     List<UploadedFile> findSearchFilesInPublicList(String keyword,Boolean access);
 
@@ -35,7 +35,9 @@ public interface UploadFileService {
 
     void saveEditFileWithUser(String username, UploadedFile uploadedFile);
 
-    Object returnUploadedFileOrLink(UploadedFile uploadedFile);
+    //Object returnUploadedFileOrLink(UploadedFile uploadedFile);
 
     List<UploadedFile> returnShareFiles();
+
+    List<UploadedFile> getPublicFiles();
 }

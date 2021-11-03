@@ -21,8 +21,6 @@ public class UploadedFile {
 
     protected Long date;
 
-    protected String link;
-
     protected Boolean access=false;
 
     @JoinColumn(name = "customUser_id", insertable = false, updatable = false)
@@ -41,7 +39,7 @@ public class UploadedFile {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_files",joinColumns = @JoinColumn(name = "uploadedFile_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
-    protected List<CustomUser> customUsers;
+    protected List<CustomUser> friends;
 
     public UploadedFile() {
 
@@ -103,14 +101,6 @@ public class UploadedFile {
         this.uuid = UUID.randomUUID();
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
     public Boolean getAccess() {
         return access;
     }
@@ -127,11 +117,11 @@ public class UploadedFile {
         this.folderId = folderId;
     }
 
-    public List<CustomUser> getCustomUsers() {
-        return customUsers;
+    public List<CustomUser> getFriends() {
+        return friends;
     }
 
-    public void setCustomUsers(CustomUser customUser) {
-        this.customUsers.add(customUser);
+    public void setFriends(CustomUser friends) {
+        this.friends.add(friends);
     }
 }

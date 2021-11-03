@@ -15,43 +15,36 @@ import java.util.stream.Collectors;
 @RestController
 public class UploadFileController {
     private final UploadFileService uploadFileService;
-    private final UserService userService;
-    private final FileRepositoryDB fileRepositoryDB;
 
-    public UploadFileController(UploadFileService uploadFileService, UserService userService, FileRepositoryDB fileRepositoryDB) {
+    public UploadFileController(UploadFileService uploadFileService, FileRepositoryDB fileRepositoryDB) {
         this.uploadFileService = uploadFileService;
-        this.userService = userService;
-        this.fileRepositoryDB = fileRepositoryDB;
     }
 
     @GetMapping
-    public List<UploadedFile> listOfFiles(){
-        Long specifyUserId = userService.getSpecifyUserId();
-        return uploadFileService.listOfFiles(specifyUserId);
+    public List<UploadedFile> getListOfFiles(){
+        return uploadFileService.getListOfMyFiles();
     }
 
     @GetMapping("/{id}")
     public Object getFile(@PathVariable Long id) throws Exception{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
 
-        return uploadFileService.returnUploadedFileOrLink(uploadedFile);
+        return uploadFileService.getFile(uploadedFile);
     }
 
     @GetMapping("/search")
-    public List<UploadedFile> uploadedFile(@Param("keyword") String keyword){
-        Long specifiUserId = userService.getSpecifyUserId();
-        return uploadFileService.findSearchFiles(keyword,specifiUserId);
+    public List<UploadedFile> getSearchFiles(@Param("keyword") String keyword){
+        return uploadFileService.findSearchFiles(keyword);
     }
 
     @GetMapping("/allFiles")
-    public List<UploadedFile> publicFiles(){
-        return fileRepositoryDB.findByAccess(true);
+    public List<UploadedFile> getPublicFiles(){
+        return uploadFileService.getPublicFiles();
     }
 
     @GetMapping("/allFiles/search")
     public List<UploadedFile> searchInPublicFiles(@Param("keyword") String keyword){
-        Boolean access = true;
-        return uploadFileService.findSearchFilesInPublicList(keyword,access);
+        return uploadFileService.findSearchFilesInPublicList(keyword,true);
     }
 
     @GetMapping("/share/myFiles")
@@ -59,12 +52,12 @@ public class UploadFileController {
         return uploadFileService.returnShareFiles();
     }
 
-    @GetMapping("/getAllLinks")
-    public List<UploadedFile> getAllLinks(){
-        List<UploadedFile> uploadedFiles = uploadFileService.listOfFiles(userService.getSpecifyUserId());
-        List<UploadedFile> uploadedFileWithLink = uploadedFiles.stream().filter(y->y.getLink()!=null).collect(Collectors.toList());
-        return uploadedFileWithLink;
-    }
+//    @GetMapping("/getAllLinks")
+//    public List<UploadedFile> getAllLinks(){
+//        List<UploadedFile> uploadedFiles = uploadFileService.listOfFiles(userService.getSpecifyUserId());
+//        //List<UploadedFile> uploadedFileWithLink = uploadedFiles.stream().filter(y->y.getLink()!=null).collect(Collectors.toList());
+//        return uploadedFileWithLink;
+//    }
 
     @PostMapping
     public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam(required = false) Boolean access) throws Exception {
@@ -75,39 +68,23 @@ public class UploadFileController {
         return uploadedFile;
     }
 
-    @PostMapping("/uploadLink")
-    public UploadedFile uploadLinkToFile(@RequestBody UploadedFile uploadedFile){
-        uploadedFile.setCustomUserId(userService.getSpecifyUserId());
-        uploadedFile.setDate();
-        fileRepositoryDB.save(uploadedFile);
-        return uploadedFile;
-    }
+//    @PostMapping("/uploadLink")
+//    public UploadedFile uploadLinkToFile(@RequestBody UploadedFile uploadedFile){
+//        uploadedFile.setCustomUserId(userService.getSpecifyUserId());
+//        uploadedFile.setDate();
+//        fileRepositoryDB.save(uploadedFile);
+//        return uploadedFile;
+//    }
 
     @DeleteMapping("/{id}")
     public UploadedFile deleteFile(@PathVariable Long id) throws Exception{
-        UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
-        if (uploadedFile.getCustomUserId().equals(userService.getSpecifyUserId()))
-        {
-            if (uploadedFile.getUuid()!=null){
-                Files.delete(uploadFileService.pathToSpecificFile(uploadedFile));
-            }
-            uploadFileService.deleteFile(id);
-            return uploadedFile;
-        }
-        return null;
+        return uploadFileService.deleteFile(id);
     }
 
     @PutMapping("/edit")
     public UploadedFile saveEditFile(@RequestBody UploadedFile uploadedFile){
-        UploadedFile uploadedFile1 = uploadFileService.findFileById(uploadedFile.getId()).get();
-        if(uploadedFile1.getCustomUserId().equals(userService.getSpecifyUserId()))
-        {
-            uploadedFile1.setFileName(uploadedFile.getFileName());
-            uploadedFile1.setAccess(uploadedFile.getAccess());
-            uploadedFile1.setLink(uploadedFile.getLink());
-            uploadFileService.saveEditFile(uploadedFile1);
-       }
-        return uploadedFile1;
+
+        return uploadFileService.saveEditFile(uploadedFile);
     }
 
     @PutMapping("/share")
