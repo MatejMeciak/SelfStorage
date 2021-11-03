@@ -1,12 +1,12 @@
 package com.appslab.CloudService.Services;
 
 import com.appslab.CloudService.Models.CustomUser;
-import com.appslab.CloudService.Models.RegistrationRequest;
+import com.appslab.CloudService.DTO.RegistrationRequestDTO;
 
 public interface UserService {
-    void createUser(RegistrationRequest registrationRequest);
+    void createUser(RegistrationRequestDTO registrationRequestDTO);
 
-    Boolean userAlreadyExists(RegistrationRequest registrationRequest);
+    Boolean userAlreadyExists(RegistrationRequestDTO registrationRequestDTO);
 
     Long getSpecifyUserId();
 

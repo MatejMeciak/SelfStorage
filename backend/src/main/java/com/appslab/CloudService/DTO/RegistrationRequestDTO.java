@@ -1,7 +1,7 @@
-package com.appslab.CloudService.Models;
+package com.appslab.CloudService.DTO;
 
 
-public class RegistrationRequest {
+public class RegistrationRequestDTO {
     protected String password;
     protected String username;
     protected String firstName;

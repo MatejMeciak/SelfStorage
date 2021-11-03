@@ -1,6 +1,7 @@
 package com.appslab.CloudService.Controllers;
 
 import com.appslab.CloudService.Models.Folder;
+import com.appslab.CloudService.Models.Link;
 import com.appslab.CloudService.Models.UploadedFile;
 import com.appslab.CloudService.Repositories.FileRepositoryDB;
 import com.appslab.CloudService.Services.FolderService;
@@ -26,13 +27,8 @@ public class FolderController {
     }
 
     @GetMapping("/{id}")
-    public List<UploadedFile> showContentInFolder(@PathVariable Long id){
-         Long folderId = folderService.findFolderById(id).get().getId();
-         if(folderService.findFolderById(id).get().getCustomUserId().equals(userService.getSpecifyUserId()))
-         {
-             return fileRepositoryDB.findByFolderId(folderId);
-         }
-         return null;
+    public List<UploadedFile> getContentInFolder(@PathVariable Long id){
+         return folderService.getContentInFolder(id);
     }
 
     @GetMapping("/search")
@@ -42,16 +38,12 @@ public class FolderController {
 
     @GetMapping("/allFolder")
     public List<Folder> getAllFolders(){
-        return folderService.getAllFolder();
+        return folderService.getAllFolders();
     }
 
     @GetMapping("/getFolder/{id}")
     public Folder getFolder(@PathVariable Long id){
-        Folder folder = folderService.findFolderById(id).get();
-        if(folderService.findFolderById(id).get().getCustomUserId().equals(userService.getSpecifyUserId())){
-            return folder;
-        }
-        return null;
+        return folderService.getFolder(id);
     }
 
     @PostMapping
@@ -59,27 +51,19 @@ public class FolderController {
         folderService.createFolder(folder);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/file")
     public UploadedFile addFileToFolder(@PathVariable Long id, @RequestBody UploadedFile uploadedFile){
-        Folder folder = folderService.findFolderById(id).get();
-        UploadedFile uploadedFile1 = uploadFileService.findFileById(uploadedFile.getId()).get();
-        if (folder.getCustomUserId().equals(userService.getSpecifyUserId()))
-        {
-            uploadedFile1.setFolderId(folder.getId());
-            uploadFileService.saveEditFile(uploadedFile1);
-            return uploadedFile1;
-        }
-        return null;
+        return folderService.addFileToFolder(id, uploadedFile);
+    }
+
+    @PutMapping("/{id}/link")
+    public Link addLinkToFolder(@PathVariable Long id, @RequestBody Link link){
+        return folderService.addLinkToFolder(id,link);
     }
 
     @DeleteMapping("/{id}")
     public Folder deleteFolder(@PathVariable Long id){
-        Folder folder = folderService.findFolderById(id).get();
-        if (folder.getCustomUserId().equals(userService.getSpecifyUserId())) {
-            folderService.deleteFolder(id);
-            return folder;
-        }
-        return null;
+        return folderService.deleteFolder(id);
     }
 
 }
