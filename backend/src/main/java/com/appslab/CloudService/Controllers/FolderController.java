@@ -26,13 +26,13 @@ public class FolderController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/folder/{id}/content")
     public List<UploadedFile> getContentInFolder(@PathVariable Long id){
          return folderService.getContentInFolder(id);
     }
 
     @GetMapping("/search")
-    public List<Folder> searchfolders(@Param("keyword") String keyword){
+    public List<Folder> searchFolders(@Param("keyword") String keyword){
         return folderService.searchFoldersByFolderName(keyword);
     }
 
@@ -66,4 +66,8 @@ public class FolderController {
         return folderService.deleteFolder(id);
     }
 
+    @DeleteMapping("/folder/{id}")
+    public void deleteLinkOrFileFromFolder(@RequestParam Long folderId,@PathVariable Long id){
+        folderService.deleteContent(folderId,id);
+    }
 }
