@@ -1,0 +1,13 @@
+<mat-sidenav-container>
+  <!-- sidenav -->
+  <mat-sidenav #sidenav class="main-sidenav" mode="over">
+    <div class="header">
+      <img class="logo-image" src="assets/images/logo.png" alt="logo">
+      <span class="logo-text">SelfStorage</span>
+    </div>
+  </mat-sidenav>
+  <!-- router-outlet (main-content) -->
+  <mat-sidenav-content class="main-content">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

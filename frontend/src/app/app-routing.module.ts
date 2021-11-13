@@ -6,8 +6,8 @@ import { RegistrationFormComponent } from './components/auth-forms/registration-
 import { FilesComponent } from './components/file-component/files/files.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { AuthGuardService } from './auth/guard/auth-guard.service';
-import {FolderComponent} from './components/file-component/folder/folder.component';
-import {ProfilePageComponent} from './components/profile-page/profile-page.component';
+import { FolderComponent } from './components/file-component/folder/folder.component';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 
 const routes: Routes = [
   { path: 'home', component: WelcomePageComponent },

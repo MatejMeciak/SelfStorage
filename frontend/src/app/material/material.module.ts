@@ -12,6 +12,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRippleModule } from '@angular/material/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const MaterialModules = [
   MatButtonModule,
@@ -28,7 +29,8 @@ const MaterialModules = [
   MatAutocompleteModule,
   MatDialogModule,
   MatSlideToggleModule,
-  MatRippleModule
+  MatRippleModule,
+  MatSidenavModule,
 ];
 
 @NgModule({
