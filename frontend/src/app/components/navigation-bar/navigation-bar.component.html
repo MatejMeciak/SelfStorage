@@ -1,14 +1,19 @@
-<nav @load>
-    <div class="nav-container">
-        <img src="../../../assets/images/logo.png" routerLink="" height="75" alt="logo">
-        <div class="links">
-            <ul>
-                <li *ngFor="let link of links" [routerLink]="link" routerLinkActive="active" >{{ link }}</li>
-            </ul>
-            <div class="login" [@slider]="animate ? 'slide': null" (click)="toggle()" >
-                <mat-icon class="circle" [@slider]>east</mat-icon>
-                <div class="text">{{ action }}</div>
-            </div>
-        </div>
+<nav>
+  <mat-toolbar>
+    <div class="left">
+      <button mat-icon-button [disableRipple]="true" (click)="toggleSideBar()">
+        <mat-icon fontSet="material-icons-round" class="menu-icon">menu</mat-icon>
+      </button>
+      <button mat-button routerLink="/" class="logo">
+        <img class="logo-image" src="assets/images/logo.png" alt="logo">
+        <span class="logo-text">SelfStorage</span>
+      </button>
     </div>
+    <div class="right">
+      <span>Admin</span>
+      <button mat-icon-button [disableRipple]="true">
+        <mat-icon class="account-icon">account_circle</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
 </nav>

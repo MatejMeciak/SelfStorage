@@ -1,18 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; margin: 0; box-sizing: border-box;}
-
-body {
-    font-family: 'Noto Sans JP', sans-serif;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-image: url("./assets/images/background.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    overflow: auto;
+html, body {
+  font-family: 'Noto Sans JP', sans-serif;
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 *, *:before, *:after {
@@ -26,4 +16,6 @@ body {
   overflow: hidden;
 }
 
-
+.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: #0000004d !important;
+}

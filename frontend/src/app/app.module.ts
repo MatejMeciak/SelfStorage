@@ -25,6 +25,7 @@ import { CreateFolderDialogComponent } from './components/file-component/dialogs
 import { MoveToFolderDialogComponent } from './components/file-component/dialogs/move-to-folder-dialog/move-to-folder-dialog.component';
 import { FolderComponent } from './components/file-component/folder/folder.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
     MoveToFolderDialogComponent,
     FolderComponent,
     ProfilePageComponent,
+    MainSidenavComponent,
   ],
   imports: [
     MaterialModule,
