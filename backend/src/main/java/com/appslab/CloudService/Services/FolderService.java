@@ -24,4 +24,6 @@ public interface FolderService {
     Link addLinkToFolder(Long id, Link link);
 
     Folder deleteFolder(Long id);
+
+    void deleteContent(Long folderId,Long id);
 }

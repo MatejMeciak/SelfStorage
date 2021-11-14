@@ -64,7 +64,6 @@ public class UploadFileController {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile,access);
         uploadFileService.saveFileToStorage(uploadedFile,multipartFile);
         uploadFileService.saveUploadedFileToDB(uploadedFile);
-
         return uploadedFile;
     }
 

@@ -102,4 +102,15 @@ public class FolderServiceImpl implements FolderService {
         }
         return null;
     }
+
+    @Override
+    public void deleteContent(Long folderId, Long id) {
+        Folder folder = folderRepository.findById(folderId).get();
+        if(fileRepositoryDB.existsById(id)==true){
+            fileRepositoryDB.findById(id).get().setFolderId(null);
+        }
+        else{
+            linkRepository.findById(id).get().setFolderId(null);
+        }
+    }
 }
