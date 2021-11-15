@@ -22,7 +22,6 @@ Aplikácia, ktorá slúži na ukladanie súborov do úložiska na server a násl
 - [ ] Zlepšiť funkcionalitu
 
 **Druhý štvrťrok**
-- [ ] Zabezpečenie
 - [ ] Vytvoriť práva pre admina a používateľa
 - [ ] Obľúbené súbory
 - [ ] Zlepšiť security
