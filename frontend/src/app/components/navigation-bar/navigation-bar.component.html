@@ -1,19 +1,16 @@
 <nav>
   <mat-toolbar>
-    <div class="left">
-      <button mat-icon-button [disableRipple]="true" (click)="toggleSideBar()">
-        <mat-icon fontSet="material-icons-round" class="menu-icon">menu</mat-icon>
-      </button>
-      <button mat-button routerLink="/" class="logo">
+    <div class="flex-container">
+      <mat-icon fontSet="material-icons-round" class="menu-icon" (click)="toggleSideBar()">menu</mat-icon>
+      <button mat-button routerLink="/">
         <img class="logo-image" src="assets/images/logo.png" alt="logo">
         <span class="logo-text">SelfStorage</span>
       </button>
     </div>
-    <div class="right">
+    <button mat-button class="account-button">
+      <mat-icon>account_circle</mat-icon>
       <span>Admin</span>
-      <button mat-icon-button [disableRipple]="true">
-        <mat-icon class="account-icon">account_circle</mat-icon>
-      </button>
-    </div>
+      <mat-icon fontSet="material-icons-round" class="expand-icon">expand_more</mat-icon>
+    </button>
   </mat-toolbar>
 </nav>

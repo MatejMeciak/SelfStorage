@@ -1,14 +1,15 @@
 html, body {
-  font-family: 'Noto Sans JP', sans-serif;
   height: 100%;
   margin: 0;
   box-sizing: border-box;
+}
+*:not(mat-icon) {
+  font-family: 'Open Sans', sans-serif !important;
 }
 
 *, *:before, *:after {
   box-sizing: inherit;
 }
-
 
 .custom-dialog .mat-dialog-container, .custom-dialog .mat-dialog-content {
   padding: 0;

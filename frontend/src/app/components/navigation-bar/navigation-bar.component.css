@@ -5,16 +5,16 @@ mat-toolbar {
   border-radius: 6px;
 }
 
-.left, .right{
+.flex-container{
   display: flex;
-  align-items: center;
 }
 .logo-image {
   width: 48px;
   margin-right: 6px;
 }
-.logo-text {
-  font-size: 24px;
+.logo-text, .expand-icon {
+  font-size: 24px!important;
+  margin: 0!important;
 }
 
 .mat-icon-button, .mat-icon {
@@ -23,13 +23,16 @@ mat-toolbar {
 }
 .mat-icon {
   line-height: normal !important;
-  display: flex;
-  align-items: center;
   font-size: 38px;
+  user-select: none;
+  cursor: pointer;
 }
 
-.account-icon {
-  margin-left: 8px;
+.account-button {
+  padding: 0;
+}
+.account-button * {
+  margin-left: 6px;
 }
 
 
