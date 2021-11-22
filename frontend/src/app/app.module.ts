@@ -26,6 +26,7 @@ import { MoveToFolderDialogComponent } from './components/file-component/dialogs
 import { FolderComponent } from './components/file-component/folder/folder.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.component';
+import { HighlightDirective } from './directives/highlight.directive';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.com
     FolderComponent,
     ProfilePageComponent,
     MainSidenavComponent,
+    HighlightDirective,
   ],
   imports: [
     MaterialModule,

@@ -1,9 +1,46 @@
 <mat-sidenav-container>
   <!-- sidenav -->
   <mat-sidenav #sidenav class="main-sidenav" mode="over">
-    <div class="header">
-      <img class="logo-image" src="assets/images/logo.png" alt="logo">
-      <span class="logo-text">SelfStorage</span>
+    <div class="flex">
+      <div class="header">
+        <img class="logo-image" src="assets/images/logo.png" alt="logo">
+        <button mat-stroked-button>Upload a file</button>
+      </div>
+      <div class="spacer"></div>
+      <div class="column" appHighlight routerLink="/">
+        <mat-icon fontSet="material-icons-round">home</mat-icon>
+        <span>Home</span>
+      </div>
+      <div class="spacer"></div>
+      <mat-expansion-panel expanded>
+        <mat-expansion-panel-header appHighlight>
+          <mat-panel-title>
+            <mat-icon>insert_drive_file</mat-icon>
+            <span>Files</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="flex">
+          <ng-container *ngFor="let list of routerLinkList">
+            <div appHighlight *ngIf="!list.sub" [routerLink]="list.link" class="column">
+              <mat-icon>{{list.matIcon}}</mat-icon>
+              <span>{{list.title}}</span>
+            </div>
+            <mat-expansion-panel *ngIf="list.sub">
+              <mat-expansion-panel-header appHighlight>
+                <mat-panel-title>
+                  <mat-icon>{{list.matIcon}}</mat-icon>
+                  <span>{{list.title}}</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div appHighlight *ngFor="let subList of list.sub" [routerLink]="subList.link" class="column">
+                <mat-icon>{{subList.matIcon}}</mat-icon>
+                <span>{{subList.title}}</span>
+              </div>
+            </mat-expansion-panel>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+      <div class="spacer"></div>
     </div>
   </mat-sidenav>
   <!-- router-outlet (main-content) -->

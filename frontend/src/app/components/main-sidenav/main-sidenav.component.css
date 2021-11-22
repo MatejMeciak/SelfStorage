@@ -2,30 +2,61 @@ mat-sidenav-container {
   width: 100%;
   height: 100%;
 }
+.main-content {
+  width: 98%;
+  margin: 10px auto;
+}
+
+/* sidenav css */
 
 .main-sidenav {
-  width: 250px;
+  width: 260px;
   top: 10px;
   left: 12px;
   bottom: 10px;
   border-radius: 14px;
-  padding: 12px 14px;
+  padding: 1em;
+}
+.flex {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.column {
+  display: flex;
+  align-items: center;
+  width: 98%;
+  color: #000000b8;
+  padding: 0 12px;
+  font-size: 15px;
+  height: 42px;
+  user-select: none;
 }
 .header {
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
+  gap: 2rem;
 }
 .logo-image {
-  width: 48px;
+  width: 58px;
+}
+.spacer {
+  width: 96%;
+  height: 1px;
+  background-color: #EEEEEF;
+}
+mat-icon {
   margin-right: 6px;
 }
-.logo-text {
-  font-size: 24px;
+mat-expansion-panel {
+  width: inherit;
+  box-shadow: none!important;
 }
-
-
-.main-content {
-  width: 98%;
-  margin: 10px auto;
+mat-expansion-panel-header {
+  height: 42px!important;
+  padding: 0 12px!important;
+}
+mat-panel-title, mat-expansion-panel {
+  color: #000000b8;
 }
