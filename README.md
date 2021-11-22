@@ -29,7 +29,7 @@ Aplikácia, ktorá slúži na ukladanie súborov do úložiska na server a násl
 **Tretí štvrťrok**
 - [ ] Prispôbiť na používanie cez mobil
 - [ ] Optimalizácia
-- [ ] Sťahovanie videií z linkov
+- [ ] Sťahovanie web kontentu(článkov, videií)
 
 **Posledný štvrťrok**
 - [ ] Hostnuť to na servery
