@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
-import {User} from '../../models/user';
-import {FileService} from '../../services/file.service';
-import {File} from '../../models/file';
+import {AuthService} from '../../../services/auth.service';
+import {User} from '../../../models/user';
+import {FileService} from '../../../services/file.service';
+import {File} from '../../../models/file';
 
 @Component({
   selector: 'app-profile-page',
