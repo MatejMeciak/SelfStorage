@@ -1,0 +1,16 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+$SelfStorage-primary: mat.define-palette(mat.$grey-palette);
+$SelfStorage-accent: mat.define-palette(mat.$blue-palette, 600, 400, A400);
+$SelfStorage-warn: mat.define-palette(mat.$red-palette);
+
+$SelfStorage-theme: mat.define-light-theme((
+  color: (
+    primary: $SelfStorage-primary,
+    accent: $SelfStorage-accent,
+    warn: $SelfStorage-warn,
+  )
+));
+
+@include mat.all-component-themes($SelfStorage-theme);

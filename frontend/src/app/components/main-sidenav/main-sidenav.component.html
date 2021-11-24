@@ -4,10 +4,10 @@
     <div class="flex">
       <div class="header">
         <img class="logo-image" src="assets/images/logo.png" alt="logo">
-        <button mat-stroked-button>Upload a file</button>
+        <div appHighlight class="highlight-border upload-button">Upload a file</div>
       </div>
       <div class="spacer"></div>
-      <div class="column" appHighlight routerLink="/">
+      <div class="column" appHighlight routerLink="home" routerLinkActive="highlight-border">
         <mat-icon fontSet="material-icons-round">home</mat-icon>
         <span>Home</span>
       </div>
@@ -21,7 +21,7 @@
         </mat-expansion-panel-header>
         <div class="flex">
           <ng-container *ngFor="let list of routerLinkList">
-            <div appHighlight *ngIf="!list.sub" [routerLink]="list.link" class="column">
+            <div appHighlight *ngIf="!list.sub" [routerLink]="list.link" routerLinkActive="highlight-border" class="column">
               <mat-icon>{{list.matIcon}}</mat-icon>
               <span>{{list.title}}</span>
             </div>
@@ -32,9 +32,11 @@
                   <span>{{list.title}}</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <div appHighlight *ngFor="let subList of list.sub" [routerLink]="subList.link" class="column">
-                <mat-icon>{{subList.matIcon}}</mat-icon>
-                <span>{{subList.title}}</span>
+              <div class="flex">
+                <div appHighlight *ngFor="let subList of list.sub" [routerLink]="subList.link" class="column">
+                  <mat-icon>{{subList.matIcon}}</mat-icon>
+                  <span>{{subList.title}}</span>
+                </div>
               </div>
             </mat-expansion-panel>
           </ng-container>
