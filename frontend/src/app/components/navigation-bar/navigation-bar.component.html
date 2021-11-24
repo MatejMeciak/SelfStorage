@@ -1,16 +1,18 @@
 <nav>
   <mat-toolbar>
     <div class="flex-container">
-      <mat-icon fontSet="material-icons-round" class="menu-icon" (click)="toggleSideBar()">menu</mat-icon>
-      <button mat-button routerLink="/">
+      <mat-icon appHighlight fontSet="material-icons-round" class="menu-icon" (click)="toggleSideBar()">menu</mat-icon>
+      <div appHighlight class="logo" routerLink="">
         <img class="logo-image" src="assets/images/logo.png" alt="logo">
         <span class="logo-text">SelfStorage</span>
-      </button>
+      </div>
     </div>
-    <button mat-button class="account-button">
+    <div appHighlight class="account-button">
       <mat-icon>account_circle</mat-icon>
-      <span>Admin</span>
-      <mat-icon fontSet="material-icons-round" class="expand-icon">expand_more</mat-icon>
-    </button>
+      <div class="account-text">
+        <span>Admin</span>
+        <mat-icon fontSet="material-icons-round" class="expand-icon">expand_more</mat-icon>
+      </div>
+    </div>
   </mat-toolbar>
 </nav>

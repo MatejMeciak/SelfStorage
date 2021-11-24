@@ -8,6 +8,11 @@ mat-toolbar {
 .flex-container{
   display: flex;
 }
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+}
 .logo-image {
   width: 48px;
   margin-right: 6px;
@@ -28,11 +33,14 @@ mat-toolbar {
   cursor: pointer;
 }
 
-.account-button {
+.account-button, .account-text {
+  display: flex;
+  align-items: center;
   padding: 0;
 }
-.account-button * {
+.account-text * {
   margin-left: 6px;
+  font-size: 14px;
 }
 
 
