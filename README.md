@@ -34,3 +34,4 @@ Aplikácia, ktorá slúži na ukladanie súborov do úložiska na server a násl
 **Posledný štvrťrok**
 - [ ] Hostnuť to na servery
 - [ ] Spojazdniť doménu
+- [ ] Dolaďovanie
