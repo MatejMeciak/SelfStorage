@@ -1,1 +1,11 @@
-welcome-page
+<div class="container">
+  <h1>Here you can upload your content</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Choose an option</mat-label>
+    <mat-select>
+      <mat-option (click)="fileInput.click()"><mat-label>File from device</mat-label>
+        <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/></mat-option>
+      <mat-option (click)="openDialog()" value="option2">Link from internet</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
