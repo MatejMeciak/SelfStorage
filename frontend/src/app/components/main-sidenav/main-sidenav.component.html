@@ -4,16 +4,16 @@
     <div class="flex">
       <div class="header">
         <img class="logo-image" src="assets/images/logo.png" alt="logo">
-        <div appHighlight class="highlight-border upload-button">Upload a file</div>
+        <div class="highlight-border upload-button">Upload a file</div>
       </div>
       <div class="spacer"></div>
-      <div class="column" appHighlight routerLink="home" routerLinkActive="highlight-border">
+      <div class="column" routerLink="home" routerLinkActive="highlight-border">
         <mat-icon fontSet="material-icons-round">home</mat-icon>
         <span>Home</span>
       </div>
       <div class="spacer"></div>
       <mat-expansion-panel expanded>
-        <mat-expansion-panel-header appHighlight>
+        <mat-expansion-panel-header>
           <mat-panel-title>
             <mat-icon>insert_drive_file</mat-icon>
             <span>Files</span>
@@ -21,19 +21,19 @@
         </mat-expansion-panel-header>
         <div class="flex">
           <ng-container *ngFor="let list of routerLinkList">
-            <div appHighlight *ngIf="!list.sub" [routerLink]="list.link" routerLinkActive="highlight-border" class="column">
+            <div *ngIf="!list.sub" [routerLink]="list.link" routerLinkActive="highlight-border" class="column">
               <mat-icon>{{list.matIcon}}</mat-icon>
               <span>{{list.title}}</span>
             </div>
             <mat-expansion-panel *ngIf="list.sub">
-              <mat-expansion-panel-header appHighlight>
+              <mat-expansion-panel-header>
                 <mat-panel-title>
                   <mat-icon>{{list.matIcon}}</mat-icon>
                   <span>{{list.title}}</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="flex">
-                <div appHighlight *ngFor="let subList of list.sub" [routerLink]="subList.link" class="column">
+                <div *ngFor="let subList of list.sub" [routerLink]="subList.link" class="column">
                   <mat-icon>{{subList.matIcon}}</mat-icon>
                   <span>{{subList.title}}</span>
                 </div>
