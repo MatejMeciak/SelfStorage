@@ -1,0 +1,13 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+:not(mat-icon) {
+  font-family: 'Open Sans', sans-serif !important;
+}
+:focus { outline: none; }
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}

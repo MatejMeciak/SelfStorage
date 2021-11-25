@@ -25,7 +25,6 @@ import { MoveToFolderDialogComponent } from './components/file-components/dialog
 import { FolderComponent } from './components/file-components/folder/folder.component';
 import { ProfilePageComponent } from './components/user-components/profile-page/profile-page.component';
 import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.component';
-import { HighlightDirective } from './directives/highlight.directive';
 import { NavbarProfileMenuComponent } from './components/user-components/navbar-profile-menu/navbar-profile-menu.component';
 
 @NgModule({
@@ -46,7 +45,6 @@ import { NavbarProfileMenuComponent } from './components/user-components/navbar-
     FolderComponent,
     ProfilePageComponent,
     MainSidenavComponent,
-    HighlightDirective,
     NavbarProfileMenuComponent,
   ],
   imports: [
