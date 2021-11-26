@@ -18,12 +18,12 @@ public class Link {
 
     private Boolean access=false;
 
-    @JoinColumn(name = "customUser_id", insertable = false, updatable = false)
+    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
-    private CustomUser customUser;
+    private CustomUser owner;
 
-    @Column(name = "customUser_id")
-    private Long customUserId;
+    @Column(name = "owner_id")
+    private Long ownerId;
 
     @JoinColumn(name = "folder_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -33,7 +33,7 @@ public class Link {
     private Long folderId;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "users_links",joinColumns = @JoinColumn(name = "link_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
+    @JoinTable(name = "share_links",joinColumns = @JoinColumn(name = "link_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
     private List<CustomUser> friends;
 
     public Link() {
@@ -75,20 +75,20 @@ public class Link {
         this.access = access;
     }
 
-    public CustomUser getCustomUser() {
-        return customUser;
+    public CustomUser getOwner() {
+        return owner;
     }
 
-    public void setCustomUser(CustomUser customUser) {
-        this.customUser = customUser;
+    public void setOwner(CustomUser customUser) {
+        this.owner = owner;
     }
 
-    public Long getCustomUserId() {
-        return customUserId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCustomUserId(Long customUserId) {
-        this.customUserId = customUserId;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Folder getFolder() {

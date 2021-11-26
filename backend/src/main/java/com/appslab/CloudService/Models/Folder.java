@@ -20,12 +20,12 @@ public class Folder {
 
     protected Boolean access;
 
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
-    protected CustomUser customUser;
+    protected CustomUser owner;
 
-    @Column(name = "user_id")
-    protected Long customUserId;
+    @Column(name = "owner_id")
+    protected Long ownerId;
 
     public Folder() {
     }
@@ -54,12 +54,12 @@ public class Folder {
         this.date = Calendar.getInstance().getTime().getTime();
     }
 
-    public Long getCustomUserId() {
-        return customUserId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCustomUserId(Long customUserId) {
-        this.customUserId = customUserId;
+    public void setOwnerId(Long customUserId) {
+        this.ownerId = customUserId;
     }
 
     public Boolean getAccess() {

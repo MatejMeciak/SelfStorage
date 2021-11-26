@@ -38,7 +38,7 @@ public class CustomUser implements UserDetails {
     protected List<UploadedFile> uploadedFiles;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    protected List<UploadedFile> uploadedFiles1;
+    protected List<UploadedFile> sharedFiles;
 
     public CustomUser() {
     }
@@ -57,7 +57,6 @@ public class CustomUser implements UserDetails {
     public void setId(long id) {
         this.id = id;
     }
-
 
     public String getPassword() {
         return password;
@@ -91,12 +90,12 @@ public class CustomUser implements UserDetails {
         this.lastName = lastName;
     }
 
-    public List<UploadedFile> getUploadedFiles1() {
-        return uploadedFiles1;
+    public List<UploadedFile> getSharedFiles() {
+        return sharedFiles;
     }
 
-    public void setUploadedFiles1(List<UploadedFile> uploadedFiles1) {
-        this.uploadedFiles1 = uploadedFiles1;
+    public void setSharedFiles(List<UploadedFile> uploadedFiles1) {
+        this.sharedFiles = uploadedFiles1;
     }
 
     @Override

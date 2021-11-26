@@ -23,8 +23,8 @@ public class LinkController {
         linkService.saveLink(link);
     }
 
-    @DeleteMapping ("/delete")
-    public void deleteLink(@RequestParam Long id){
+    @DeleteMapping("/delete/{id}")
+    public void deleteLink(@PathVariable Long id){
         linkService.deleteLink(id);
     }
 

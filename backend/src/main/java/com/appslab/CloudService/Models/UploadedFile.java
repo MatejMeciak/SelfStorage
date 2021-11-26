@@ -25,10 +25,10 @@ public class UploadedFile {
 
     @JoinColumn(name = "customUser_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
-    protected CustomUser customUser;
+    protected CustomUser owner;
 
     @Column(name = "customUser_id")
-    protected Long customUserId;
+    protected Long ownerId;
 
     @JoinColumn(name = "folder_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -38,10 +38,10 @@ public class UploadedFile {
     protected Long folderId;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "users_files",joinColumns = @JoinColumn(name = "uploadedFile_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
+    @JoinTable(name = "share_files",joinColumns = @JoinColumn(name = "uploadedFile_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
     protected List<CustomUser> friends;
 
-    public UploadedFile() {
+    public UploadedFile(){
 
     }
 
@@ -85,12 +85,12 @@ public class UploadedFile {
         this.date = Calendar.getInstance().getTime().getTime();
     }
 
-    public Long getCustomUserId() {
-        return customUserId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setCustomUserId(Long customUserId) {
-        this.customUserId = customUserId;
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public UUID getUuid() {

@@ -28,20 +28,20 @@ public class LinkServiceImpl implements LinkService {
         link1.setLink(link.getLink());
         link1.setDate(link.getDate());
         link1.setAccess(link.getAccess());
-        link1.setCustomUserId(userService.getSpecifyUserId());
+        link1.setOwnerId(userService.getSpecifyUserId());
         linkRepository.save(link1);
     }
 
     @Override
     public void deleteLink(Long id) {
-        if(userService.getSpecifyUserId().equals(linkRepository.findById(id).get().getCustomUserId())){
+        if(userService.getSpecifyUserId().equals(linkRepository.findById(id).get().getOwnerId())){
             linkRepository.deleteById(id);
         }
     }
 
     @Override
     public Iterable<Link> listOfMyLinks(Long customUserId) {
-        return linkRepository.findByCustomUserId(customUserId);
+        return linkRepository.findByOwnerId(customUserId);
     }
 
     @Override

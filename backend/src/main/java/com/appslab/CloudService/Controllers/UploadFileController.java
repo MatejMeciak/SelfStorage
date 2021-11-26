@@ -3,13 +3,9 @@ package com.appslab.CloudService.Controllers;
 import com.appslab.CloudService.Repositories.FileRepositoryDB;
 import com.appslab.CloudService.Services.UploadFileService;
 import com.appslab.CloudService.Models.UploadedFile;
-import com.appslab.CloudService.Services.UserService;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.nio.file.Files;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequestMapping("/api/file")
 @RestController
@@ -28,22 +24,21 @@ public class UploadFileController {
     @GetMapping("/{id}")
     public Object getFile(@PathVariable Long id) throws Exception{
         UploadedFile uploadedFile = uploadFileService.findFileById(id).get();
-
         return uploadFileService.getFile(uploadedFile);
     }
 
     @GetMapping("/search")
-    public List<UploadedFile> getSearchFiles(@Param("keyword") String keyword){
+    public List<UploadedFile> getSearchedFiles(@RequestParam String keyword){
         return uploadFileService.findSearchFiles(keyword);
     }
 
-    @GetMapping("/allFiles")
+    @GetMapping("/public")
     public List<UploadedFile> getPublicFiles(){
         return uploadFileService.getPublicFiles();
     }
 
-    @GetMapping("/allFiles/search")
-    public List<UploadedFile> searchInPublicFiles(@Param("keyword") String keyword){
+    @GetMapping("/public/search")
+    public List<UploadedFile> searchInPublicFiles(@RequestParam String keyword){
         return uploadFileService.findSearchFilesInPublicList(keyword,true);
     }
 
@@ -82,7 +77,6 @@ public class UploadFileController {
 
     @PutMapping("/edit")
     public UploadedFile saveEditFile(@RequestBody UploadedFile uploadedFile){
-
         return uploadFileService.saveEditFile(uploadedFile);
     }
 
