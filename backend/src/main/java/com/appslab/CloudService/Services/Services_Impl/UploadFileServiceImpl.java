@@ -41,7 +41,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     @Override
     public UploadedFile deleteFile(Long id) throws Exception{
         UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
-        if (uploadedFile.getCustomUserId().equals(userService.getSpecifyUserId()))
+        if (uploadedFile.getOwnerId().equals(userService.getSpecifyUserId()))
         {
             if (uploadedFile.getUuid()!= null){
                 Files.delete(pathToSpecificFile(uploadedFile));
@@ -54,7 +54,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public List<UploadedFile> getListOfMyFiles() {
-        return fileRepositoryDB.findByCustomUserId(userService.getSpecifyUserId());
+        return fileRepositoryDB.findByOwnerId(userService.getSpecifyUserId());
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UploadFileServiceImpl implements UploadFileService {
             uploadedFile.setFileSize(multipartFile.getSize());
             uploadedFile.setMimeType(multipartFile.getContentType());
             uploadedFile.setDate();
-            uploadedFile.setCustomUserId(userService.getSpecifyUserId());
+            uploadedFile.setOwnerId(userService.getSpecifyUserId());
             uploadedFile.setUuid();
             if (access!=null){
                 uploadedFile.setAccess(access);
@@ -109,7 +109,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     @Override
     public UploadedFile saveEditFile(UploadedFile uploadedFile) {
         UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
-        if(uploadedFile1.getCustomUserId().equals(userService.getSpecifyUserId()))
+        if(uploadedFile1.getOwnerId().equals(userService.getSpecifyUserId()))
         {
             uploadedFile1.setFileName(uploadedFile.getFileName());
             uploadedFile1.setAccess(uploadedFile.getAccess());
@@ -125,7 +125,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public ResponseEntity getFile(UploadedFile uploadedFile) throws Exception{
-        if(uploadedFile.getCustomUserId().equals(userService.getSpecifyUserId())&uploadedFile.getAccess().equals(false))
+        if(uploadedFile.getOwnerId().equals(userService.getSpecifyUserId())&uploadedFile.getAccess().equals(false))
         {
             FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
             return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
@@ -168,13 +168,11 @@ public class UploadFileServiceImpl implements UploadFileService {
     @Override
     public List<UploadedFile> returnShareFiles() {
         CustomUser customUser = userRepository.findById(userService.getSpecifyUserId()).get();
-        return fileRepositoryDB.findByCustomUsers(customUser);
+        return fileRepositoryDB.findByOwner(customUser);
     }
 
     @Override
     public List<UploadedFile> getPublicFiles() {
         return fileRepositoryDB.findByAccess(true);
     }
-
-
 }

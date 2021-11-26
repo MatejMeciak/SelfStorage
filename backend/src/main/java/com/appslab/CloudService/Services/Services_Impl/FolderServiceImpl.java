@@ -12,7 +12,6 @@ import com.appslab.CloudService.Services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FolderServiceImpl implements FolderService {
@@ -35,7 +34,7 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public List<UploadedFile> getContentInFolder(Long id) {
         Folder folder = folderRepository.findById(id).get();
-        if(folder.getCustomUserId().equals(userService.getSpecifyUserId())){
+        if(folder.getOwnerId().equals(userService.getSpecifyUserId())){
             return folder.getUploadedFileList();
         }
         return null;
@@ -44,7 +43,7 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public void createFolder(Folder folder) {
         folder.setDate();
-        folder.setCustomUserId(userService.getSpecifyUserId());
+        folder.setOwnerId(userService.getSpecifyUserId());
         folderRepository.save(folder);
     }
 
@@ -56,13 +55,13 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     public List<Folder> getAllFolders() {
-        return folderRepository.findByCustomUserId(userService.getSpecifyUserId());
+        return folderRepository.findByOwnerId(userService.getSpecifyUserId());
     }
 
     @Override
     public Folder getFolder(Long id) {
         Folder folder = folderRepository.findById(id).get();
-        if (folder.getCustomUserId().equals(userService.getSpecifyUserId())) {
+        if (folder.getOwnerId().equals(userService.getSpecifyUserId())) {
             return folder;
         }
         return null;
@@ -72,7 +71,7 @@ public class FolderServiceImpl implements FolderService {
     public UploadedFile addFileToFolder(Long id, UploadedFile uploadedFile) {
         Folder folder = folderRepository.findById(id).get();
         UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
-        if (folder.getCustomUserId().equals(userService.getSpecifyUserId()))
+        if (folder.getOwnerId().equals(userService.getSpecifyUserId()))
         {
             uploadedFile1.setFolderId(folder.getId());
             uploadFileService.saveEditFile(uploadedFile1);
@@ -85,7 +84,7 @@ public class FolderServiceImpl implements FolderService {
     public Link addLinkToFolder(Long id, Link link) {
         Folder folder = folderRepository.findById(id).get();
         Link link1 =  linkRepository.findById(link.getId()).get();
-        if(folder.getCustomUserId().equals(userService.getSpecifyUserId())){
+        if(folder.getOwnerId().equals(userService.getSpecifyUserId())){
             link1.setFolderId(folder.getId());
             linkRepository.save(link1);
             return link1;
@@ -96,7 +95,7 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public Folder deleteFolder(Long id) {
         Folder folder = folderRepository.findById(id).get();
-        if (folder.getCustomUserId().equals(userService.getSpecifyUserId())) {
+        if (folder.getOwnerId().equals(userService.getSpecifyUserId())) {
             folderRepository.deleteById(id);
             return folder;
         }
