@@ -1,18 +1,16 @@
+@use 'src/scss/abstracts/mixins' as *;
 .file-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   grid-gap: 1.5rem;
   justify-self: stretch;
 }
-h1  {
-  color: #222222;
-  font-size: 50px;
-}
 .file-header {
-  padding: 5px;
-  margin-bottom: 1em;
   display: flex;
   align-items: baseline;
+  h1  {
+    font-size: 42px;
+  }
 }
 app-file-card {
   width: 100%;
@@ -62,4 +60,7 @@ mat-icon:first-of-type {
 .active {
   background-color: #ffd969;
   border: #ffb900 2px solid;
+}
+.spacer {
+  @include spacer($space: 1.5rem);
 }

@@ -1,83 +1,60 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { environment } from '../../environments/environment';
-import { File as FileModel} from '../models/file';
 import { HttpClient } from '@angular/common/http';
-import {Folder} from '../models/folder';
+import { environment } from '../../environments/environment';
+
+import { File as FileModel } from '../models/file';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
-  constructor(private http: HttpClient) {
-  }
   fileUrl = `${environment.apiUrl}/file`;
 
-  folderUrl = `${environment.apiUrl}/folder`;
+  constructor(private http: HttpClient) { }
 
-  getUserFiles(): Observable<FileModel[]> {
+  // GET
+  getFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(this.fileUrl);
   }
-  getUserFile(id: number): Observable<FileModel> {
+  getFile(id: number): Observable<FileModel> {
     return this.http.get<FileModel>(`${this.fileUrl}/${id}`);
   }
+  getSearchedFiles(keyword: string): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.fileUrl}/search/?keyword=${keyword}`);
+  }
   getPublicFiles(): Observable<FileModel[]> {
-    return this.http.get<FileModel[]>(`${this.fileUrl}/allFiles`);
+    return this.http.get<FileModel[]>(`${this.fileUrl}/public`);
   }
-
-  uploadFile(file: File): Observable<FileModel> {
-    const formData = new FormData();
-    formData.append('file', file);
-    return this.http.post<FileModel>(this.fileUrl, formData);
+  getSearchedPublicFiles(keyword: string): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.fileUrl}/public/search/?keyword=${keyword}`);
   }
-
-  uploadLinkFile(file: FileModel): Observable<FileModel> {
-    return this.http.post<FileModel>(`${this.fileUrl}/uploadLink`, file);
-  }
-
-  updateFile(file: FileModel): Observable<FileModel> {
-    delete file['customUsers'];
-    return this.http.put<FileModel>(`${this.fileUrl}/edit`, file);
-  }
-
   getSharedFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/share/myFiles`);
   }
   downloadFile(file: FileModel): Observable<Blob> {
     return this.http.get(`${this.fileUrl}/${file.id}`, { responseType: 'blob' });
   }
+
+  // POST
+  uploadFile(file: File): Observable<FileModel> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<FileModel>(this.fileUrl, formData);
+  }
+
+  // DELETE
   deleteFile(file: FileModel): Observable<FileModel> {
     return this.http.delete<FileModel>(`${this.fileUrl}/${file.id}`);
   }
-  searchUserFiles(keyword: string): Observable<FileModel[]> {
-    return this.http.get<FileModel[]>(`${this.fileUrl}/search/?keyword=${keyword}`);
-  }
-  searchPublicFiles(keyword: string): Observable<FileModel[]> {
-    return this.http.get<FileModel[]>(`${this.fileUrl}/allFiles/search/?keyword=${keyword}`);
-  }
-  // folders
 
-  getFolderFiles(id: number): Observable<FileModel[]> {
-    return this.http.get<FileModel[]>(`${this.folderUrl}/${id}`);
-  }
-  getFolder(id: number): Observable<Folder> {
-    return this.http.get<Folder>(`${this.folderUrl}/getFolder/${id}`);
-  }
-  getFolders(): Observable<Folder[]> {
-    return this.http.get<Folder[]>(`${this.folderUrl}/allFolder`);
-  }
-  createFolder(folder: Folder): Observable<Folder[]> {
-    return this.http.post<Folder[]>(this.folderUrl, folder);
-  }
-  updateFolder(folderId: Folder, file: FileModel): Observable<Folder[]> {
+  // PUT
+  updateFile(file: FileModel): Observable<FileModel> {
     delete file['customUsers'];
-    return this.http.put<Folder[]>(`${this.folderUrl}/${folderId}`, file);
+    return this.http.put<FileModel>(`${this.fileUrl}/edit`, file);
   }
-  searchFolders(keyword: string): Observable<Folder[]> {
-    return this.http.get<Folder[]>(`${this.folderUrl}/search/?keyword=${keyword}`);
+  shareFileWithUser(username: string, file:FileModel): Observable<FileModel> {
+    return this.http.put<FileModel>(`${this.fileUrl}/share/?username=${username}`, file)
   }
-  deleteFolder(folder: Folder): Observable<Folder> {
-    return this.http.delete<Folder>(`${this.folderUrl}/${folder.id}`);
-  }
+
 }

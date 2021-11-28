@@ -16,7 +16,7 @@ export class WelcomePageComponent implements OnInit {
   constructor(private fileService: FileService,  private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.fileService.getUserFiles().subscribe(files => this.files = files.slice(0, 5));
+    this.fileService.getFiles().subscribe(files => this.files = files.slice(0, 5));
   }
 
   onFileInput(files: FileList): void {
@@ -29,6 +29,6 @@ export class WelcomePageComponent implements OnInit {
     });
   }
   uploadLinkFile(file): void {
-    this.fileService.uploadLinkFile(file).subscribe();
+    this.fileService.uploadFile(file).subscribe();
   }
 }

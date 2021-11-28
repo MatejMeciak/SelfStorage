@@ -1,16 +1,16 @@
 <nav>
   <mat-toolbar>
     <div class="flex-container">
-      <mat-icon fontSet="material-icons-round" class="menu-icon" (click)="toggleSideBar()">menu</mat-icon>
-      <div class="logo" routerLink="">
+      <mat-icon fontSet="material-icons-round" class="menu-icon highlight" (click)="toggleSideBar()">menu</mat-icon>
+      <div class="logo highlight" routerLink="/">
         <img class="logo-image" src="assets/images/logo.png" alt="logo">
         <span class="logo-text">SelfStorage</span>
       </div>
     </div>
-    <div class="account-button">
+    <div class="account-button highlight">
       <mat-icon>account_circle</mat-icon>
       <div class="account-text">
-        <span>Admin</span>
+        <span>{{ user ? user.username : 'no user' }}</span>
         <mat-icon fontSet="material-icons-round" class="expand-icon">expand_more</mat-icon>
       </div>
     </div>

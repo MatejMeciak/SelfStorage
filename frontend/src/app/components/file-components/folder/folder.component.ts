@@ -7,16 +7,21 @@ import {FileDetailComponent} from '../file-detail/file-detail.component';
 import {CreateFolderDialogComponent} from '../dialogs/create-folder-dialog/create-folder-dialog.component';
 import {Folder} from '../../../models/folder';
 import {MatDialog} from '@angular/material/dialog';
+import {FolderService} from "../../../services/folder.service";
+import {Link} from "../../../models/link";
+import {LinkService} from "../../../services/link.service";
 
 @Component({
   selector: 'app-folder',
   templateUrl: './folder.component.html',
-  styleUrls: ['./folder.component.css']
+  styleUrls: ['./folder.component.scss']
 })
 export class FolderComponent implements OnInit {
   folder: Folder;
   files: File[];
-  constructor(private route: ActivatedRoute, private fileService: FileService, private dialog: MatDialog) {}
+  constructor(private folderService: FolderService, private linkService: LinkService,
+              private fileService: FileService,
+              private route: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getFiles();
@@ -24,11 +29,11 @@ export class FolderComponent implements OnInit {
   }
   getFiles(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.fileService.getFolderFiles(id).subscribe(files => this.files = files);
+    this.folderService.getFolderContent(id).subscribe(files => this.files = files);
   }
   getFolder(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.fileService.getFolder(id).subscribe(folder => this.folder = folder);
+    this.folderService.getFolder(id).subscribe(folder => this.folder = folder);
   }
 
   onFileInput(files: FileList): void {
@@ -39,7 +44,7 @@ export class FolderComponent implements OnInit {
   openLinkDialog(): void {
     const dialogRef = this.dialog.open(UploadFileDialogComponent, { data: { fileName: '', access: false } as File });
     dialogRef.afterClosed().subscribe(file => {
-      this.fileService.uploadLinkFile(file).subscribe();
+      this.linkService.uploadLink(file).subscribe();
     });
   }
   openDetailDialogOf(file: File): void {
@@ -48,7 +53,7 @@ export class FolderComponent implements OnInit {
   openFolderDialog(): void {
     const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {folderName: '', access: false } as Folder });
     dialogRef.afterClosed().subscribe(folder => {
-      this.fileService.createFolder(folder).subscribe();
+      this.folderService.createFolder(folder).subscribe();
     });
   }
 

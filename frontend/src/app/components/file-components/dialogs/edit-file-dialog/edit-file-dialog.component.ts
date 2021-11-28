@@ -7,7 +7,7 @@ import {Folder} from '../../../../models/folder';
 @Component({
   selector: 'app-edit-file-dialog',
   templateUrl: './edit-file-dialog.component.html',
-  styleUrls: ['./edit-file-dialog.component.css']
+  styleUrls: ['./edit-file-dialog.component.scss']
 })
 export class EditFileDialogComponent implements OnInit {
 
