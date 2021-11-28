@@ -1,5 +1,5 @@
 <div class="file-header">
-  <h1>Your files</h1>
+  <h1>Your Storage</h1>
     <mat-icon class="upload-button" [matMenuTriggerFor]="menu">add</mat-icon>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="fileInput.click()">
@@ -19,18 +19,13 @@
     <mat-icon>search</mat-icon>
     <mat-icon>more_vert</mat-icon>
 </div>
-<div class="categories">
-  <div (click)="active='all'" [ngClass]="{'active': active === 'all'}">All</div>
-  <div (click)="active='folders'" [ngClass]="{'active': active === 'folders'}">Folders</div>
-  <div (click)="active='files'" [ngClass]="{'active': active === 'files'}">Files</div>
-  <div>Links</div>
-</div>
+<div class="spacer"></div>
 <div *ngIf="files || folders; else elseBlock">
-    <div *ngIf="active === 'folders' || active === 'all'">
+    <div>
       <h2>Folders</h2>
       <div class="file-grid"><app-file-card *ngFor="let folder of folders" [folder]="folder" [routerLink]="['/folder', folder.id]"></app-file-card></div>
     </div>
-      <div *ngIf="active === 'files' || active === 'all'">
+      <div>
         <h2>Files</h2>
         <div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="openDetailDialogOf(file)"></app-file-card></div>
       </div>

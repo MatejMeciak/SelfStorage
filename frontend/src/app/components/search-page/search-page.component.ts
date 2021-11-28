@@ -20,7 +20,7 @@ export class SearchPageComponent implements OnInit {
     this.files = this.searchKeyword.pipe(
       debounceTime(250),
       distinctUntilChanged(),
-      mergeMap((keyword: string) => this.fileService.searchPublicFiles(keyword)),
+      mergeMap((keyword: string) => this.fileService.getSearchedPublicFiles(keyword)),
     );
   }
   inputChange(keyword: string): void {

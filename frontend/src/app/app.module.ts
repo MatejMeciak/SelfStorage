@@ -26,6 +26,8 @@ import { FolderComponent } from './components/file-components/folder/folder.comp
 import { ProfilePageComponent } from './components/user-components/profile-page/profile-page.component';
 import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.component';
 import { NavbarProfileMenuComponent } from './components/user-components/navbar-profile-menu/navbar-profile-menu.component';
+import {FolderService} from "./services/folder.service";
+import {LinkService} from "./services/link.service";
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { NavbarProfileMenuComponent } from './components/user-components/navbar-
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [ FileService, AuthService,
+  providers: [
+    FileService, FolderService, LinkService,
+    AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

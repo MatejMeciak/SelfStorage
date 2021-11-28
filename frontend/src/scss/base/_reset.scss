@@ -3,6 +3,10 @@ html, body {
   margin: 0;
   box-sizing: border-box;
 }
+img, picture {
+  max-width: 100%;
+  display: block;
+}
 :not(mat-icon) {
   font-family: 'Open Sans', sans-serif !important;
 }

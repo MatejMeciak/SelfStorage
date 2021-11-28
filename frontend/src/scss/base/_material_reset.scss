@@ -4,8 +4,11 @@
   overflow: hidden;
 }
 .mat-drawer-backdrop.mat-drawer-shown {
-  background-color: #0000004d!important;
+  background-color: #0000004d !important;
 }
 .mat-expansion-panel-body {
-  padding: 0 24px!important;
+  padding: 0 24px !important;
+}
+.mat-dialog-content {
+  margin: 0 !important;
 }

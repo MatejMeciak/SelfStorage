@@ -6,11 +6,13 @@ import {UploadFileDialogComponent} from '../dialogs/upload-file-dialog/upload-fi
 import {MatDialog} from '@angular/material/dialog';
 import {CreateFolderDialogComponent} from '../dialogs/create-folder-dialog/create-folder-dialog.component';
 import {FileDetailComponent} from '../file-detail/file-detail.component';
+import {FolderService} from "../../../services/folder.service";
+import {LinkService} from "../../../services/link.service";
 
 @Component({
   selector: 'app-files',
   templateUrl: './files.component.html',
-  styleUrls: ['./files.component.css']
+  styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit {
 
@@ -20,11 +22,11 @@ export class FilesComponent implements OnInit {
   folders: Folder[];
 
   folderFiles: File[];
-  constructor(private fileService: FileService, private dialog: MatDialog) { }
+  constructor(private fileService: FileService, private folderService: FolderService, private linkService: LinkService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.fileService.getUserFiles().subscribe(files => this.files = files);
-    this.fileService.getFolders().subscribe(folders => this.folders = folders);
+    this.fileService.getFiles().subscribe(files => this.files = files);
+    this.folderService.getFolders().subscribe(folders => this.folders = folders);
   }
   onFileInput(files: FileList): void {
     for (let i = 0; i < files.length; i++) {
@@ -34,13 +36,13 @@ export class FilesComponent implements OnInit {
   openLinkDialog(): void {
     const dialogRef = this.dialog.open(UploadFileDialogComponent, { data: { fileName: '', access: false } as File });
     dialogRef.afterClosed().subscribe(file => {
-      this.fileService.uploadLinkFile(file).subscribe();
+      this.linkService.uploadLink(file).subscribe();
     });
   }
   openFolderDialog(): void {
     const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {folderName: '', access: false } as Folder });
     dialogRef.afterClosed().subscribe(folder => {
-      this.fileService.createFolder(folder).subscribe();
+      this.folderService.createFolder(folder).subscribe();
     });
   }
 
@@ -49,7 +51,7 @@ export class FilesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(deleteFile => {
       if (deleteFile) {
         this.fileService.deleteFile(file).subscribe(() =>
-          this.fileService.getUserFiles().subscribe(files => this.files = files));
+          this.fileService.getFiles().subscribe(files => this.files = files));
       }
     });
   }

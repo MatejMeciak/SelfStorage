@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { File } from '../../../models/file';
-import { getFileUrl } from '../../../utils/utils';
+//import { getFileUrl } from '../../../utils/utils';
 import {Folder} from '../../../models/folder';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-file-card',
   templateUrl: './file-card.component.html',
-  styleUrls: ['./file-card.component.css']
+  styleUrls: ['./file-card.component.scss']
 })
 export class FileCardComponent implements OnInit {
   @Input() file: File;
@@ -15,7 +16,7 @@ export class FileCardComponent implements OnInit {
   }
 
   get fileUrl(): string {
-    return getFileUrl(this.file);
+    return `${environment.apiUrl}/file/${this.file.id}`;
   }
   ngOnInit(): void { }
 }
