@@ -67,27 +67,49 @@ public class FolderServiceImpl implements FolderService {
         return null;
     }
 
-    @Override
-    public UploadedFile addFileToFolder(Long id, UploadedFile uploadedFile) {
-        Folder folder = folderRepository.findById(id).get();
-        UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
-        if (folder.getOwnerId().equals(userService.getSpecifyUserId()))
-        {
-            uploadedFile1.setFolderId(folder.getId());
-            uploadFileService.saveEditFile(uploadedFile1);
-            return uploadedFile1;
-        }
-        return null;
-    }
+//    @Override
+//    public UploadedFile addFileToFolder(Long id, UploadedFile uploadedFile) {
+//        Folder folder = folderRepository.findById(id).get();
+//        UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
+//        if (folder.getOwnerId().equals(userService.getSpecifyUserId()))
+//        {
+//            uploadedFile1.setFolderId(folder.getId());
+//            uploadFileService.saveEditFile(uploadedFile1);
+//            return uploadedFile1;
+//        }
+//        return null;
+//    }
+//
+//    @Override
+//    public Link addLinkToFolder(Long id, Link link) {
+//        Folder folder = folderRepository.findById(id).get();
+//        Link link1 =  linkRepository.findById(link.getId()).get();
+//        if(folder.getOwnerId().equals(userService.getSpecifyUserId())){
+//            link1.setFolderId(folder.getId());
+//            linkRepository.save(link1);
+//            return link1;
+//        }
+//        return null;
+//    }
 
     @Override
-    public Link addLinkToFolder(Long id, Link link) {
+    public Object addFileOrLinkToFolder(Long id, UploadedFile uploadedFile, Link link) {
         Folder folder = folderRepository.findById(id).get();
-        Link link1 =  linkRepository.findById(link.getId()).get();
-        if(folder.getOwnerId().equals(userService.getSpecifyUserId())){
-            link1.setFolderId(folder.getId());
-            linkRepository.save(link1);
-            return link1;
+        if (uploadedFile!=null) {
+            UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
+            if(folder.equals(userService.getSpecifyUserId())){
+                uploadedFile1.setFolderId(id);
+                fileRepositoryDB.save(uploadedFile1);
+                return uploadedFile;
+            }
+        }
+        else{
+            Link link1 = linkRepository.findById(link.getId()).get();
+            if(folder.equals(userService.getSpecifyUserId())){
+                link1.setFolderId(id);
+                linkRepository.save(link1);
+                return link;
+            }
         }
         return null;
     }

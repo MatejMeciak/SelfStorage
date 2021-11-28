@@ -14,4 +14,6 @@ public interface LinkService {
     List<Link> findSearchLink(String keyword);
 
     Link saveEditLink(Link link);
+
+    Link getLink(Long id);
 }

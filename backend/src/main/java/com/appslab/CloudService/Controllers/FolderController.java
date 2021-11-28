@@ -7,7 +7,6 @@ import com.appslab.CloudService.Repositories.FileRepositoryDB;
 import com.appslab.CloudService.Services.FolderService;
 import com.appslab.CloudService.Services.UploadFileService;
 import com.appslab.CloudService.Services.UserService;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -26,13 +25,13 @@ public class FolderController {
         this.userService = userService;
     }
 
-    @GetMapping("/folder/{id}/content")
+    @GetMapping("/{id}/content")
     public List<UploadedFile> getContentInFolder(@PathVariable Long id){
          return folderService.getContentInFolder(id);
     }
 
     @GetMapping("/search")
-    public List<Folder> searchFolders(@Param("keyword") String keyword){
+    public List<Folder> searchFolders(@RequestParam("keyword") String keyword){
         return folderService.searchFoldersByFolderName(keyword);
     }
 
@@ -51,14 +50,9 @@ public class FolderController {
         folderService.createFolder(folder);
     }
 
-    @PutMapping("/{id}/file")
-    public UploadedFile addFileToFolder(@PathVariable Long id, @RequestBody UploadedFile uploadedFile){
-        return folderService.addFileToFolder(id, uploadedFile);
-    }
-
-    @PutMapping("/{id}/link")
-    public Link addLinkToFolder(@PathVariable Long id, @RequestBody Link link){
-        return folderService.addLinkToFolder(id,link);
+    @PutMapping("{id}/upload")
+    public Object addFileOrLinkToFolder(@PathVariable Long id, @RequestBody(required = false) UploadedFile uploadedFile, @RequestParam(required = false) Link link){
+        return folderService.addFileOrLinkToFolder(id, uploadedFile, link);
     }
 
     @DeleteMapping("/{id}")
