@@ -37,6 +37,13 @@ public class UploadedFile {
     @Column(name = "folder_id")
     protected Long folderId;
 
+    @JoinColumn(name = "category_id",insertable = false,updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    protected Category category;
+
+    @Column(name = "category_id")
+    protected Long categoryId;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "share_files",joinColumns = @JoinColumn(name = "uploadedFile_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
     protected List<CustomUser> friends;
@@ -123,5 +130,13 @@ public class UploadedFile {
 
     public void setFriends(CustomUser friends) {
         this.friends.add(friends);
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

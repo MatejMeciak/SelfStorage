@@ -32,6 +32,13 @@ public class Link {
     @Column(name = "folder_id")
     private Long folderId;
 
+    @JoinColumn(name = "category_id",updatable = false,insertable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Category category;
+
+    @Column(name = "category_id")
+    private Long categoryId;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "share_links",joinColumns = @JoinColumn(name = "link_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
     private List<CustomUser> friends;
@@ -113,5 +120,13 @@ public class Link {
 
     public void setFriends(CustomUser friends) {
         this.friends.add(friends);
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }
