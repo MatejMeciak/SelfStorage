@@ -19,9 +19,7 @@ public interface FolderService {
 
     Folder getFolder(Long id);
 
-    UploadedFile addFileToFolder(Long id, UploadedFile uploadedFile);
-
-    Link addLinkToFolder(Long id, Link link);
+    Object addFileOrLinkToFolder(Long id, UploadedFile uploadedFile, Link link);
 
     Folder deleteFolder(Long id);
 

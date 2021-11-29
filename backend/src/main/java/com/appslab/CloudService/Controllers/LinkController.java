@@ -3,11 +3,10 @@ package com.appslab.CloudService.Controllers;
 import com.appslab.CloudService.Models.Link;
 import com.appslab.CloudService.Services.LinkService;
 import com.appslab.CloudService.Services.UserService;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RequestMapping("/link")
+@RequestMapping("/api/link")
 @RestController
 public class LinkController {
     private LinkService linkService;
@@ -18,14 +17,14 @@ public class LinkController {
         this.userService = userService;
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public void uploadLink(@RequestBody Link link){
         linkService.saveLink(link);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteLink(@PathVariable Long id){
-        linkService.deleteLink(id);
+    @GetMapping("{id}")
+    public Link getLink(@PathVariable Long id){
+        return linkService.getLink(id);
     }
 
     @GetMapping("/allMyLinks")
@@ -34,7 +33,7 @@ public class LinkController {
     }
 
     @GetMapping("/search")
-    public List<Link> getSearchLinks(@Param("keyword") String keyword){
+    public List<Link> getSearchLinks(@RequestParam("keyword") String keyword){
         return linkService.findSearchLink(keyword);
     }
 
@@ -42,4 +41,10 @@ public class LinkController {
     public Link editLink(@RequestBody Link link){
         return linkService.saveEditLink(link);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteLink(@PathVariable Long id){
+        linkService.deleteLink(id);
+    }
+
 }
