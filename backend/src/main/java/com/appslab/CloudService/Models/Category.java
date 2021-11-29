@@ -13,8 +13,12 @@ public class Category {
 
     private Boolean adminAccess;
 
-    @ManyToOne
+    @JoinColumn(name = "creator_id",updatable = false,insertable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CustomUser creator;
+
+    @Column(name = "creator_id")
+    private Long creatorId;
 
     @OneToMany
     private List<UploadedFile> files;
@@ -40,7 +44,48 @@ public class Category {
         return adminAccess;
     }
 
+    public CustomUser getCreator() {
+        return creator;
+    }
+
+    public void setCreator(CustomUser creator) {
+        this.creator = creator;
+    }
+
+    public List<UploadedFile> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<UploadedFile> files) {
+        this.files = files;
+    }
+
+    public List<Folder> getFolders() {
+        return folders;
+    }
+
+    public void setFolders(List<Folder> folders) {
+        this.folders = folders;
+    }
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
+    }
+
     public void setAdminAccess(Boolean adminAccess) {
         this.adminAccess = adminAccess;
     }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
 }

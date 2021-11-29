@@ -46,5 +46,4 @@ public class LinkController {
     public void deleteLink(@PathVariable Long id){
         linkService.deleteLink(id);
     }
-
 }
