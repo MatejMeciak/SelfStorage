@@ -1,8 +1,6 @@
 package com.appslab.CloudService.Controllers;
 
 import com.appslab.CloudService.Models.Category;
-import com.appslab.CloudService.Models.Link;
-import com.appslab.CloudService.Models.UploadedFile;
 import com.appslab.CloudService.Services.CategoryService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -26,9 +24,9 @@ public class CategoryController {
         return categoryService.getCategory(id);
     }
 
-    @PostMapping("/{id}/add")
-    public Object addFileOrLinkToCategory(@PathVariable Long id, @RequestBody(required = false) UploadedFile uploadedFile, @RequestBody(required = false) Link link){
-        return categoryService.addFileOrLinkToCategory(id, uploadedFile, link);
+    @PostMapping("/{categoryId}/add")
+    public Object addFileOrLinkToCategory(@PathVariable Long categoryId, @RequestParam Long requestId){
+        return categoryService.addContentToCategory(categoryId, requestId);
     }
 
     @PostMapping
@@ -37,14 +35,12 @@ public class CategoryController {
     }
 
     @DeleteMapping("/category/{id}")
-    public void deleteFileOrLinkFromCategory(@PathVariable Long id ){
-
+    public void deleteContentFromCategory(@PathVariable Long id){
+        
     }
 
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id){
         categoryService.deleteCategory(id);
     }
-
-
 }

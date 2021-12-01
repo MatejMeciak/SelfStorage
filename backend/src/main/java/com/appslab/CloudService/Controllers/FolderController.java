@@ -1,7 +1,6 @@
 package com.appslab.CloudService.Controllers;
 
 import com.appslab.CloudService.Models.Folder;
-import com.appslab.CloudService.Models.Link;
 import com.appslab.CloudService.Models.UploadedFile;
 import com.appslab.CloudService.Repositories.FileRepositoryDB;
 import com.appslab.CloudService.Services.FolderService;
@@ -50,9 +49,9 @@ public class FolderController {
         folderService.createFolder(folder);
     }
 
-    @PutMapping("{id}/upload")
-    public Object addFileOrLinkToFolder(@PathVariable Long id, @RequestBody(required = false) UploadedFile uploadedFile, @RequestParam(required = false) Link link){
-        return folderService.addFileOrLinkToFolder(id, uploadedFile, link);
+    @PutMapping("/{id}/upload")
+    public void addFileOrLinkToFolder(@PathVariable Long id, @RequestParam Long requestId){
+        folderService.addContentToFolder(id, requestId);
     }
 
     @DeleteMapping("/{id}")

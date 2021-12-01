@@ -45,16 +45,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Object addFileOrLinkToCategory(Long categoryId, UploadedFile uploadedFile, Link link) {
+    public Object addContentToCategory(Long categoryId, Long requestId) {
         Category category = categoryRepository.findById(categoryId).get();
         if (category.getCreatorId().equals(userService.getSpecifyUserId())){
-            if(uploadedFile != null) {
+            if(fileRepositoryDB.existsById(requestId)==true) {
                 UploadedFile uploadedFile1 = new UploadedFile();
                 uploadedFile1.setCategoryId(categoryId);
                 fileRepositoryDB.save(uploadedFile1);
                 return uploadedFile1;
             }
-            else if (link != null){
+            else if (linkRepository.existsById(requestId)==true){
                 Link link1 = new Link();
                 link1.setCategoryId(categoryId);
                 linkRepository.save(link1);
@@ -69,6 +69,18 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id).get();
         if (category.getCreatorId().equals(userService.getSpecifyUserId())) {
             categoryRepository.delete(category);
+        }
+    }
+
+    @Override
+    public void deleteContentFromCategory(Long id) {
+        if(fileRepositoryDB.existsById(id)){
+            UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
+            uploadedFile.setCategoryId(null);
+        }
+        else if(linkRepository.existsById(id)){
+            Link link = linkRepository.findById(id).get();
+            
         }
     }
 }
