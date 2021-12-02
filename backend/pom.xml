@@ -9,9 +9,9 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.appslab</groupId>
-	<artifactId>CloudService</artifactId>
+	<artifactId>selfstorage</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CloudService</name>
+	<name>SelfStorage</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
