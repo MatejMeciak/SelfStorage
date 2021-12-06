@@ -1,7 +1,9 @@
-.custom-dialog .mat-dialog-container, .custom-dialog .mat-dialog-content {
-  padding: 0;
-  max-height: none;
-  overflow: hidden;
+.custom-dialog {
+  .mat-dialog-container, .mat-dialog-content {
+    padding: 0;
+    max-height: none;
+    overflow: hidden;
+  }
 }
 .mat-drawer-backdrop.mat-drawer-shown {
   background-color: #0000004d !important;

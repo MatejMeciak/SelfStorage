@@ -7,10 +7,6 @@
         <mat-icon>post_add</mat-icon>
         <span>Upload file from device</span>
       </button>
-      <button mat-menu-item (click)="openLinkDialog()">
-        <mat-icon>launch</mat-icon>
-        <span>Upload file by link</span>
-      </button>
       <button mat-menu-item (click)="openFolderDialog()">
         <mat-icon>folder</mat-icon>
         <span>Create folder</span>
@@ -20,10 +16,10 @@
     <mat-icon>more_vert</mat-icon>
 </div>
 <div class="spacer"></div>
-<div *ngIf="files || folders; else elseBlock">
+<div *ngIf="files || (folders$|async); else elseBlock">
     <div>
       <h2>Folders</h2>
-      <div class="file-grid"><app-file-card *ngFor="let folder of folders" [folder]="folder" [routerLink]="['/folder', folder.id]"></app-file-card></div>
+      <div class="file-grid"><app-file-card *ngFor="let folder of (folders$|async)" [folder]="folder" [routerLink]="['/folder', folder.id]"></app-file-card></div>
     </div>
       <div>
         <h2>Files</h2>

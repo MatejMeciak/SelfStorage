@@ -4,10 +4,9 @@ import { FileService } from '../../../services/file.service';
 import * as fileSaver from 'file-saver';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {EditFileDialogComponent} from '../dialogs/edit-file-dialog/edit-file-dialog.component';
-//import { getFileUrl } from '../../../utils/utils';
+import { getFileUrl } from '../../../utils/utils';
 import {MoveToFolderDialogComponent} from '../dialogs/move-to-folder-dialog/move-to-folder-dialog.component';
 import {Folder} from '../../../models/folder';
-import {environment} from "../../../../environments/environment";
 import {FolderService} from "../../../services/folder.service";
 
 @Component({
@@ -25,7 +24,7 @@ export class FileDetailComponent implements OnInit {
   ) { }
 
   get fileUrl(): string {
-    return `${environment.apiUrl}/file/${this.file.id}`;
+    return getFileUrl(this.file);
   }
 
   ngOnInit(): void { }
@@ -45,7 +44,7 @@ export class FileDetailComponent implements OnInit {
   openMoveToFolderDialog(): void {
     const dialogRef = this.dialog.open(MoveToFolderDialogComponent, { data: {file: this.file, folder: this.folder, action: 'move'} });
     dialogRef.afterClosed().subscribe(data => {
-      this.folderService.updateFolderWithFile(data.folder.id, data.file).subscribe();
+      this.folderService.updateFolderWithFile(data.folder.id, data.file.id).subscribe();
     });
   }
   shareWithDialog(): void {

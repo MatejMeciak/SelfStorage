@@ -8,8 +8,6 @@ import {CreateFolderDialogComponent} from '../dialogs/create-folder-dialog/creat
 import {Folder} from '../../../models/folder';
 import {MatDialog} from '@angular/material/dialog';
 import {FolderService} from "../../../services/folder.service";
-import {Link} from "../../../models/link";
-import {LinkService} from "../../../services/link.service";
 
 @Component({
   selector: 'app-folder',
@@ -19,8 +17,7 @@ import {LinkService} from "../../../services/link.service";
 export class FolderComponent implements OnInit {
   folder: Folder;
   files: File[];
-  constructor(private folderService: FolderService, private linkService: LinkService,
-              private fileService: FileService,
+  constructor(private folderService: FolderService, private fileService: FileService,
               private route: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -40,12 +37,6 @@ export class FolderComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       this.fileService.uploadFile(files.item(i)).subscribe(file => this.files.push(file));
     }
-  }
-  openLinkDialog(): void {
-    const dialogRef = this.dialog.open(UploadFileDialogComponent, { data: { fileName: '', access: false } as File });
-    dialogRef.afterClosed().subscribe(file => {
-      this.linkService.uploadLink(file).subscribe();
-    });
   }
   openDetailDialogOf(file: File): void {
     this.dialog.open(FileDetailComponent, { data: file, panelClass: 'custom-dialog' });

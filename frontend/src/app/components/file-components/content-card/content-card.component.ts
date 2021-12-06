@@ -6,17 +6,16 @@ import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-file-card',
-  templateUrl: './file-card.component.html',
-  styleUrls: ['./file-card.component.scss']
+  templateUrl: './content-card.component.html',
+  styleUrls: ['./content-card.component.scss']
 })
-export class FileCardComponent implements OnInit {
+export class ContentCardComponent implements OnInit {
   @Input() file: File;
   @Input() folder: Folder;
-  constructor() {
-  }
 
   get fileUrl(): string {
     return `${environment.apiUrl}/file/${this.file.id}`;
   }
+  constructor() { }
   ngOnInit(): void { }
 }

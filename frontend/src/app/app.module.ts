@@ -10,7 +10,7 @@ import { LoginFormComponent } from './components/auth-forms/login-form/login-for
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { FileService } from './services/file.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FileCardComponent } from './components/file-components/file-card/file-card.component';
+import { ContentCardComponent } from './components/file-components/content-card/content-card.component';
 import { RegistrationFormComponent } from './components/auth-forms/registration-form/registration-form.component';
 import { FilesComponent } from './components/file-components/files/files.component';
 import { FileDetailComponent } from './components/file-components/file-detail/file-detail.component';
@@ -26,8 +26,7 @@ import { FolderComponent } from './components/file-components/folder/folder.comp
 import { ProfilePageComponent } from './components/user-components/profile-page/profile-page.component';
 import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.component';
 import { NavbarProfileMenuComponent } from './components/user-components/navbar-profile-menu/navbar-profile-menu.component';
-import {FolderService} from "./services/folder.service";
-import {LinkService} from "./services/link.service";
+import { FolderService } from "./services/folder.service";
 
 @NgModule({
   declarations: [
@@ -35,7 +34,7 @@ import {LinkService} from "./services/link.service";
     NavigationBarComponent,
     LoginFormComponent,
     WelcomePageComponent,
-    FileCardComponent,
+    ContentCardComponent,
     RegistrationFormComponent,
     FilesComponent,
     FileDetailComponent,
@@ -59,7 +58,7 @@ import {LinkService} from "./services/link.service";
     FormsModule,
   ],
   providers: [
-    FileService, FolderService, LinkService,
+    FileService, FolderService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,
