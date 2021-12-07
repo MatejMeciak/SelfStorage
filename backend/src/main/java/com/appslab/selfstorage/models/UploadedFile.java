@@ -49,7 +49,6 @@ public class UploadedFile {
     protected List<CustomUser> friends;
 
     public UploadedFile(){
-
     }
 
     public Long getFileSize() {

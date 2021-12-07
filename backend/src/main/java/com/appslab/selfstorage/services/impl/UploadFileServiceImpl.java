@@ -1,6 +1,6 @@
 package com.appslab.selfstorage.services.impl;
 
-import com.appslab.selfstorage.fileproperty.DocumentStorageProperty;
+import com.appslab.selfstorage.config.DocumentStorageProperty;
 import com.appslab.selfstorage.models.CustomUser;
 import com.appslab.selfstorage.models.UploadedFile;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
@@ -103,7 +103,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public List<UploadedFile> findSearchFiles(String keyword) {
-        return fileRepositoryDB.findByFileName(keyword,userService.getSpecifyUserId());
+        return fileRepositoryDB.findByFileNameContainingAndOwnerId(keyword,userService.getSpecifyUserId());
     }
 
     @Override
@@ -120,11 +120,11 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public List<UploadedFile> findSearchFilesInPublicList(String keyword,Boolean access) {
-        return fileRepositoryDB.findByFileName(keyword,access);
+        return fileRepositoryDB.findByFileNameContainingAndAccess(keyword,access);
     }
 
     @Override
-    public ResponseEntity getFile(UploadedFile uploadedFile) throws Exception{
+    public ResponseEntity<InputStreamResource> getFile(UploadedFile uploadedFile) throws Exception{
         if(uploadedFile.getOwnerId().equals(userService.getSpecifyUserId())&uploadedFile.getAccess().equals(false))
         {
             FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));

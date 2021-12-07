@@ -1,6 +1,5 @@
 package com.appslab.selfstorage.models;
 
-
 import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,6 +32,9 @@ public class CustomUser implements UserDetails {
     @NotNull
     @NotEmpty
     protected String lastName;
+
+    @OneToMany
+    protected List<Category> categories;
 
     @OneToMany
     protected List<UploadedFile> uploadedFiles;

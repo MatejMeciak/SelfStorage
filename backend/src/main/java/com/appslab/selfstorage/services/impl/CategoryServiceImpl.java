@@ -73,13 +73,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteContentFromCategory(Long id) {
-        if(fileRepositoryDB.existsById(id)&fileRepositoryDB.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
+        if(fileRepositoryDB.existsById(id)&&fileRepositoryDB.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
             UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
             uploadedFile.setCategoryId(null);
+            fileRepositoryDB.save(uploadedFile);
         }
-        else if(linkRepository.existsById(id)&linkRepository.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
+        else if(linkRepository.existsById(id)&&linkRepository.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
             Link link = linkRepository.findById(id).get();
             link.setCategoryId(null);
+            linkRepository.save(link);
         }
     }
 }

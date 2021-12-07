@@ -13,7 +13,7 @@ public class Category {
 
     private Boolean adminAccess;
 
-    @JoinColumn(name = "creator_id",updatable = false,insertable = false)
+    @JoinColumn(name = "creator_id",updatable = false, insertable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private CustomUser creator;
 

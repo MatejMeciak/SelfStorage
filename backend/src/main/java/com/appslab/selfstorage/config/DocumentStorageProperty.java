@@ -1,4 +1,4 @@
-package com.appslab.selfstorage.fileproperty;
+package com.appslab.selfstorage.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
