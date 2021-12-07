@@ -1,6 +1,6 @@
-package com.appslab.selfstorage.security;
+package com.appslab.selfstorage.config;
 
-import com.appslab.selfstorage.services.CustomUserService;
+import com.appslab.selfstorage.services.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,17 +17,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final CustomUserService customUserService;
+    private  UserServiceImpl userServiceImpl;
+    private PasswordEncoder passwordEncoder;
 
-    public WebSecurityConfig(CustomUserService customUserService) {
-        this.customUserService = customUserService;
+    public WebSecurityConfig(UserServiceImpl userServiceImpl, PasswordEncoder passwordEncoder) {
+        this.userServiceImpl = userServiceImpl;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
     public DaoAuthenticationProvider authProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(customUserService);
-        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setUserDetailsService(userServiceImpl);
+        authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
 
@@ -44,11 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             }
 
         };
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Override

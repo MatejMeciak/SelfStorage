@@ -6,7 +6,6 @@ import com.appslab.selfstorage.repositories.UserRepository;
 import com.appslab.selfstorage.services.LinkService;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -46,7 +45,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public List<Link> findSearchLink(String keyword) {
-        return linkRepository.findByLinkName(keyword, userService.getSpecifyUserId());
+        return linkRepository.findByLinkNameContainingAndOwnerId(keyword, userService.getSpecifyUserId());
     }
 
     @Override

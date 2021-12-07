@@ -50,7 +50,7 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public List<Folder> searchFoldersByFolderName(String keyword) {
         Long customUserId = userService.getSpecifyUserId();
-        return folderRepository.findByFolderName(keyword, customUserId);
+        return folderRepository.findByFolderNameContainingAndOwnerId(keyword, customUserId);
     }
 
     @Override
@@ -121,10 +121,10 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public void deleteContent(Long folderId, Long id) {
         Folder folder = folderRepository.findById(folderId).get();
-        if(fileRepositoryDB.existsById(id)==true&linkRepository.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
+        if(fileRepositoryDB.existsById(id)==true&&linkRepository.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
             fileRepositoryDB.findById(id).get().setFolderId(null);
         }
-        else if(linkRepository.existsById(id)==true&linkRepository.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
+        else if(linkRepository.existsById(id)==true&&linkRepository.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
             linkRepository.findById(id).get().setFolderId(null);
         }
     }
