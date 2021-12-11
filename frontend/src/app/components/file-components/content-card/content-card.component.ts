@@ -1,20 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Folder } from '../../../models/folder';
 import { File } from '../../../models/file';
-//import { getFileUrl } from '../../../utils/utils';
-import {Folder} from '../../../models/folder';
-import {environment} from "../../../../environments/environment";
+import { getFileUrl } from '../../../utils/utils';
 
 @Component({
-  selector: 'app-file-card',
+  selector: 'app-content-card',
   templateUrl: './content-card.component.html',
   styleUrls: ['./content-card.component.scss']
 })
 export class ContentCardComponent implements OnInit {
-  @Input() file: File;
-  @Input() folder: Folder;
+  @Input() data: File| Folder;
 
   get fileUrl(): string {
-    return `${environment.apiUrl}/file/${this.file.id}`;
+    return getFileUrl(this.data);
   }
   constructor() { }
   ngOnInit(): void { }

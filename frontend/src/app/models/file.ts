@@ -1,7 +1,7 @@
 export interface File {
   id: number;
   fileSize: number;
-  fileName: string;
+  name: string;
   mimeType: string;
   date: number;
   access: boolean;

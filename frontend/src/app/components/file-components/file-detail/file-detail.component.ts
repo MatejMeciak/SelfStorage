@@ -3,9 +3,9 @@ import { File } from '../../../models/file';
 import { FileService } from '../../../services/file.service';
 import * as fileSaver from 'file-saver';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {EditFileDialogComponent} from '../dialogs/edit-file-dialog/edit-file-dialog.component';
+import {EditFileDialogComponent} from '../../dialogs/edit-file-dialog/edit-file-dialog.component';
 import { getFileUrl } from '../../../utils/utils';
-import {MoveToFolderDialogComponent} from '../dialogs/move-to-folder-dialog/move-to-folder-dialog.component';
+import {MoveToFolderDialogComponent} from '../../dialogs/move-to-folder-dialog/move-to-folder-dialog.component';
 import {Folder} from '../../../models/folder';
 import {FolderService} from "../../../services/folder.service";
 
@@ -53,7 +53,7 @@ export class FileDetailComponent implements OnInit {
 
   downloadFile(): void {
     this.fileService.downloadFile(this.file).subscribe(blob => {
-      fileSaver.saveAs(blob, this.file.fileName);
+      fileSaver.saveAs(blob, this.file.name);
     });
   }
   closeDialog(deleteFile: boolean): void {

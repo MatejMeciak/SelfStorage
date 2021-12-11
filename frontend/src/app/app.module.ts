@@ -18,15 +18,16 @@ import { SearchPageComponent } from './components/search-page/search-page.compon
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './auth/interceptor/auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditFileDialogComponent } from './components/file-components/dialogs/edit-file-dialog/edit-file-dialog.component';
-import { UploadFileDialogComponent } from './components/file-components/dialogs/upload-file-dialog/upload-file-dialog.component';
-import { CreateFolderDialogComponent } from './components/file-components/dialogs/create-folder-dialog/create-folder-dialog.component';
-import { MoveToFolderDialogComponent } from './components/file-components/dialogs/move-to-folder-dialog/move-to-folder-dialog.component';
+import { EditFileDialogComponent } from './components/dialogs/edit-file-dialog/edit-file-dialog.component';
+import { UploadFileDialogComponent } from './components/dialogs/upload-file-dialog/upload-file-dialog.component';
+import { CreateFolderDialogComponent } from './components/dialogs/create-folder-dialog/create-folder-dialog.component';
+import { MoveToFolderDialogComponent } from './components/dialogs/move-to-folder-dialog/move-to-folder-dialog.component';
 import { FolderComponent } from './components/file-components/folder/folder.component';
 import { ProfilePageComponent } from './components/user-components/profile-page/profile-page.component';
 import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.component';
 import { NavbarProfileMenuComponent } from './components/user-components/navbar-profile-menu/navbar-profile-menu.component';
 import { FolderService } from "./services/folder.service";
+import {CategoryService} from "./services/category.service";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import { FolderService } from "./services/folder.service";
     FormsModule,
   ],
   providers: [
-    FileService, FolderService,
+    FileService, FolderService, CategoryService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {File} from "../../models/file";
 import {FileService} from "../../services/file.service";
 import {MatDialog} from "@angular/material/dialog";
-import {UploadFileDialogComponent} from "../file-components/dialogs/upload-file-dialog/upload-file-dialog.component";
+import {UploadFileDialogComponent} from "../dialogs/upload-file-dialog/upload-file-dialog.component";
 
 @Component({
   selector: 'app-welcome-page',

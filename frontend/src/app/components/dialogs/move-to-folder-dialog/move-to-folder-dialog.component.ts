@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Folder} from '../../../../models/folder';
-import {FolderService} from "../../../../services/folder.service";
+import {Folder} from '../../../models/folder';
+import {FolderService} from "../../../services/folder.service";
 
 @Component({
   selector: 'app-move-to-folder-dialog',

@@ -7,8 +7,8 @@ import { FolderService } from "../../../services/folder.service";
 import { File } from '../../../models/file';
 import { Folder } from '../../../models/folder';
 
-import { UploadFileDialogComponent } from '../dialogs/upload-file-dialog/upload-file-dialog.component';
-import { CreateFolderDialogComponent } from '../dialogs/create-folder-dialog/create-folder-dialog.component';
+import { UploadFileDialogComponent } from '../../dialogs/upload-file-dialog/upload-file-dialog.component';
+import { CreateFolderDialogComponent } from '../../dialogs/create-folder-dialog/create-folder-dialog.component';
 import { FileDetailComponent } from "../file-detail/file-detail.component";
 
 import { MatDialog } from '@angular/material/dialog';
@@ -41,7 +41,7 @@ export class FilesComponent implements OnInit, OnDestroy {
   }
 
   openFolderDialog(): void {
-    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {folderName: '', access: false } as Folder });
+    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {name: '', access: false } as Folder });
     dialogRef.afterClosed().subscribe(folder => {
       this.folderService.createFolder(folder).subscribe();
     });

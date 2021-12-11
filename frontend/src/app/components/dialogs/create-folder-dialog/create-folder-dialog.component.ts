@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Folder} from '../../../../models/folder';
+import {Folder} from '../../../models/folder';
 
 @Component({
   selector: 'app-create-folder-dialog',

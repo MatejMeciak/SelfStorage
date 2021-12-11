@@ -1,5 +1,5 @@
 <div class="file-header">
-  <h1>{{ folder.folderName }}</h1>
+  <h1>{{ folder.name }}</h1>
   <mat-icon class="upload-button" [matMenuTriggerFor]="menu">add</mat-icon>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="fileInput.click()">
@@ -16,7 +16,7 @@
 </div>
 <div *ngIf="files; else elseBlock">
   <h2>Files</h2>
-  <div class="file-grid"><app-file-card *ngFor="let file of files" [file]="file" (click)="openDetailDialogOf(file)"></app-file-card></div>
+  <div class="file-grid"><app-content-card *ngFor="let file of files" [data]="file" (click)="openDetailDialogOf(file)"></app-content-card></div>
 </div>
 <ng-template #elseBlock>
   <p>No data</p>
