@@ -1,7 +1,6 @@
 package com.appslab.selfstorage.services;
 
 import com.appslab.selfstorage.models.Link;
-
 import java.util.List;
 
 public interface LinkService {

@@ -50,7 +50,7 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public List<Folder> searchFoldersByFolderName(String keyword) {
         Long customUserId = userService.getSpecifyUserId();
-        return folderRepository.findByFolderNameContainingAndOwnerId(keyword, customUserId);
+        return folderRepository.findByNameContainingAndOwnerId(keyword, customUserId);
     }
 
     @Override

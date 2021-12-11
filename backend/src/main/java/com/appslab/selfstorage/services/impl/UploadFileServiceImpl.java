@@ -65,7 +65,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     @Override
     public UploadedFile uploadedFile(MultipartFile multipartFile,Boolean access) {
             UploadedFile uploadedFile = new UploadedFile();
-            uploadedFile.setFileName(multipartFile.getOriginalFilename());
+            uploadedFile.setName(multipartFile.getOriginalFilename());
             uploadedFile.setFileSize(multipartFile.getSize());
             uploadedFile.setMimeType(multipartFile.getContentType());
             uploadedFile.setDate();
@@ -103,7 +103,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public List<UploadedFile> findSearchFiles(String keyword) {
-        return fileRepositoryDB.findByFileNameContainingAndOwnerId(keyword,userService.getSpecifyUserId());
+        return fileRepositoryDB.findByNameContainingAndOwnerId(keyword,userService.getSpecifyUserId());
     }
 
     @Override
@@ -111,7 +111,7 @@ public class UploadFileServiceImpl implements UploadFileService {
         UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
         if(uploadedFile1.getOwnerId().equals(userService.getSpecifyUserId()))
         {
-            uploadedFile1.setFileName(uploadedFile.getFileName());
+            uploadedFile1.setName(uploadedFile.getName());
             uploadedFile1.setAccess(uploadedFile.getAccess());
             fileRepositoryDB.save(uploadedFile1);
         }
@@ -120,7 +120,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public List<UploadedFile> findSearchFilesInPublicList(String keyword,Boolean access) {
-        return fileRepositoryDB.findByFileNameContainingAndAccess(keyword,access);
+        return fileRepositoryDB.findByNameContainingAndAccess(keyword,access);
     }
 
     @Override

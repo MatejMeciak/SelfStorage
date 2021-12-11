@@ -20,7 +20,7 @@ public class Category {
     @Column(name = "creator_id")
     private Long creatorId;
 
-    @OneToMany
+    @OneToMany(mappedBy = "category")
     private List<UploadedFile> files;
 
     @OneToMany

@@ -11,7 +11,7 @@ public class Folder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
-    protected String folderName;
+    protected String name;
 
     protected Long date;
 
@@ -38,12 +38,12 @@ public class Folder {
         this.id = id;
     }
 
-    public String getFolderName() {
-        return folderName;
+    public String getName() {
+        return name;
     }
 
-    public void setFolderName(String folderName) {
-        this.folderName = folderName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getDate() {
