@@ -15,7 +15,7 @@ public class UploadedFile {
 
     protected Long fileSize;
 
-    protected String fileName;
+    protected String name;
 
     protected String mimeType;
 
@@ -59,12 +59,12 @@ public class UploadedFile {
         this.fileSize = fileSize;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getName() {
+        return name;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {

@@ -7,9 +7,9 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface FileRepositoryDB extends CrudRepository<UploadedFile,Long> {
-    List<UploadedFile> findByFileNameContainingAndOwnerId(String keyword, Long ownerId);
+    List<UploadedFile> findByNameContainingAndOwnerId(String keyword, Long ownerId);
 
-    List<UploadedFile> findByFileNameContainingAndAccess(String fileName,Boolean access);
+    List<UploadedFile> findByNameContainingAndAccess(String name,Boolean access);
 
     List<UploadedFile> findByOwnerId(Long customUserId);
 
