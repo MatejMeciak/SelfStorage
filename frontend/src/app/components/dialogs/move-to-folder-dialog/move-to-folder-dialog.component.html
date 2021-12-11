@@ -3,7 +3,7 @@
     <mat-label>{{ data.action | titlecase }} to</mat-label>
       <mat-select [(value)]="data.folder">
         <mat-option *ngFor="let folder of folders" [value]="folder">
-          {{folder.folderName}}
+          {{folder.name}}
         </mat-option>
       </mat-select>
   </mat-form-field>

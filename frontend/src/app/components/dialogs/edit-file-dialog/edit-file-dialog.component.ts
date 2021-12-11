@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { File } from '../../../../models/file';
-import {FileService} from '../../../../services/file.service';
-import {Folder} from '../../../../models/folder';
+import { File } from '../../../models/file';
+import {FileService} from '../../../services/file.service';
+import {Folder} from '../../../models/folder';
 
 @Component({
   selector: 'app-edit-file-dialog',

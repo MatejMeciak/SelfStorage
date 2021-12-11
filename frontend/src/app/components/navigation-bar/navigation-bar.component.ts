@@ -25,4 +25,7 @@ export class NavigationBarComponent implements OnInit {
   toggleSideBar(): void {
     this.toggleSideNavEvent.emit();
   }
+  logout() {
+    this.authService.logout();
+  }
 }

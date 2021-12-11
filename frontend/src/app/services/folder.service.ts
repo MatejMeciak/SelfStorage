@@ -5,7 +5,6 @@ import { Observable } from "rxjs";
 
 import { File as FileModel } from "../models/file";
 import { Folder } from "../models/folder";
-import {Link} from "../models/link";
 
 @Injectable({
   providedIn: 'root'
@@ -35,14 +34,8 @@ export class FolderService {
   }
 
   // PUT
-  updateFolderWithFile(folderId: Folder, file: FileModel): Observable<any> {
-    delete file['customUsers'];
-    return this.http.put(`${this.folderUrl}/${folderId}/file`, file);
-  }
-  // TODO
-  updateFolderWithLink(folderId: Folder, file: FileModel): Observable<Folder[]> {
-    delete file['customUsers'];
-    return this.http.put<Folder[]>(`${this.folderUrl}/${folderId}`, file);
+  updateFolderWithFile(folderId: number, fileId: number): Observable<Folder> {
+    return this.http.put<Folder>(`${this.folderUrl}/${folderId}/upload`, fileId);
   }
 
   //DELETE

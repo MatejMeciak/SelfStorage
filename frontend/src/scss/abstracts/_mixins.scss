@@ -1,4 +1,7 @@
 @mixin highlight {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
   cursor: pointer;
   border-radius: 4px;
   user-select: none;
@@ -9,6 +12,7 @@
     font-size: 14px;
     font-weight: 500;
     opacity: 0.8;
+    height: fit-content;
     &:hover {
       opacity: 1;
     }

@@ -7,12 +7,23 @@
         <span class="logo-text">SelfStorage</span>
       </div>
     </div>
-    <div class="account-button highlight">
+    <div class="account-button highlight" [matMenuTriggerFor]="menu">
       <mat-icon>account_circle</mat-icon>
       <div class="account-text">
         <span>{{ user ? user.username : 'no user' }}</span>
         <mat-icon fontSet="material-icons-round" class="expand-icon">expand_more</mat-icon>
       </div>
     </div>
+    <!-- move to component -->
+    <mat-menu #menu="matMenu">
+      <div class="highlight" routerLink="/login">
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+      </div>
+      <div mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </div>
+    </mat-menu>
   </mat-toolbar>
 </nav>

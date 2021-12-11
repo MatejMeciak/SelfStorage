@@ -2,14 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FileService} from '../../../services/file.service';
 import { File} from '../../../models/file';
-import {UploadFileDialogComponent} from '../dialogs/upload-file-dialog/upload-file-dialog.component';
 import {FileDetailComponent} from '../file-detail/file-detail.component';
-import {CreateFolderDialogComponent} from '../dialogs/create-folder-dialog/create-folder-dialog.component';
+import {CreateFolderDialogComponent} from '../../dialogs/create-folder-dialog/create-folder-dialog.component';
 import {Folder} from '../../../models/folder';
 import {MatDialog} from '@angular/material/dialog';
 import {FolderService} from "../../../services/folder.service";
-import {Link} from "../../../models/link";
-import {LinkService} from "../../../services/link.service";
 
 @Component({
   selector: 'app-folder',
@@ -19,8 +16,7 @@ import {LinkService} from "../../../services/link.service";
 export class FolderComponent implements OnInit {
   folder: Folder;
   files: File[];
-  constructor(private folderService: FolderService, private linkService: LinkService,
-              private fileService: FileService,
+  constructor(private folderService: FolderService, private fileService: FileService,
               private route: ActivatedRoute, private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -41,17 +37,11 @@ export class FolderComponent implements OnInit {
       this.fileService.uploadFile(files.item(i)).subscribe(file => this.files.push(file));
     }
   }
-  openLinkDialog(): void {
-    const dialogRef = this.dialog.open(UploadFileDialogComponent, { data: { fileName: '', access: false } as File });
-    dialogRef.afterClosed().subscribe(file => {
-      this.linkService.uploadLink(file).subscribe();
-    });
-  }
   openDetailDialogOf(file: File): void {
     this.dialog.open(FileDetailComponent, { data: file, panelClass: 'custom-dialog' });
   }
   openFolderDialog(): void {
-    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {folderName: '', access: false } as Folder });
+    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {name: '', access: false } as Folder });
     dialogRef.afterClosed().subscribe(folder => {
       this.folderService.createFolder(folder).subscribe();
     });

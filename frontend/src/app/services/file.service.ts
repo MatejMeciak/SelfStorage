@@ -50,7 +50,6 @@ export class FileService {
 
   // PUT
   updateFile(file: FileModel): Observable<FileModel> {
-    delete file['customUsers'];
     return this.http.put<FileModel>(`${this.fileUrl}/edit`, file);
   }
   shareFileWithUser(username: string, file:FileModel): Observable<FileModel> {

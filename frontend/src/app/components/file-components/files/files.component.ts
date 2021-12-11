@@ -1,46 +1,47 @@
-import { Component, OnInit } from '@angular/core';
-import { File } from '../../../models/file';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, takeUntil } from "rxjs";
+
 import { FileService } from '../../../services/file.service';
+import { FolderService } from "../../../services/folder.service";
+
+import { File } from '../../../models/file';
 import { Folder } from '../../../models/folder';
-import {UploadFileDialogComponent} from '../dialogs/upload-file-dialog/upload-file-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
-import {CreateFolderDialogComponent} from '../dialogs/create-folder-dialog/create-folder-dialog.component';
-import {FileDetailComponent} from '../file-detail/file-detail.component';
-import {FolderService} from "../../../services/folder.service";
-import {LinkService} from "../../../services/link.service";
+
+import { UploadFileDialogComponent } from '../../dialogs/upload-file-dialog/upload-file-dialog.component';
+import { CreateFolderDialogComponent } from '../../dialogs/create-folder-dialog/create-folder-dialog.component';
+import { FileDetailComponent } from "../file-detail/file-detail.component";
+
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-files',
   templateUrl: './files.component.html',
   styleUrls: ['./files.component.scss']
 })
-export class FilesComponent implements OnInit {
-
-  active = 'all';
-
+export class FilesComponent implements OnInit, OnDestroy {
   files: File[];
-  folders: Folder[];
+  folders$:  Observable<Folder[]>;
 
-  folderFiles: File[];
-  constructor(private fileService: FileService, private folderService: FolderService, private linkService: LinkService, private dialog: MatDialog) { }
+  unsubscribe$ = new Subject();
+  constructor(private fileService: FileService, private folderService: FolderService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.fileService.getFiles().subscribe(files => this.files = files);
-    this.folderService.getFolders().subscribe(folders => this.folders = folders);
+    this.fileService.getFiles().pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(files => this.files = files);
+    this.folders$ = this.folderService.getFolders();
   }
+
   onFileInput(files: FileList): void {
     for (let i = 0; i < files.length; i++) {
-      this.fileService.uploadFile(files.item(i)).subscribe(file => this.files.push(file));
+      this.fileService.uploadFile(files.item(i)).pipe(
+        takeUntil(this.unsubscribe$)
+      ).subscribe(file => this.files.push(file));
     }
   }
-  openLinkDialog(): void {
-    const dialogRef = this.dialog.open(UploadFileDialogComponent, { data: { fileName: '', access: false } as File });
-    dialogRef.afterClosed().subscribe(file => {
-      this.linkService.uploadLink(file).subscribe();
-    });
-  }
+
   openFolderDialog(): void {
-    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {folderName: '', access: false } as Folder });
+    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {name: '', access: false } as Folder });
     dialogRef.afterClosed().subscribe(folder => {
       this.folderService.createFolder(folder).subscribe();
     });
@@ -54,5 +55,9 @@ export class FilesComponent implements OnInit {
           this.fileService.getFiles().subscribe(files => this.files = files));
       }
     });
+  }
+  ngOnDestroy(): void {
+    this.unsubscribe$.next(true);
+    this.unsubscribe$.complete();
   }
 }
