@@ -1,6 +1,8 @@
 <app-main-sidenav #sidenavComponent>
-  <app-navigation-bar (toggleSideNavEvent)="sidenavComponent.toggleSideNav()"></app-navigation-bar>
-  <div class="router-container">
-    <router-outlet></router-outlet>
+  <div class="main-content">
+    <app-navigation-bar (toggleSideNavEvent)="sidenavComponent.toggleSideNav()"></app-navigation-bar>
+    <div class="router-container">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </app-main-sidenav>

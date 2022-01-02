@@ -15,6 +15,6 @@
     <div class="filter" matRipple (click)="allPublicFiles()">Show Shared Files</div>
   </div>
 </div>
-<div class="file-grid"><app-content-card *ngFor="let file of files | async" [data]="file" (click)="selectedFile=file"></app-content-card></div>
+<div class="file-grid"><app-content-card *ngFor="let file of files | async" [content]="file" (click)="selectedFile=file"></app-content-card></div>
 
 

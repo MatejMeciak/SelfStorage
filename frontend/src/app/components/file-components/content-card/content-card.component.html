@@ -1,9 +1,9 @@
 <div class="card">
   <div class="card-content">
-    <img src="{{ fileUrl }}" alt="{{ data.name }}">
+    <img src="{{ fileUrl }}" alt="{{ content.name }}">
   </div>
   <div class="card-footer">
-    <h3>{{ data.name | slice:0: 20 }}</h3>
-    <p class="date-time">{{ data.date | date : 'MMM d y hh:mm'}}</p>
+    <p class="card-name">{{ content.name }}</p>
+    <span class="date-time">{{ content.date | date : 'MMM d y hh:mm'}}</span>
   </div>
 </div>

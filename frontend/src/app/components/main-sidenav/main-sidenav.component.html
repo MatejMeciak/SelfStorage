@@ -26,8 +26,8 @@
       <mat-expansion-panel expanded>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon>insert_drive_file</mat-icon>
-            <span>Files</span>
+            <mat-icon>storage</mat-icon>
+            <span>Your Storage</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="flex">
@@ -44,9 +44,12 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="flex">
-                <div *ngFor="let subList of list.sub" [routerLink]="subList.link" routerLinkActive="active" class="column highlight">
-                  <mat-icon>{{subList.matIcon}}</mat-icon>
-                  <span>{{subList.title}}</span>
+                <div *ngFor="let subList of this.categories|async" [routerLink]="subList.name" routerLinkActive="active" class="column highlight">
+                  <mat-icon *ngIf="subList.name === 'Favourite'; else elseBlock">favorite</mat-icon>
+                  <ng-template #elseBlock>
+                    <mat-icon>star</mat-icon>
+                  </ng-template>
+                  <span>{{subList.name}}</span>
                 </div>
               </div>
             </mat-expansion-panel>
@@ -54,10 +57,15 @@
         </div>
       </mat-expansion-panel>
       <div class="spacer"></div>
+      <div class="column highlight" routerLink="search" routerLinkActive="active">
+        <mat-icon fontSet="material-icons-round">public</mat-icon>
+        <span>Public files</span>
+      </div>
+      <div class="spacer"></div>
     </div>
   </mat-sidenav>
   <!-- router-outlet (main-content) -->
-  <mat-sidenav-content class="main-content">
+  <mat-sidenav-content>
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>
