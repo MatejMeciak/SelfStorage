@@ -16,7 +16,9 @@
     margin: auto 0;
   }
 }
-
+.files-header:nth-child(1) {
+  margin-right: 1rem;
+}
 .spacer {
   @include spacer($space: 1.5rem);
 }
@@ -40,4 +42,14 @@ app-content-card {
   p {
     margin: 0;
   }
+}
+.container {
+  padding-left: 0.5rem;
+}
+
+.detail-sidenav {
+  padding: 1em;
+  width: 25%;
+  border-left: 1px solid #e1e1e1;
+  background-color: #fafafa;
 }

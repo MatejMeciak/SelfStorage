@@ -19,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit, OnDestroy {
+  selectedFile: File;
   files: File[];
   folders$:  Observable<Folder[]>;
 

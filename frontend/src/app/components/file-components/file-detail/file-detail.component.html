@@ -1,61 +1,25 @@
-<!-- <div (window:keydown.escape)="closeFile()" class="background-detail">
-  <div class="container">
-    <img src="{{ fileUrl }}" alt="{{file.fileName}}">
-    <div class="side-block">
-      <p><span>File name:</span> {{ file.fileName }}</p>
-      <p *ngIf="file.fileSize"><span>File size:</span> {{ file.fileSize / 1000 | number: '1.0-2' }} kB</p>
-      <p><span>Uploaded date:</span> {{ file.date | date : 'MMM d y hh:mm' }}</p>
-      <p><span>Is public:</span> {{ file.access }}</p>
-      <div class="options">
-        <mat-icon (click)="downloadFile()">file_download</mat-icon>
-        <mat-icon (click)="openDialog()">more_vert</mat-icon>
-        <mat-icon (click)="closeFile()">close</mat-icon>
-      </div>
+<div class="container" *ngIf="file">
+  <img class="image" src="{{ fileUrl }}" alt="file-image">
+  <div class="title">
+    <span>{{ file.name }}</span>
+    <div class="shared-with"></div>
+    <div class="sub-title">
+      <span>{{ fileType }}</span>
+      <span class="date">{{ file.date | date : 'MMM d y hh:mm'}}</span>
     </div>
   </div>
-</div> -->
-<div class="options">
-  <mat-icon class="menu" [matMenuTriggerFor]="menu">more_vert</mat-icon>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="downloadFile()">
-      <mat-icon>file_download</mat-icon>
-      <span>Download file</span>
-    </button>
-    <button mat-menu-item (click)="openEditFileDialog()">
-      <mat-icon>edit</mat-icon>
-      <span>Edit file</span>
-    </button>
-    <button mat-menu-item [matMenuTriggerFor]="CopyOrMove">
-      <mat-icon>drive_folder_upload</mat-icon>
-      <span>Move or copy file to folder</span>
-    </button>
-    <mat-menu #CopyOrMove="matMenu">
-      <button mat-menu-item (click)="openMoveToFolderDialog()">
-        <mat-icon>drive_folder_upload</mat-icon>
-        <span>Move file to folder</span>
-      </button>
-      <button mat-menu-item (click)="openCopyToFolderDialog()">
-        <mat-icon>snippet_folder</mat-icon>
-        <span>Copy file to folder</span>
-      </button>
-    </mat-menu>
-    <button mat-menu-item (click)="shareWithDialog()">
-      <mat-icon>share</mat-icon>
-      <span>Share with</span>
-    </button>
-    <button mat-menu-item (click)="closeDialog(true)">
-      <mat-icon>delete</mat-icon>
-      <span>Delete</span>
-    </button>
-    <button mat-menu-item (click)="closeDialog(false)">
-      <mat-icon>close</mat-icon>
-      <span>Close</span>
-    </button>
-  </mat-menu>
-</div>
-
-<mat-dialog-content (window:keydown.escape)="closeDialog(false)">
-  <div>
-    <img src="{{ fileUrl }}" alt="{{file.name}}">
+  <div class="spacer"></div>
+    <div class="highlight">
+      <mat-icon>wallpaper</mat-icon>
+      <span>View</span>
+    </div>
+    <div class="spacer"></div>
+  <div class="highlight">
+    <mat-icon>edit</mat-icon>
+    <span>Edit</span>
   </div>
-</mat-dialog-content>
+  <div class="highlight">
+    <mat-icon>share</mat-icon>
+    <span>Share</span>
+  </div>
+</div>

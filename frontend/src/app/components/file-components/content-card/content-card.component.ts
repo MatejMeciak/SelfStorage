@@ -9,10 +9,10 @@ import { getFileUrl } from '../../../utils/utils';
   styleUrls: ['./content-card.component.scss']
 })
 export class ContentCardComponent implements OnInit {
-  @Input() data: File| Folder;
+  @Input() content: File | Folder;
 
   get fileUrl(): string {
-    return getFileUrl(this.data);
+    return getFileUrl(this.content);
   }
   constructor() { }
   ngOnInit(): void { }

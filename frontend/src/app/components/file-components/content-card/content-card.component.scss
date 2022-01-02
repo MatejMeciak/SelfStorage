@@ -16,14 +16,19 @@
     text-align: center;
     padding: 10px;
     background-color: white;
+    .card-name {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
     .date-time {
       font-size: 12px;
     }
-    .date-time, h3 {
+    .date-time, .card-name {
       margin: 0;
     }
   }
 }
-
 
 

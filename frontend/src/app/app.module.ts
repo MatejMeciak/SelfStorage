@@ -28,6 +28,7 @@ import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.com
 import { NavbarProfileMenuComponent } from './components/user-components/navbar-profile-menu/navbar-profile-menu.component';
 import { FolderService } from "./services/folder.service";
 import {CategoryService} from "./services/category.service";
+import {DialogService} from "./services/dialog.service";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {CategoryService} from "./services/category.service";
     FormsModule,
   ],
   providers: [
-    FileService, FolderService, CategoryService,
+    FileService, FolderService,
+    CategoryService, DialogService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,
