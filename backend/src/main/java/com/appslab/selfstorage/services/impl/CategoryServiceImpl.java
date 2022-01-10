@@ -14,31 +14,31 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
-    UserService userService;
+    UserService userservice;
     FileRepositoryDB fileRepositoryDB;
     LinkRepository linkRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, UserService userService, FileRepositoryDB fileRepositoryDB, LinkRepository linkRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, UserService localUserDetailService, FileRepositoryDB fileRepositoryDB, LinkRepository linkRepository) {
         this.categoryRepository = categoryRepository;
-        this.userService = userService;
+        this.userservice = localUserDetailService;
         this.fileRepositoryDB = fileRepositoryDB;
         this.linkRepository = linkRepository;
     }
 
     @Override
     public List<Category> getListOfCategories() {
-        return categoryRepository.findByCreatorId(userService.getSpecifyUserId());
+        return categoryRepository.findByCreatorId(userservice.getSpecifyUserId());
     }
 
     @Override
-    public Category getCategory(Long id) {
-        return categoryRepository.findById(id).get();
+    public List<UploadedFile> getCategory(Long id) {
+        return categoryRepository.findById(id).get().getFiles();
     }
 
     @Override
     public Category createCategory(String categoryName){
         Category category = new Category();
-        category.setCreatorId(userService.getSpecifyUserId());
+        category.setCreatorId(userservice.getSpecifyUserId());
         category.setName(categoryName);
         return categoryRepository.save(category);
     }
@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Object addContentToCategory(Long categoryId, Long requestId) {
         Category category = categoryRepository.findById(categoryId).get();
-        if (category.getCreatorId().equals(userService.getSpecifyUserId())){
+        if (category.getCreatorId().equals(userservice.getSpecifyUserId())){
             if(fileRepositoryDB.existsById(requestId)==true) {
                 UploadedFile uploadedFile1 = new UploadedFile();
                 uploadedFile1.setCategoryId(categoryId);
@@ -66,19 +66,19 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(Long id){
         Category category = categoryRepository.findById(id).get();
-        if (category.getCreatorId().equals(userService.getSpecifyUserId())) {
+        if (category.getCreatorId().equals(userservice.getSpecifyUserId())) {
             categoryRepository.delete(category);
         }
     }
 
     @Override
     public void deleteContentFromCategory(Long id) {
-        if(fileRepositoryDB.existsById(id)&&fileRepositoryDB.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
+        if(fileRepositoryDB.existsById(id)&&fileRepositoryDB.findById(id).get().getOwnerId().equals(userservice.getSpecifyUserId())){
             UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
             uploadedFile.setCategoryId(null);
             fileRepositoryDB.save(uploadedFile);
         }
-        else if(linkRepository.existsById(id)&&linkRepository.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
+        else if(linkRepository.existsById(id)&&linkRepository.findById(id).get().getOwnerId().equals(userservice.getSpecifyUserId())){
             Link link = linkRepository.findById(id).get();
             link.setCategoryId(null);
             linkRepository.save(link);

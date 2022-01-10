@@ -8,7 +8,6 @@ import com.appslab.selfstorage.repositories.FolderRepository;
 import com.appslab.selfstorage.repositories.LinkRepository;
 import com.appslab.selfstorage.services.FolderService;
 import com.appslab.selfstorage.services.UploadFileService;
-import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,17 +16,19 @@ import java.util.List;
 public class FolderServiceImpl implements FolderService {
 
     private FolderRepository folderRepository;
-    private UserService userService;
+    private LocalUserDetailService localLocalUserDetailServiceDetail;
     private FileRepositoryDB fileRepositoryDB;
     private UploadFileService uploadFileService;
     private LinkRepository linkRepository;
+    private com.appslab.selfstorage.services.UserService userService;
 
-    public FolderServiceImpl(FolderRepository folderRepository, UserService userService, FileRepositoryDB fileRepositoryDB, UploadFileService uploadFileService, LinkRepository linkRepository) {
+    public FolderServiceImpl(FolderRepository folderRepository, LocalUserDetailService localLocalUserDetailServiceDetail, FileRepositoryDB fileRepositoryDB, UploadFileService uploadFileService, LinkRepository linkRepository, com.appslab.selfstorage.services.UserService userService) {
         this.folderRepository = folderRepository;
-        this.userService = userService;
+        this.localLocalUserDetailServiceDetail = localLocalUserDetailServiceDetail;
         this.fileRepositoryDB = fileRepositoryDB;
         this.uploadFileService = uploadFileService;
         this.linkRepository = linkRepository;
+        this.userService = userService;
     }
 
 

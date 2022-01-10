@@ -1,7 +1,7 @@
 package com.appslab.selfstorage.dto;
 
 
-public class RegistrationRequestDTO {
+public class RegistrationRequestDto {
     protected String password;
     protected String username;
     protected String firstName;
