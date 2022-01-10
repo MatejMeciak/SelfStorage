@@ -17,7 +17,7 @@ public class FolderController {
     private final FileRepositoryDB fileRepositoryDB;
     private final UserService userService;
 
-    public FolderController(FolderService folderService, UploadFileService uploadFileService, FileRepositoryDB fileRepositoryDB,UserService userService) {
+    public FolderController(FolderService folderService, UploadFileService uploadFileService, FileRepositoryDB fileRepositoryDB, UserService userService) {
         this.folderService = folderService;
         this.uploadFileService = uploadFileService;
         this.fileRepositoryDB = fileRepositoryDB;

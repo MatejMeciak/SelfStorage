@@ -29,7 +29,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     private UserService userService;
     private UserRepository userRepository;
 
-    @Autowired
+
     public UploadFileServiceImpl(FileRepositoryDB fileRepositoryDB, DocumentStorageProperty documentStorageProperty, UserService userService, UserRepository userRepository) throws Exception {
         this.fileRepositoryDB = fileRepositoryDB;
         this.userService = userService;
@@ -103,7 +103,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public List<UploadedFile> findSearchFiles(String keyword) {
-        return fileRepositoryDB.findByNameContainingAndOwnerId(keyword,userService.getSpecifyUserId());
+        return fileRepositoryDB.findByNameContainingAndOwnerId(keyword, userService.getSpecifyUserId());
     }
 
     @Override
@@ -125,7 +125,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public ResponseEntity<InputStreamResource> getFile(UploadedFile uploadedFile) throws Exception{
-        if(uploadedFile.getOwnerId().equals(userService.getSpecifyUserId())&uploadedFile.getAccess().equals(false))
+        if(uploadedFile.getOwnerId().equals(userService.getSpecifyUserId())&&uploadedFile.getAccess().equals(false))
         {
             FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
             return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
