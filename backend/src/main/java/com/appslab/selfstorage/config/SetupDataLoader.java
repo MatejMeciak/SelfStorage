@@ -5,8 +5,7 @@ import com.appslab.selfstorage.models.CustomUser;
 import com.appslab.selfstorage.models.Role;
 import com.appslab.selfstorage.repositories.RoleRepository;
 import com.appslab.selfstorage.repositories.UserRepository;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +15,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Component
-public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
-
-    private boolean alreadySetup = false;
+public class SetupDataLoader implements CommandLineRunner {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -30,17 +27,12 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
     @Transactional
-    public void onApplicationEvent(final ContextRefreshedEvent event) {
-        if (alreadySetup) {
-            return;
-        }
-
+    @Override
+    public void run(String... args){
         Role userRole = createRoleIfNotFound(Role.ROLE_USER);
         Role adminRole = createRoleIfNotFound(Role.ROLE_ADMIN);
         createUserIfNotFound("admin@javachinna.com", Set.of(userRole, adminRole));
-        alreadySetup = true;
     }
 
     @Transactional
@@ -57,6 +49,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             Date now = Calendar.getInstance().getTime();
             user.setCreatedDate(now);
             user.setModifiedDate(now);
+            user.setFirstName("Firstname");
+            user.setLastName("Lastname");
             user = userRepository.save(user);
         }
         return user;

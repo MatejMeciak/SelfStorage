@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
+@Service("localUserDetailService")
 public class LocalUserDetailService implements UserDetailsService{
 
     private UserRepository userRepository;
