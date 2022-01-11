@@ -18,9 +18,9 @@ public class CategoryServiceImpl implements CategoryService {
     FileRepositoryDB fileRepositoryDB;
     LinkRepository linkRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, UserService localUserDetailService, FileRepositoryDB fileRepositoryDB, LinkRepository linkRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, UserService userService, FileRepositoryDB fileRepositoryDB, LinkRepository linkRepository) {
         this.categoryRepository = categoryRepository;
-        this.userservice = localUserDetailService;
+        this.userservice = userService;
         this.fileRepositoryDB = fileRepositoryDB;
         this.linkRepository = linkRepository;
     }
