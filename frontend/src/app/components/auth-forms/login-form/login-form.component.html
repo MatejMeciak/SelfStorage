@@ -3,7 +3,13 @@
         <h1>LOGIN</h1>
     </mat-card-header>
     <mat-card-content>
-        <form [formGroup]="loginGroup" (ngSubmit)="login()">
+        <form [formGroup]="loginGroup" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <label>
+              <input formControlName="email" matInput type="email">
+            </label>
+          </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Username</mat-label>
               <label>
@@ -20,6 +26,18 @@
         </form>
     </mat-card-content>
     <mat-card-footer>
+        <div role="alert" *ngIf="isLoginFailed">Login failed: {{ errorMessage }}</div>
         <p class="footer-text" routerLink="/registration">I am not registered.</p>
+      <div class="flex">
+        <p class="social-login">
+          Sign in with:
+          <a href="{{ googleURL }}">
+            <img alt="Login with Google" src="/assets/img/google.png">
+          </a>
+          <a href="{{ facebookURL }}">
+            <img alt="Login with Facebook" src="/assets/img/facebook.png">
+          </a>
+        </p>
+      </div>
     </mat-card-footer>
 </mat-card>

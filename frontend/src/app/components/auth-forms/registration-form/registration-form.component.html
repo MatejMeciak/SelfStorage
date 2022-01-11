@@ -3,25 +3,17 @@
     <h1>REGISTER</h1>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="registerGroup" (ngSubmit)="register()">
-      <div class="flex">
-        <mat-form-field appearance="outline">
-          <mat-label>FirstName</mat-label>
-          <label>
-            <input formControlName="firstName" matInput type="text">
-          </label>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>LastName</mat-label>
-          <label>
-            <input formControlName="lastName" matInput type="text">
-          </label>
-        </mat-form-field>
-      </div>
+    <form [formGroup]="registerGroup" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
         <label>
           <input formControlName="username" matInput type="text">
+        </label>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <label>
+          <input formControlName="email" matInput type="email">
         </label>
       </mat-form-field>
       <mat-form-field appearance="outline">
@@ -30,13 +22,12 @@
           <input formControlName="password" matInput type="password">
         </label>
       </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Repeat Password</mat-label>
-        <label>
-          <input formControlName="password" matInput type="password">
-        </label>
-      </mat-form-field>
       <button type="submit" mat-stroked-button>Register</button>
     </form>
   </mat-card-content>
+  <mat-card-footer>
+    <div class="alert" *ngIf="isSignUpFailed">
+      Signup failed!<br />{{ errorMessage }}
+    </div>
+  </mat-card-footer>
 </mat-card>
