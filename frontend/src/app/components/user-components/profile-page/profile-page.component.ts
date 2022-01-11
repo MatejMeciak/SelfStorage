@@ -19,7 +19,7 @@ export class ProfilePageComponent implements OnInit {
     this.getSharedFiles();
   }
   getUser(): void {
-    this.authService.getUser().subscribe(user => this.user = user);
+    //this.authService.getUser().subscribe(user => this.user = user);
   }
   getSharedFiles(): void {
     this.fileService.getSharedFiles().subscribe(files => this.sharedFiles = files);
