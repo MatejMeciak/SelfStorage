@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(RegistrationRequestDto registrationRequest){
-        CustomUser customUser = new CustomUser(passwordEncoder.encode(registrationRequest.getPassword()), registrationRequest.getUsername(), registrationRequest.getFirstName(), registrationRequest.getLastName());
+        CustomUser customUser = new CustomUser(passwordEncoder.encode(registrationRequest.getPassword()), registrationRequest.getUsername());
         customUser = userRepository.save(customUser);
         Category favouriteFiles = new Category();
         favouriteFiles.setName("Favourite");
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
 
     private CustomUser buildUser(final SignUpRequest formDTO) {
         CustomUser user = new CustomUser();
-        user.setUsername(formDTO.getDisplayName());
+        user.setUsername(formDTO.getUsername());
         user.setEmail(formDTO.getEmail());
         user.setPassword(passwordEncoder.encode(formDTO.getPassword()));
         final HashSet<Role> roles = new HashSet<Role>();
@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private SignUpRequest toUserRegistrationObject(String registrationId, OAuth2UserInfo oAuth2UserInfo) {
-        return SignUpRequest.getBuilder().addProviderUserID(oAuth2UserInfo.getId()).addDisplayName(oAuth2UserInfo.getName()).addEmail(oAuth2UserInfo.getEmail())
+        return SignUpRequest.getBuilder().addProviderUserID(oAuth2UserInfo.getId()).addUsernameName(oAuth2UserInfo.getName()).addEmail(oAuth2UserInfo.getEmail())
                 .addSocialProvider(GeneralUtils.toSocialProvider(registrationId)).addPassword("changeit").build();
     }
 

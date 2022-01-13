@@ -6,14 +6,11 @@ import com.appslab.selfstorage.models.CustomUser;
 import com.appslab.selfstorage.repositories.UserRepository;
 import com.appslab.selfstorage.services.UserService;
 import com.appslab.selfstorage.util.GeneralUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service("localUserDetailService")
 public class LocalUserDetailService implements UserDetailsService{

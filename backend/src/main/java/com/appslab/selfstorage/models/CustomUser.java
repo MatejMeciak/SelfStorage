@@ -42,14 +42,6 @@ public class CustomUser implements UserDetails {
     @NotEmpty
     private String username;
 
-    @NotNull
-    @NotEmpty
-    protected String firstName;
-
-    @NotNull
-    @NotEmpty
-    protected String lastName;
-
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "USER_ID")},inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
@@ -67,11 +59,9 @@ public class CustomUser implements UserDetails {
     public CustomUser() {
     }
 
-    public CustomUser(@NotEmpty String password, @NotEmpty String username, @NotEmpty String firstName, @NotEmpty String lastName) {
+    public CustomUser(@NotEmpty String password, @NotEmpty String username) {
         this.password = password;
         this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -96,22 +86,6 @@ public class CustomUser implements UserDetails {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public List<UploadedFile> getSharedFiles() {
