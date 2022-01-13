@@ -22,12 +22,19 @@
           <input formControlName="password" matInput type="password">
         </label>
       </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Repeat password</mat-label>
+        <label>
+          <input formControlName="matchingPassword" matInput type="password">
+        </label>
+      </mat-form-field>
       <button type="submit" mat-stroked-button>Register</button>
     </form>
   </mat-card-content>
   <mat-card-footer>
-    <div class="alert" *ngIf="isSignUpFailed">
-      Signup failed!<br />{{ errorMessage }}
+    <div role="alert" *ngIf="isSignUpFailed">
+      Signup failed! {{ errorMessage }}
     </div>
+    <p class="footer-text" routerLink="/login">I have already registered.</p>
   </mat-card-footer>
 </mat-card>

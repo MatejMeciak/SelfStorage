@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
-import { tap } from 'rxjs/operators';
-import {User} from '../models/user';
+import { BehaviorSubject, Observable } from 'rxjs';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -14,7 +13,7 @@ const httpOptions = {
 })
 export class AuthService {
   userUrl = `${environment.apiUrl}/user`;
-  authUrl = `${environment.apiUrl}`;
+  authUrl = `${environment.authApi}`;
   token: BehaviorSubject<string> = new BehaviorSubject(null);
   constructor(private readonly http: HttpClient) { }
   getToken(): string {
@@ -50,18 +49,23 @@ export class AuthService {
   //   return this.http.post(`${this.authUrl}/registration`, user);
   // }
   login(credentials): Observable<any> {
-    return this.http.post(environment.AUTH_API + 'signin', {
-      email: credentials.username,
+    return this.http.post(this.authUrl + 'signin', {
+      email: credentials.email,
       password: credentials.password
     }, httpOptions);
   }
 
   register(user): Observable<any> {
-    return this.http.post(environment.AUTH_API + 'signup', {
+    return this.http.post(this.authUrl + 'signup', {
       username: user.username,
       email: user.email,
       password: user.password,
+      matchingPassword: user.matchingPassword,
       socialProvider: 'LOCAL'
     }, httpOptions);
+  }
+
+  getCurrentUser(): Observable<any> {
+    return this.http.get(this.userUrl + '/me', httpOptions);
   }
 }

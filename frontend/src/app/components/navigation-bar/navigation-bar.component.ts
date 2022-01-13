@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {User} from "../../models/user";
-import {File} from "../../models/file";
 import {TokenStorageService} from "../../services/token-storage.service";
 
 @Component({
@@ -16,6 +15,7 @@ export class NavigationBarComponent implements OnInit {
   // showAdminBoard = false;
   // showModeratorBoard = false;
   username: string;
+  user: User;
 
   @Output() toggleSideNavEvent = new EventEmitter();
 
@@ -23,12 +23,11 @@ export class NavigationBarComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private authService: AuthService
   ) { }
-  user: User;
 
   ngOnInit(): void {
     this.getUser();
     this.isLoggedIn = !!this.tokenStorageService.getToken();
-
+    console.log(this.tokenStorageService.getToken());
     if (this.isLoggedIn) {
       this.user = this.tokenStorageService.getUser();
       // this.roles = user.roles;

@@ -7,7 +7,6 @@ import { FolderService } from "../../../services/folder.service";
 import { File } from '../../../models/file';
 import { Folder } from '../../../models/folder';
 
-import { UploadFileDialogComponent } from '../../dialogs/upload-file-dialog/upload-file-dialog.component';
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder-dialog/create-folder-dialog.component';
 import { FileDetailComponent } from "../file-detail/file-detail.component";
 

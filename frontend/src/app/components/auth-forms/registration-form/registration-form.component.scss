@@ -1,7 +1,7 @@
 mat-card {
   width: fit-content;
   margin: 6em auto 0;
-  padding: 5em;
+  padding: 5em 5em 52px;
   position: relative;
 }
 mat-form-field {
@@ -16,8 +16,8 @@ mat-card-content {
   align-items: center;
 }
 h1 {
-  color: #35A4DB;
-  border-left: 5px solid #35A4DB;
+  color: #2a85ff;
+  border-left: 5px solid #2a85ff;
   padding-left: 2.3em;
   position: absolute;
   left: 0;
@@ -25,8 +25,14 @@ h1 {
 }
 
 .footer-text {
-  color: #35A4DB;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  color: #969696;
   text-align: center;
+  &:hover {
+    color: #222222;
+    cursor: pointer;
+  }
 }
 
 button {
@@ -43,5 +49,17 @@ button {
 }
 .flex > mat-form-field {
   width: 120px;
+}
+
+div[role="alert"] {
+  color: red;
+  text-align: center;
+}
+
+.footer-text {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  color: #969696;
+  text-align: center;
 }
 

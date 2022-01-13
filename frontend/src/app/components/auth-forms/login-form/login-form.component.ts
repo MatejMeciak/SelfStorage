@@ -16,12 +16,11 @@ export class LoginFormComponent implements OnInit {
   errorMessage = '';
   currentUser: any;
   form: any;
-  googleURL = environment.GOOGLE_AUTH_URL;
-  facebookURL = environment.FACEBOOK_AUTH_URL;
+  googleURL = environment.googleAuthUrl;
+  facebookURL = environment.facebookAuthUrl;
 
   loginGroup = new FormGroup({
     email: new FormControl('', Validators.required),
-    username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
   });
   constructor(
@@ -42,15 +41,15 @@ export class LoginFormComponent implements OnInit {
     }
     else if(token){
       this.tokenStorage.saveToken(token);
-      // this.userService.getCurrentUser().subscribe(
-      //   data => {
-      //     this.login(data);
-      //   },
-      //   err => {
-      //     this.errorMessage = err.error.message;
-      //     this.isLoginFailed = true;
-      //   }
-      // );
+      this.authService.getCurrentUser().subscribe(
+        data => {
+          this.login(data);
+        },
+        err => {
+          this.errorMessage = err.error.message;
+          this.isLoginFailed = true;
+        }
+      );
     }
     else if(error){
       this.errorMessage = error;
@@ -67,9 +66,9 @@ export class LoginFormComponent implements OnInit {
   // }
   onSubmit(): void {
     if (this.loginGroup.valid) {
-      const username = this.loginGroup.value.username;
+      const email = this.loginGroup.value.email;
       const password = this.loginGroup.value.password;
-      this.form = { username, password };
+      this.form = { email, password };
       this.authService.login(this.form).subscribe(
         data => {
           this.tokenStorage.saveToken(data.accessToken);

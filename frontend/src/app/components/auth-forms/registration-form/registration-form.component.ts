@@ -17,6 +17,7 @@ export class RegistrationFormComponent implements OnInit {
   registerGroup = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
+    matchingPassword: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
   });
   constructor(
@@ -42,6 +43,7 @@ export class RegistrationFormComponent implements OnInit {
     if (this.registerGroup.valid) {
       const username = this.registerGroup.value.username;
       const password = this.registerGroup.value.password;
+      const matchingPassword = this.registerGroup.value.matchingPassword;
       const email = this.registerGroup.value.email;
       this.form = { username, password, email };
       this.authService.register(this.form).subscribe(
