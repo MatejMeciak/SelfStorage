@@ -49,8 +49,6 @@ public class SetupDataLoader implements CommandLineRunner {
             Date now = Calendar.getInstance().getTime();
             user.setCreatedDate(now);
             user.setModifiedDate(now);
-            user.setFirstName("Firstname");
-            user.setLastName("Lastname");
             user = userRepository.save(user);
         }
         return user;
