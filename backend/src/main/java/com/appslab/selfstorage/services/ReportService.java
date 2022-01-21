@@ -6,7 +6,11 @@ import com.appslab.selfstorage.models.UploadedFile;
 import java.util.Iterator;
 
 public interface ReportService{
-    void createReport(UploadedFile uploadedFile, String reason);
+    Report createReport(UploadedFile uploadedFile, String reason);
 
     Iterator<Report> getAllReports();
+
+    Report removeReport(Long id);
+
+    UploadedFile submitReport(Long id);
 }

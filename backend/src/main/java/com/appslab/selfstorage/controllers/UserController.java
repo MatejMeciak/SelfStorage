@@ -47,9 +47,5 @@ public class UserController {
         return ResponseEntity.ok(GeneralUtils.buildUserInfo(user));
     }
 
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getAdminContent() {
-        return ResponseEntity.ok(ReportService.class.cast(reportService.getAllReports()));
-    }
+
 }
