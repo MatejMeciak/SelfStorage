@@ -14,6 +14,7 @@ import com.appslab.selfstorage.repositories.RoleRepository;
 import com.appslab.selfstorage.repositories.UserRepository;
 import com.appslab.selfstorage.security.oauth2.user.OAuth2UserInfo;
 import com.appslab.selfstorage.security.oauth2.user.OAuth2UserInfoFactory;
+import com.appslab.selfstorage.services.CategoryService;
 import com.appslab.selfstorage.services.UserService;
 
 import com.appslab.selfstorage.util.GeneralUtils;
@@ -32,38 +33,36 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-    private CategoryRepository categoryRepository;
     private RoleRepository roleRepository;
 
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, CategoryRepository categoryRepository,RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.categoryRepository = categoryRepository;
         this.roleRepository = roleRepository;
     }
 
-    @Override
-    public void createUser(RegistrationRequestDto registrationRequest){
-        CustomUser customUser = new CustomUser(passwordEncoder.encode(registrationRequest.getPassword()), registrationRequest.getUsername());
-        customUser = userRepository.save(customUser);
-        Category favouriteFiles = new Category();
-        favouriteFiles.setName("Favourite");
-        favouriteFiles.setCreatorId(customUser.getId());
-        categoryRepository.save(favouriteFiles);
-    }
+//    @Override
+//    public void createUser(RegistrationRequestDto registrationRequest){
+//        CustomUser customUser = new CustomUser(passwordEncoder.encode(registrationRequest.getPassword()), registrationRequest.getUsername());
+//        customUser = userRepository.save(customUser);
+//        Category favouriteFiles = new Category();
+//        favouriteFiles.setName("Favourite");
+//        favouriteFiles.setCreatorId(customUser.getId());
+//        categoryRepository.save(favouriteFiles);
+//    }
 
-    @Override
-    public Boolean userAlreadyExists(RegistrationRequestDto registrationRequest) {
-        Boolean username = userRepository.existsByUsername(registrationRequest.getUsername());
-        if (username != true){
-            createUser(registrationRequest);
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
+//    @Override
+//    public Boolean userAlreadyExists(RegistrationRequestDto registrationRequest) {
+//        Boolean username = userRepository.existsByUsername(registrationRequest.getUsername());
+//        if (username != true){
+//            createUser(registrationRequest);
+//            return false;
+//        }
+//        else{
+//            return true;
+//        }
+//    }
 
     @Override
     public void changePassword(String password) {
@@ -110,6 +109,7 @@ public class UserServiceImpl implements UserService {
         user.setProvider(formDTO.getSocialProvider().getProviderType());
         user.setEnabled(true);
         user.setProviderUserId(formDTO.getProviderUserId());
+
         return user;
     }
 
@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
     public Long getSpecifyUserId() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
-        Optional<CustomUser> user = userRepository.findByUsername(username);
-        return user.get().getId();
+        CustomUser user = userRepository.findByEmail(username);
+        return user.getId();
     }
 }

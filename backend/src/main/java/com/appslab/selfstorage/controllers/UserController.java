@@ -2,8 +2,7 @@ package com.appslab.selfstorage.controllers;
 
 import com.appslab.selfstorage.config.CurrentUser;
 import com.appslab.selfstorage.dto.LocalUser;
-import com.appslab.selfstorage.models.CustomUser;
-import com.appslab.selfstorage.dto.RegistrationRequestDto;
+import com.appslab.selfstorage.services.ReportService;
 import com.appslab.selfstorage.services.UserService;
 import com.appslab.selfstorage.util.GeneralUtils;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
+    private ReportService reportService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ReportService reportService) {
         this.userService = userService;
+        this.reportService = reportService;
     }
 
 //    @GetMapping("/user")
@@ -40,26 +41,15 @@ public class UserController {
 //        userService.changePassword(password);
 //    }
 
-    @GetMapping("/user/me")
-    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/user")
+    //@PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getCurrentUser(@CurrentUser LocalUser user) {
         return ResponseEntity.ok(GeneralUtils.buildUserInfo(user));
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<?> getContent() {
-        return ResponseEntity.ok("Public content goes here");
-    }
-
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> getUserContent() {
-        return ResponseEntity.ok("User content goes here");
     }
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAdminContent() {
-        return ResponseEntity.ok("Admin content goes here");
+        return ResponseEntity.ok(ReportService.class.cast(reportService.getAllReports()));
     }
 }

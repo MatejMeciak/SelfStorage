@@ -7,6 +7,9 @@ import com.appslab.selfstorage.services.ReportService;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
+import java.util.List;
+
 @Service
 public class ReportServiceImpl implements ReportService {
     private ReportRepository reportRepository;
@@ -24,5 +27,10 @@ public class ReportServiceImpl implements ReportService {
         report.setReason(reason);
         report.setFileId(uploadedFile.getId());
         reportRepository.save(report);
+    }
+
+    @Override
+    public Iterator<Report> getAllReports() {
+        return reportRepository.findAll().iterator();
     }
 }

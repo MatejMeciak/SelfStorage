@@ -58,11 +58,6 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public Path getDocStorageLocation() {
-        return docStorageLocation;
-    }
-
-    @Override
     public UploadedFile uploadedFile(MultipartFile multipartFile,Boolean access) {
             UploadedFile uploadedFile = new UploadedFile();
             uploadedFile.setName(multipartFile.getOriginalFilename());
@@ -89,12 +84,12 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public Path pathToSpecificFile(UploadedFile uploadedFile) {
-        return getDocStorageLocation().resolve(uploadedFile.getUuid().toString());
+        return docStorageLocation.resolve(uploadedFile.getUuid().toString());
     }
 
     @Override
     public void saveFileToStorage(UploadedFile uploadedFile, MultipartFile multipartFile) throws Exception{
-        File file = getDocStorageLocation().resolve(uploadedFile.getUuid().toString()).toFile();
+        File file = docStorageLocation.resolve(uploadedFile.getUuid().toString()).toFile();
         file.createNewFile();
         FileOutputStream outputStream = new FileOutputStream(file);
         multipartFile.getInputStream().transferTo(outputStream);
@@ -125,7 +120,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public ResponseEntity<InputStreamResource> getFile(UploadedFile uploadedFile) throws Exception{
-        if(uploadedFile.getOwnerId().equals(userService.getSpecifyUserId())&&uploadedFile.getAccess().equals(false))
+        if(uploadedFile.getOwnerId().equals(userService.getSpecifyUserId()))
         {
             FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
             return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
@@ -148,22 +143,6 @@ public class UploadFileServiceImpl implements UploadFileService {
             fileRepositoryDB.save(uploadedFile1);
         }
     }
-
-//    @Override
-//    public Object returnUploadedFileOrLink(UploadedFile uploadedFile) {
-//        //if(uploadedFile.getLink()==null){
-//            try {
-//                return this.getFile(uploadedFile);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        //}
-//        //else{
-//           // return uploadedFile;
-//        //}
-//        //return null;
-//    }
 
     @Override
     public List<UploadedFile> returnShareFiles() {

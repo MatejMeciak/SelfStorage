@@ -27,9 +27,6 @@ public class Category {
     @OneToMany
     private List<Folder> folders;
 
-    @OneToMany
-    private List<Link> links;
-
     public Category() {
     }
 
@@ -69,14 +66,6 @@ public class Category {
         this.folders = folders;
     }
 
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
-
     public void setAdminAccess(Boolean adminAccess) {
         this.adminAccess = adminAccess;
     }
@@ -88,5 +77,4 @@ public class Category {
     public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
     }
-
 }

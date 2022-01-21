@@ -13,8 +13,6 @@ public interface UploadFileService {
 
     List<UploadedFile> getListOfMyFiles();
 
-    Path getDocStorageLocation();
-
     UploadedFile uploadedFile(MultipartFile multipartFile,Boolean access);
 
     void saveUploadedFileToDB(UploadedFile uploadedFile);
@@ -34,8 +32,6 @@ public interface UploadFileService {
     ResponseEntity<InputStreamResource> getFile(UploadedFile uploadedFile) throws Exception;
 
     void saveEditFileWithUser(String username, UploadedFile uploadedFile);
-
-    //Object returnUploadedFileOrLink(UploadedFile uploadedFile);
 
     List<UploadedFile> returnShareFiles();
 

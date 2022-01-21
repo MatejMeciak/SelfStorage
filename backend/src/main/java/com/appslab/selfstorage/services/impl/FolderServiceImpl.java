@@ -1,11 +1,9 @@
 package com.appslab.selfstorage.services.impl;
 
 import com.appslab.selfstorage.models.Folder;
-import com.appslab.selfstorage.models.Link;
 import com.appslab.selfstorage.models.UploadedFile;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
 import com.appslab.selfstorage.repositories.FolderRepository;
-import com.appslab.selfstorage.repositories.LinkRepository;
 import com.appslab.selfstorage.services.FolderService;
 import com.appslab.selfstorage.services.UploadFileService;
 import com.appslab.selfstorage.services.UserService;
@@ -19,14 +17,12 @@ public class FolderServiceImpl implements FolderService {
     private FolderRepository folderRepository;
     private FileRepositoryDB fileRepositoryDB;
     private UploadFileService uploadFileService;
-    private LinkRepository linkRepository;
     private UserService userService;
 
-    public FolderServiceImpl(FolderRepository folderRepository,FileRepositoryDB fileRepositoryDB, UploadFileService uploadFileService, LinkRepository linkRepository, com.appslab.selfstorage.services.UserService userService) {
+    public FolderServiceImpl(FolderRepository folderRepository,FileRepositoryDB fileRepositoryDB, UploadFileService uploadFileService, UserService userService) {
         this.folderRepository = folderRepository;
         this.fileRepositoryDB = fileRepositoryDB;
         this.uploadFileService = uploadFileService;
-        this.linkRepository = linkRepository;
         this.userService = userService;
     }
 
@@ -95,16 +91,10 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public void addContentToFolder(Long id, Long requestId ) {
         Folder folder = folderRepository.findById(id).get();
-        if (folder.getOwnerId().equals(userService.getSpecifyUserId())){
-            if (fileRepositoryDB.existsById(requestId)==true) {
-                UploadedFile uploadedFile1 = fileRepositoryDB.findById(requestId).get();
-                uploadedFile1.setFolderId(id);
-                fileRepositoryDB.save(uploadedFile1);
-            } else if (linkRepository.existsById(requestId)==true) {
-                Link link1 = linkRepository.findById(requestId).get();
-                link1.setFolderId(id);
-                linkRepository.save(link1);
-            }
+        if (folder.getOwnerId().equals(userService.getSpecifyUserId())) {
+            UploadedFile uploadedFile1 = fileRepositoryDB.findById(requestId).get();
+            uploadedFile1.setFolderId(id);
+            fileRepositoryDB.save(uploadedFile1);
         }
     }
 
@@ -121,11 +111,8 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public void deleteContent(Long folderId, Long id) {
         Folder folder = folderRepository.findById(folderId).get();
-        if(fileRepositoryDB.existsById(id)==true&&linkRepository.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
+        if(fileRepositoryDB.existsById(id)==true&&fileRepositoryDB.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
             fileRepositoryDB.findById(id).get().setFolderId(null);
-        }
-        else if(linkRepository.existsById(id)==true&&linkRepository.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
-            linkRepository.findById(id).get().setFolderId(null);
         }
     }
 }

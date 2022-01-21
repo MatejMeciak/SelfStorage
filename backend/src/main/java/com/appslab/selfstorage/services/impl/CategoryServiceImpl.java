@@ -1,11 +1,9 @@
 package com.appslab.selfstorage.services.impl;
 
 import com.appslab.selfstorage.models.Category;
-import com.appslab.selfstorage.models.Link;
 import com.appslab.selfstorage.models.UploadedFile;
 import com.appslab.selfstorage.repositories.CategoryRepository;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
-import com.appslab.selfstorage.repositories.LinkRepository;
 import com.appslab.selfstorage.services.CategoryService;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
@@ -16,13 +14,11 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
     UserService userservice;
     FileRepositoryDB fileRepositoryDB;
-    LinkRepository linkRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, UserService userService, FileRepositoryDB fileRepositoryDB, LinkRepository linkRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, UserService userService, FileRepositoryDB fileRepositoryDB) {
         this.categoryRepository = categoryRepository;
         this.userservice = userService;
         this.fileRepositoryDB = fileRepositoryDB;
-        this.linkRepository = linkRepository;
     }
 
     @Override
@@ -47,18 +43,10 @@ public class CategoryServiceImpl implements CategoryService {
     public Object addContentToCategory(Long categoryId, Long requestId) {
         Category category = categoryRepository.findById(categoryId).get();
         if (category.getCreatorId().equals(userservice.getSpecifyUserId())){
-            if(fileRepositoryDB.existsById(requestId)==true) {
-                UploadedFile uploadedFile1 = new UploadedFile();
-                uploadedFile1.setCategoryId(categoryId);
-                fileRepositoryDB.save(uploadedFile1);
-                return uploadedFile1;
-            }
-            else if (linkRepository.existsById(requestId)==true){
-                Link link1 = new Link();
-                link1.setCategoryId(categoryId);
-                linkRepository.save(link1);
-                return link1;
-            }
+            UploadedFile uploadedFile1 = new UploadedFile();
+            uploadedFile1.setCategoryId(categoryId);
+            fileRepositoryDB.save(uploadedFile1);
+            return uploadedFile1;
         }
         return null;
     }
@@ -73,15 +61,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteContentFromCategory(Long id) {
-        if(fileRepositoryDB.existsById(id)&&fileRepositoryDB.findById(id).get().getOwnerId().equals(userservice.getSpecifyUserId())){
+        if(fileRepositoryDB.findById(id).get().getOwnerId().equals(userservice.getSpecifyUserId())){
             UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
             uploadedFile.setCategoryId(null);
             fileRepositoryDB.save(uploadedFile);
-        }
-        else if(linkRepository.existsById(id)&&linkRepository.findById(id).get().getOwnerId().equals(userservice.getSpecifyUserId())){
-            Link link = linkRepository.findById(id).get();
-            link.setCategoryId(null);
-            linkRepository.save(link);
         }
     }
 }
