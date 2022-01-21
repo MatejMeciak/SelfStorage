@@ -1,1 +1,22 @@
-<p>navbar-profile-menu works!</p>
+<div class="container">
+  <div class="profile-header" *ngIf="isLoggedIn">
+    <div class="profile">
+      <mat-icon>account_circle</mat-icon>
+      <span class="profile-text">{{ user ? user.username : 'no user' }}</span>
+    </div>
+    <button class="highlight" routerLink="/profile">My Profile</button>
+  </div>
+  <div class="highlight" *ngIf="!isLoggedIn" routerLink="/registration">
+    <mat-icon>add_circle_outline</mat-icon>
+    <span>Register</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="highlight" *ngIf="!isLoggedIn" routerLink="/login">
+    <mat-icon>login</mat-icon>
+    <span>Login</span>
+  </div>
+  <div class="highlight" *ngIf="isLoggedIn" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    <span>Logout</span>
+  </div>
+</div>

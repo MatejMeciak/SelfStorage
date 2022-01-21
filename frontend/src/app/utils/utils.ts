@@ -1,7 +1,14 @@
-import { environment } from '../../environments/environment';
+import { Injectable } from '@angular/core';
 
-export const getFileUrl = (content): string => {
-  return !content.hasOwnProperty('mimeType') ? './assets/images/folder_icon.png' :
-    content.mimeType.includes('image') ? `${environment.apiUrl}/file/${content.id}` :
-      './assets/images/file_icon.png';
- };
+@Injectable({
+  providedIn: 'root',
+})
+export class UtilsService {
+   getFileUrl(content, image?): string {
+    return !content.hasOwnProperty('mimeType') ? './assets/images/folder_icon.png' :
+      content.mimeType.includes('image') ? image :
+        './assets/images/file_icon.png';
+  };
+}
+
+

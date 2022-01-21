@@ -36,5 +36,14 @@
       Signup failed! {{ errorMessage }}
     </div>
     <p class="footer-text" routerLink="/login">I have already registered.</p>
+    <p class="social-login">
+      Sign in with:
+      <a href="{{ googleURL }}">
+        <img alt="Login with Google" src="/assets/images/google.png">
+      </a>
+      <a href="{{ facebookURL }}">
+        <img alt="Login with Facebook" src="/assets/images/facebook.png">
+      </a>
+    </p>
   </mat-card-footer>
 </mat-card>

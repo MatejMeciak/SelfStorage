@@ -9,6 +9,8 @@ import {Folder} from "../../models/folder";
 import {MatDialog} from "@angular/material/dialog";
 import {FolderService} from "../../services/folder.service";
 import {Category} from "../../models/category";
+import {SidenavService} from "../../services/sidenav.service";
+import { TokenStorageService } from "../../services/token-storage.service";
 
 @Component({
   selector: 'app-main-sidenav',
@@ -16,7 +18,8 @@ import {Category} from "../../models/category";
   styleUrls: ['./main-sidenav.component.scss']
 })
 export class MainSidenavComponent implements OnInit, OnDestroy {
-  @ViewChild('sidenav') sideNavRef: MatSidenav;
+  @ViewChild('sidenav', { static: true }) sideNav: MatSidenav;
+  isLoggedIn = false;
 
   unsubscribe$ = new Subject();
 
@@ -28,10 +31,16 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
     { title: 'Shared with', link: 'search', matIcon: 'folder_shared' },
   ];
 
-  constructor(private dialog: MatDialog, private router: Router,
-              private fileService: FileService, private categoryService: CategoryService) { }
+  constructor(private dialog: MatDialog,
+              private router: Router,
+              private fileService: FileService,
+              private tokenStorageService: TokenStorageService,
+              private categoryService: CategoryService,
+              private sidenavService: SidenavService) { }
   ngOnInit(): void {
     this.categories = this.categoryService.getCategories();
+    this.sidenavService.setMainSidenav(this.sideNav);
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
   }
 
   onFileInput(files: FileList): void {
@@ -44,7 +53,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
 
 
   async toggleSideNav(): Promise<void> {
-    await this.sideNavRef.toggle();
+    await this.sidenavService.toggleMainSidenav();
   }
   ngOnDestroy(): void {
     this.unsubscribe$.next(true);

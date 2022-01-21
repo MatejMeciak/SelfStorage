@@ -12,14 +12,13 @@ import {File} from '../../../models/file';
 export class ProfilePageComponent implements OnInit {
 
   constructor(private authService: AuthService, private fileService: FileService) { }
-  user: User;
+  user;
   sharedFiles: File[];
   ngOnInit(): void {
-    this.getUser();
+    this.authService.getCurrentUser().subscribe(user => {
+      this.user = user;
+    });
     this.getSharedFiles();
-  }
-  getUser(): void {
-    //this.authService.getUser().subscribe(user => this.user = user);
   }
   getSharedFiles(): void {
     this.fileService.getSharedFiles().subscribe(files => this.sharedFiles = files);

@@ -4,27 +4,21 @@ mat-toolbar {
   background-color: #ededed;
   border-radius: 6px;
 }
-
 .flex-container{
   display: flex;
-}
-.logo {
-  display: flex;
-  align-items: center;
-  padding: 0 14px;
-}
-.logo-image {
-  width: 48px;
-  margin-right: 6px;
+  .logo {
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+  }
+  .logo-image {
+    width: 48px;
+    margin-right: 6px;
+  }
 }
 .logo-text, .expand-icon {
   font-size: 24px!important;
   margin: 0!important;
-}
-
-.mat-icon-button, .mat-icon {
-  width: fit-content;
-  height: fit-content;
 }
 .mat-icon {
   line-height: normal !important;
@@ -32,20 +26,29 @@ mat-toolbar {
   user-select: none;
   cursor: pointer;
 }
+.mat-icon-button, .mat-icon {
+  width: fit-content;
+  height: fit-content;
+}
 
 .account-button, .account-text {
   display: flex;
   align-items: center;
   padding: 0;
 }
-.account-button {
+.account-button, .login-button {
   padding: 4px 6px;
 }
 .account-text * {
   margin-left: 6px;
   font-size: 14px;
 }
-
+.login-button {
+  gap: 0.2rem;
+  mat-icon {
+    font-size: 32px;
+  }
+}
 
 
 

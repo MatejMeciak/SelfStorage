@@ -6,20 +6,33 @@ import {MatDrawer, MatSidenav} from "@angular/material/sidenav";
 })
 export class SidenavService {
   private mainSidenav: MatSidenav;
+  private detailSidenav: MatDrawer;
 
   public setMainSidenav(sidenav: MatSidenav) {
     this.mainSidenav = sidenav;
   }
-
-  public open(sidenav:MatSidenav, MatDrawer) {
-    return sidenav.open();
+  public setDetailSidenav(sidenav: MatDrawer) {
+    this.detailSidenav = sidenav;
   }
 
-  public close(sidenav:MatSidenav, MatDrawer) {
-    return sidenav.close();
+
+  public openMainSidenav() {
+    return this.mainSidenav.open();
+  }
+  public closeMainSidenav() {
+    return this.mainSidenav.close();
+  }
+  public toggleMainSidenav() {
+    return this.mainSidenav.toggle();
   }
 
-  public toggle(sidenav:MatSidenav, MatDrawer): void {
-    sidenav.toggle();
+  public openDetailSidenav() {
+    return this.detailSidenav.open();
+  }
+  public closeDetailSidenav() {
+    return this.detailSidenav.close();
+  }
+  public toggleDetailSidenav() {
+    return this.detailSidenav.toggle();
   }
 }

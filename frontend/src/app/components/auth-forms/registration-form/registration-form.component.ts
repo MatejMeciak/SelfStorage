@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { environment } from "../../../../environments/environment";
 
 @Component({
   selector: 'app-registration-form',
@@ -13,6 +14,9 @@ export class RegistrationFormComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
   form:any;
+  googleURL = environment.googleAuthUrl;
+  facebookURL = environment.facebookAuthUrl;
+
 
   registerGroup = new FormGroup({
     username: new FormControl('', Validators.required),
@@ -25,20 +29,7 @@ export class RegistrationFormComponent implements OnInit {
     private readonly router: Router
   ) { }
 
-  ngOnInit(): void {
-  }
-  // register(): void {
-  //   if (this.registerGroup.valid) {
-  //     const username = this.registerGroup.value.username;
-  //     const password = this.registerGroup.value.password;
-  //     const email = this.registerGroup.value.email;
-  //     this.authService.register(username, password, email)
-  //       .subscribe(() => {
-  //         this.authService.login(username, password)
-  //           .subscribe(() => this.router.navigateByUrl('/home'));
-  //       });
-  //   }
-  // }
+  ngOnInit(): void { }
   onSubmit(): void {
     if (this.registerGroup.valid) {
       const username = this.registerGroup.value.username;
@@ -48,7 +39,6 @@ export class RegistrationFormComponent implements OnInit {
       this.form = { username, password, email };
       this.authService.register(this.form).subscribe(
         data => {
-          console.log(data);
           this.isSuccessful = true;
           this.isSignUpFailed = false;
         },

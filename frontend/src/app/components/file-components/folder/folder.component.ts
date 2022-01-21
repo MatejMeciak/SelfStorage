@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FileService} from '../../../services/file.service';
 import { File} from '../../../models/file';
-import {FileDetailComponent} from '../file-detail/file-detail.component';
+import {ContentDetailComponent} from '../content-detail/content-detail.component';
 import {CreateFolderDialogComponent} from '../../dialogs/create-folder-dialog/create-folder-dialog.component';
 import {Folder} from '../../../models/folder';
 import {MatDialog} from '@angular/material/dialog';
@@ -38,7 +38,7 @@ export class FolderComponent implements OnInit {
     }
   }
   openDetailDialogOf(file: File): void {
-    this.dialog.open(FileDetailComponent, { data: file, panelClass: 'custom-dialog' });
+    this.dialog.open(ContentDetailComponent, { data: file, panelClass: 'custom-dialog' });
   }
   openFolderDialog(): void {
     const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {name: '', access: false } as Folder });

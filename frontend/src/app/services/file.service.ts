@@ -20,20 +20,20 @@ export class FileService {
   getFile(id: number): Observable<FileModel> {
     return this.http.get<FileModel>(`${this.fileUrl}/${id}`);
   }
+  getFileBlob(id: number): Observable<Blob> {
+    return this.http.get(`${this.fileUrl}/${id}`, { responseType: 'blob' });
+  }
   getSearchedFiles(keyword: string): Observable<FileModel[]> {
-    return this.http.get<FileModel[]>(`${this.fileUrl}/search/?keyword=${keyword}`);
+    return this.http.get<FileModel[]>(`${this.fileUrl}/search?keyword=${keyword}`);
   }
   getPublicFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/public`);
   }
   getSearchedPublicFiles(keyword: string): Observable<FileModel[]> {
-    return this.http.get<FileModel[]>(`${this.fileUrl}/public/search/?keyword=${keyword}`);
+    return this.http.get<FileModel[]>(`${this.fileUrl}/public/search?keyword=${keyword}`);
   }
   getSharedFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/share/myFiles`);
-  }
-  downloadFile(file: FileModel): Observable<Blob> {
-    return this.http.get(`${this.fileUrl}/${file.id}`, { responseType: 'blob' });
   }
 
   // POST
