@@ -28,10 +28,12 @@ public class ReportController {
         return ResponseEntity.ok(ReportService.class.cast(reportService.getAllReports()));
     }
 
-    @PutMapping("/remove/{id}")
+
+
+    @PutMapping("/remove")
     @PreAuthorize("hasRole('ADMIN')")
-    public Report removeReport(@RequestParam Long id){
-        return reportService.removeReport(id);
+    public Report removeReport(@RequestBody Report report){
+        return reportService.removeReport(report);
     }
 
     @DeleteMapping("/submit/{id}")

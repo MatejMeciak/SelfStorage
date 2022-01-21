@@ -47,13 +47,6 @@ public class UploadFileController {
         return uploadFileService.returnShareFiles();
     }
 
-//    @GetMapping("/getAllLinks")
-//    public List<UploadedFile> getAllLinks(){
-//        List<UploadedFile> uploadedFiles = uploadFileService.listOfFiles(userService.getSpecifyUserId());
-//        //List<UploadedFile> uploadedFileWithLink = uploadedFiles.stream().filter(y->y.getLink()!=null).collect(Collectors.toList());
-//        return uploadedFileWithLink;
-//    }
-
     @PostMapping
     public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam(required = false) Boolean access) throws Exception {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile,access);
@@ -61,14 +54,6 @@ public class UploadFileController {
         uploadFileService.saveUploadedFileToDB(uploadedFile);
         return uploadedFile;
     }
-
-//    @PostMapping("/uploadLink")
-//    public UploadedFile uploadLinkToFile(@RequestBody UploadedFile uploadedFile){
-//        uploadedFile.setCustomUserId(userService.getSpecifyUserId());
-//        uploadedFile.setDate();
-//        fileRepositoryDB.save(uploadedFile);
-//        return uploadedFile;
-//    }
 
     @DeleteMapping("/{id}")
     public UploadedFile deleteFile(@PathVariable Long id) throws Exception{

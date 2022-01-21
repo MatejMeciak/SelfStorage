@@ -21,28 +21,12 @@ public class UserController {
         this.reportService = reportService;
     }
 
-//    @GetMapping("/user")
-//    public CustomUser getUser() {
-//        return this.userService.getUser();
-//    }
-//
-//    @PostMapping("/registration")
-//    public RegistrationRequestDto registration(@RequestBody RegistrationRequestDto registrationRequestDTO){
-//        if(userService.userAlreadyExists(registrationRequestDTO)!=true){
-//            return registrationRequestDTO;
-//        }
-//        else {
-//            return null;
-//        }
-//    }
-//
 //    @PutMapping("/changePassword")
 //    public void changePassword(@RequestParam String password){
 //        userService.changePassword(password);
 //    }
 
     @GetMapping("/user")
-    //@PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getCurrentUser(@CurrentUser LocalUser user) {
         return ResponseEntity.ok(GeneralUtils.buildUserInfo(user));
     }

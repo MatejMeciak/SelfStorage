@@ -10,7 +10,7 @@ public interface ReportService{
 
     Iterator<Report> getAllReports();
 
-    Report removeReport(Long id);
+    Report removeReport(Report report);
 
     UploadedFile submitReport(Long id);
 }

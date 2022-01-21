@@ -37,9 +37,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Report removeReport(Long id) {
-        Report report = reportRepository.findById(id).get();
-        reportRepository.deleteById(id);
+    public Report removeReport(Report report) {
+        reportRepository.deleteById(report.getId());
         return report;
     }
 
