@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {User} from "../../models/user";
 import {TokenStorageService} from "../../services/token-storage.service";
+import {Router} from "@angular/router";
+import {SidenavService} from "../../services/sidenav.service";
 
 @Component({
   selector: 'app-navigation-bar',
@@ -11,45 +13,29 @@ import {TokenStorageService} from "../../services/token-storage.service";
 export class NavigationBarComponent implements OnInit {
 
   isLoggedIn = false;
-  // private roles: string[];
-  // showAdminBoard = false;
-  // showModeratorBoard = false;
   username: string;
   user: User;
 
-  @Output() toggleSideNavEvent = new EventEmitter();
-
   constructor(
     private tokenStorageService: TokenStorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private sidenavService: SidenavService,
   ) { }
 
   ngOnInit(): void {
-    this.getUser();
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     console.log(this.tokenStorageService.getToken());
     if (this.isLoggedIn) {
       this.user = this.tokenStorageService.getUser();
-      // this.roles = user.roles;
-      //
-      // this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      // this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-
       this.username = this.user.username;
     }
   }
-  getUser(): void {
-    //this.authService.getUser().subscribe(user => this.user = user);
+
+  async toggleSideNav(): Promise<void> {
+    await this.sidenavService.toggleMainSidenav();
+  }
+  logout() {
+
   }
 
-  toggleSideBar(): void {
-    this.toggleSideNavEvent.emit();
-  }
-  // logout() {
-  //   this.authService.logout();
-  // }
-  logout(): void {
-    this.tokenStorageService.signOut();
-    window.location.reload();
-  }
 }

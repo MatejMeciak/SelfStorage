@@ -1,7 +1,11 @@
 .router-container {
-  padding-left: 0.5rem;
-  margin: 2rem auto;
+  height: 100%;
+  padding: 0.5rem;
 }
 .main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
   padding: 1rem;
 }

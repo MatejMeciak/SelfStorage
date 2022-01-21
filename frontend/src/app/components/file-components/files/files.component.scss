@@ -1,4 +1,7 @@
 @use 'src/scss/abstracts/mixins' as *;
+mat-drawer-container {
+  height: 100%;
+}
 .file-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));

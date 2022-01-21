@@ -1,0 +1,37 @@
+@use 'src/scss/abstracts/mixins' as *;
+.container {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    .profile-text {
+      width: min-content;
+    }
+  }
+}
+.mat-icon {
+  font-size: 38px;
+  user-select: none;
+  width: fit-content;
+  height: fit-content;
+}
+.spacer {
+  @include spacer();
+}
+.highlight:not(button) {
+  gap: 0.6rem;
+  padding: 0 0.6rem;
+}
+
+
+
+

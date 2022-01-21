@@ -2,14 +2,16 @@
   <h1>Profile</h1>
   <div class="flexbox">
     <div class="files">
-      <p>Shared files with other users</p>
-      <div class="file-grid"><app-content-card *ngFor="let file of sharedFiles" [content]="file"></app-content-card></div>
+      <h2>Shared files with other users</h2>
+      <div class="file-grid" *ngIf="!sharedFiles; else elseBlock"><app-content-card *ngFor="let file of sharedFiles" [content]="file"></app-content-card></div>
     </div>
-    <mat-card>
+    <ng-template #elseBlock>
+      <p>No content</p>
+    </ng-template>
+    <mat-card *ngIf="user">
       <mat-card-header>
         <div mat-card-avatar class="image"></div>
-        <mat-card-title>{{user.username }}</mat-card-title>
-        <mat-card-subtitle style="text-align: center">@{{user.username}}</mat-card-subtitle>
+        <mat-card-title>{{ user.username }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="flexbox">

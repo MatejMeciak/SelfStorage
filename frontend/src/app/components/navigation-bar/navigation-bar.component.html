@@ -1,29 +1,26 @@
 <nav>
   <mat-toolbar>
     <div class="flex-container">
-      <mat-icon fontSet="material-icons-round" class="menu-icon highlight" (click)="toggleSideBar()">menu</mat-icon>
+      <mat-icon fontSet="material-icons-round" class="menu-icon highlight" (click)="toggleSideNav()">menu</mat-icon>
       <div class="logo highlight" routerLink="/">
         <img class="logo-image" src="assets/images/logo.png" alt="logo">
         <span class="logo-text">SelfStorage</span>
       </div>
     </div>
-    <div class="account-button highlight" [matMenuTriggerFor]="menu">
-      <mat-icon>account_circle</mat-icon>
+    <div class="account-button highlight" *ngIf="isLoggedIn" [matMenuTriggerFor]="menu">
+      <mat-icon >account_circle</mat-icon>
       <div class="account-text">
         <span>{{ user ? user.username : 'no user' }}</span>
         <mat-icon fontSet="material-icons-round" class="expand-icon">expand_more</mat-icon>
       </div>
     </div>
-    <!-- move to component -->
-    <mat-menu #menu="matMenu">
-      <div class="highlight" routerLink="/login">
-        <mat-icon>login</mat-icon>
-        <span>Login</span>
-      </div>
-      <div mat-menu-item (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        <span>Logout</span>
-      </div>
+    <div *ngIf="!isLoggedIn" class="login-button highlight" routerLink="/login">
+      <mat-icon>login</mat-icon>
+      <span>Login</span>
+    </div>
+    <!-- mat-menu -->
+    <mat-menu #menu>
+      <app-navbar-profile-menu></app-navbar-profile-menu>
     </mat-menu>
   </mat-toolbar>
 </nav>

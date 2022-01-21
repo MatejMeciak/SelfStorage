@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { Observable, Subject, takeUntil } from "rxjs";
 
 import { FileService } from '../../../services/file.service';
@@ -8,9 +8,11 @@ import { File } from '../../../models/file';
 import { Folder } from '../../../models/folder';
 
 import { CreateFolderDialogComponent } from '../../dialogs/create-folder-dialog/create-folder-dialog.component';
-import { FileDetailComponent } from "../file-detail/file-detail.component";
+import { ContentDetailComponent } from "../content-detail/content-detail.component";
 
 import { MatDialog } from '@angular/material/dialog';
+import {MatDrawer} from "@angular/material/sidenav";
+import {SidenavService} from "../../../services/sidenav.service";
 
 @Component({
   selector: 'app-files',
@@ -18,18 +20,24 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit, OnDestroy {
+  @ViewChild('detailSidenav', { static: true }) public detailSidenav: MatDrawer;
+
   selectedFile: File;
   files: File[];
   folders$:  Observable<Folder[]>;
 
   unsubscribe$ = new Subject();
-  constructor(private fileService: FileService, private folderService: FolderService, private dialog: MatDialog) { }
+  constructor(private fileService: FileService,
+              private folderService: FolderService,
+              private sidenavService:SidenavService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.fileService.getFiles().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(files => this.files = files);
     this.folders$ = this.folderService.getFolders();
+    this.sidenavService.setDetailSidenav(this.detailSidenav);
   }
 
   onFileInput(files: FileList): void {
@@ -41,21 +49,13 @@ export class FilesComponent implements OnInit, OnDestroy {
   }
 
   openFolderDialog(): void {
-    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {name: '', access: false } as Folder });
+    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: { name: '', access: false } as Folder });
     dialogRef.afterClosed().subscribe(folder => {
       this.folderService.createFolder(folder).subscribe();
+      this.folders$ = this.folderService.getFolders();
     });
   }
 
-  openDetailDialogOf(file: File): void {
-    const dialogRef = this.dialog.open(FileDetailComponent, { data: file, panelClass: 'custom-dialog' });
-    dialogRef.afterClosed().subscribe(deleteFile => {
-      if (deleteFile) {
-        this.fileService.deleteFile(file).subscribe(() =>
-          this.fileService.getFiles().subscribe(files => this.files = files));
-      }
-    });
-  }
   ngOnDestroy(): void {
     this.unsubscribe$.next(true);
     this.unsubscribe$.complete();

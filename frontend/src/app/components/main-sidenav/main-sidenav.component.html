@@ -4,7 +4,7 @@
     <div class="flex">
       <div class="header">
         <img class="logo-image" src="assets/images/logo.png" alt="logo">
-        <button class="highlight" [matMenuTriggerFor]="menu">Upload a file</button>
+        <button class="highlight" [disabled]="!isLoggedIn" [matMenuTriggerFor]="menu">Upload a file</button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="fileInput.click()">
             <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/>
@@ -18,12 +18,12 @@
         </mat-menu>
       </div>
       <div class="spacer"></div>
-      <div class="column highlight" routerLink="home" routerLinkActive="active">
+      <div class="column highlight" routerLink="/" routerLinkActive="active">
         <mat-icon fontSet="material-icons-round">home</mat-icon>
         <span>Home</span>
       </div>
       <div class="spacer"></div>
-      <mat-expansion-panel expanded>
+      <mat-expansion-panel [expanded]="isLoggedIn" [disabled]="!isLoggedIn">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <mat-icon>storage</mat-icon>
@@ -36,7 +36,7 @@
               <mat-icon>{{list.matIcon}}</mat-icon>
               <span>{{list.title}}</span>
             </div>
-            <mat-expansion-panel *ngIf="list.sub">
+            <mat-expansion-panel *ngIf="list.sub && isLoggedIn">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <mat-icon>{{list.matIcon}}</mat-icon>

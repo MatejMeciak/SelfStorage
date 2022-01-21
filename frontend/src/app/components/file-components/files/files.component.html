@@ -1,6 +1,6 @@
 <mat-drawer-container>
-  <mat-drawer class="detail-sidenav" mode="side" position="end" opened>
-    <app-file-detail [file]="selectedFile"></app-file-detail>
+  <mat-drawer #detailSidenav class="detail-sidenav" mode="side" position="end">
+    <app-content-detail [file]="selectedFile"></app-content-detail>
   </mat-drawer>
   <mat-drawer-content>
     <div class="container">
@@ -37,7 +37,7 @@
         </div>
       </div>
       <ng-template #elseBlock>
-        <p>No data</p>
+        <p>No content</p>
       </ng-template>
     </div>
   </mat-drawer-content>

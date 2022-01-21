@@ -7,13 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { MaterialModule } from './material/material.module';
 import { LoginFormComponent } from './components/auth-forms/login-form/login-form.component';
-import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { FileService } from './services/file.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ContentCardComponent } from './components/file-components/content-card/content-card.component';
 import { RegistrationFormComponent } from './components/auth-forms/registration-form/registration-form.component';
 import { FilesComponent } from './components/file-components/files/files.component';
-import { FileDetailComponent } from './components/file-components/file-detail/file-detail.component';
+import { ContentDetailComponent } from './components/file-components/content-detail/content-detail.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './auth/interceptor/auth.interceptor';
@@ -27,19 +27,20 @@ import { ProfilePageComponent } from './components/user-components/profile-page/
 import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.component';
 import { NavbarProfileMenuComponent } from './components/user-components/navbar-profile-menu/navbar-profile-menu.component';
 import { FolderService } from "./services/folder.service";
-import {CategoryService} from "./services/category.service";
-import {DialogService} from "./services/dialog.service";
+import { CategoryService } from "./services/category.service";
+import { DialogService } from "./services/dialog.service";
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationBarComponent,
     LoginFormComponent,
-    WelcomePageComponent,
+    LandingPageComponent,
     ContentCardComponent,
     RegistrationFormComponent,
     FilesComponent,
-    FileDetailComponent,
+    ContentDetailComponent,
     SearchPageComponent,
     EditFileDialogComponent,
     UploadFileDialogComponent,
@@ -49,6 +50,7 @@ import {DialogService} from "./services/dialog.service";
     ProfilePageComponent,
     MainSidenavComponent,
     NavbarProfileMenuComponent,
+    AdminComponent,
   ],
   imports: [
     MaterialModule,

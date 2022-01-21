@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../../services/auth.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {environment} from "../../../../environments/environment";
-import {TokenStorageService} from "../../../services/token-storage.service";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from "../../../../environments/environment";
+import { TokenStorageService } from "../../../services/token-storage.service";
 
 @Component({
   selector: 'app-login-form',
@@ -26,7 +26,6 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private tokenStorage: TokenStorageService,
     private route: ActivatedRoute,
-    //private userService: UserService,
     private readonly authService: AuthService,
     private readonly router: Router
   ) { }
@@ -56,14 +55,6 @@ export class LoginFormComponent implements OnInit {
       this.isLoginFailed = true;
     }
   }
-  // login(): void {
-  //   if (this.loginGroup.valid) {
-  //     const username = this.loginGroup.value.username;
-  //     const password = this.loginGroup.value.password;
-  //     this.authService.login(username, password)
-  //       .subscribe(() => this.router.navigateByUrl('/home'));
-  //   }
-  // }
   onSubmit(): void {
     if (this.loginGroup.valid) {
       const email = this.loginGroup.value.email;
@@ -88,6 +79,7 @@ export class LoginFormComponent implements OnInit {
     this.isLoggedIn = true;
     this.currentUser = this.tokenStorage.getUser();
     window.location.reload();
+    this.router.navigate(['/']);
   }
 
 }

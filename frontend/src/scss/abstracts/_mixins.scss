@@ -13,11 +13,11 @@
     font-weight: 500;
     opacity: 0.8;
     height: fit-content;
-    &:hover {
+    &:hover:not([disabled]) {
       opacity: 1;
     }
   }
-  &:hover {
+  &:hover:not([disabled]) {
     background: rgba(0,0,0,0.05);
   }
 }
