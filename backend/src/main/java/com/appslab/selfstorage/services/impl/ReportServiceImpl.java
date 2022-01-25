@@ -9,6 +9,7 @@ import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
+import java.util.List;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -32,8 +33,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Iterator<Report> getAllReports() {
-        return reportRepository.findAll().iterator();
+    public List<Report> getAllReports() {
+        return reportRepository.findAll();
     }
 
     @Override
@@ -49,5 +50,10 @@ public class ReportServiceImpl implements ReportService {
         uploadedFile.setAccess(false);
         reportRepository.deleteById(id);
         return fileRepositoryDB.save(uploadedFile);
+    }
+
+    @Override
+    public Report getCurrentReport(Long id) {
+        return reportRepository.findById(id).get();
     }
 }

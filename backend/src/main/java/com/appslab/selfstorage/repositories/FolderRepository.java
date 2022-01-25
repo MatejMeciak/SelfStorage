@@ -8,8 +8,6 @@ import java.util.Optional;
 
 public interface FolderRepository extends CrudRepository<Folder,Long> {
 
-    Optional<Folder> findByName(String name);
-
     List<Folder> findByNameContainingAndOwnerId(String name, Long ownerId);
 
     List<Folder> findByOwnerId(Long userId);

@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/report")
 public class ReportController {
@@ -24,13 +27,17 @@ public class ReportController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getAdminContent() {
-        return ResponseEntity.ok(ReportService.class.cast(reportService.getAllReports()));
+    public List<Report> getAdminContent() {
+        return reportService.getAllReports();
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Report getCurrentReport(@RequestParam Long id){
+        return reportService.getCurrentReport(id);
+    }
 
-
-    @PutMapping("/remove")
+    @DeleteMapping("/remove")
     @PreAuthorize("hasRole('ADMIN')")
     public Report removeReport(@RequestBody Report report){
         return reportService.removeReport(report);
