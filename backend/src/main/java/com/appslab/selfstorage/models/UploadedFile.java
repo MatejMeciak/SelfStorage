@@ -48,6 +48,9 @@ public class UploadedFile {
     @JoinTable(name = "share_files",joinColumns = @JoinColumn(name = "uploadedFile_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
     protected List<CustomUser> friends;
 
+    @OneToMany
+    private List<Report> reports;
+
     public UploadedFile(){
     }
 

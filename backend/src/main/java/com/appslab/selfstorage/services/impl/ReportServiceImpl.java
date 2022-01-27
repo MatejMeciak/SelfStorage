@@ -8,7 +8,6 @@ import com.appslab.selfstorage.services.ReportService;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -38,8 +37,10 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Report removeReport(Report report) {
-        reportRepository.deleteById(report.getId());
+    public Report removeReport(Long id) {
+        Report report = reportRepository.findById(id).get();
+        Long fileId = report.getFileId();
+        reportRepository.deleteAllByFileId(fileId);
         return report;
     }
 
@@ -48,7 +49,7 @@ public class ReportServiceImpl implements ReportService {
         Report report = reportRepository.findById(id).get();
         UploadedFile uploadedFile = fileRepositoryDB.findById(report.getFileId()).get();
         uploadedFile.setAccess(false);
-        reportRepository.deleteById(id);
+        reportRepository.deleteAllByFileId(report.getFileId());
         return fileRepositoryDB.save(uploadedFile);
     }
 
