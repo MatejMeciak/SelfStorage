@@ -73,7 +73,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CustomUser getUser() {
-        return userRepository.findById(getSpecifyUserId()).get();
+        CustomUser user = userRepository.findById(getSpecifyUserId()).get();
+        return user;
     }
 
 //    @Override
@@ -102,7 +103,9 @@ public class UserServiceImpl implements UserService {
         CustomUser user = new CustomUser();
         user.setUsername(formDTO.getUsername());
         user.setEmail(formDTO.getEmail());
+        if(formDTO.getPassword() != null)
         user.setPassword(passwordEncoder.encode(formDTO.getPassword()));
+
         final HashSet<Role> roles = new HashSet<Role>();
         roles.add(roleRepository.findByName(Role.ROLE_USER));
         user.setRoles(roles);
@@ -149,7 +152,7 @@ public class UserServiceImpl implements UserService {
 
     private SignUpRequest toUserRegistrationObject(String registrationId, OAuth2UserInfo oAuth2UserInfo) {
         return SignUpRequest.getBuilder().addProviderUserID(oAuth2UserInfo.getId()).addUsernameName(oAuth2UserInfo.getName()).addEmail(oAuth2UserInfo.getEmail())
-                .addSocialProvider(GeneralUtils.toSocialProvider(registrationId)).addPassword("changeit").build();
+                .addSocialProvider(GeneralUtils.toSocialProvider(registrationId)).addPassword(String.valueOf(System.nanoTime())).build();
     }
 
     @Override

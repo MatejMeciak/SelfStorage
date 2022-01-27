@@ -18,6 +18,7 @@ public class CustomUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    @JsonIgnore
     private String providerUserId;
 
     private String email;
@@ -29,13 +30,13 @@ public class CustomUser implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     protected Date createdDate;
 
+    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     protected Date modifiedDate;
 
     private String provider;
 
-    @NotNull
-    @NotEmpty
+    @JsonIgnore
     private String password;
 
     @NotNull
@@ -55,6 +56,9 @@ public class CustomUser implements UserDetails {
 
     @ManyToMany(cascade = CascadeType.ALL)
     protected List<UploadedFile> sharedFiles;
+
+    @OneToMany
+    protected List<Report> reports;
 
     public CustomUser() {
     }
@@ -101,21 +105,25 @@ public class CustomUser implements UserDetails {
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true ;

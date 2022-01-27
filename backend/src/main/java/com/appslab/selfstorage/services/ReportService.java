@@ -3,7 +3,6 @@ package com.appslab.selfstorage.services;
 import com.appslab.selfstorage.models.Report;
 import com.appslab.selfstorage.models.UploadedFile;
 
-import java.util.Iterator;
 import java.util.List;
 
 public interface ReportService{
@@ -11,7 +10,7 @@ public interface ReportService{
 
     List<Report> getAllReports();
 
-    Report removeReport(Report report);
+    Report removeReport(Long id);
 
     UploadedFile submitReport(Long id);
 

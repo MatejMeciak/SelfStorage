@@ -32,7 +32,7 @@ public class SetupDataLoader implements CommandLineRunner {
     public void run(String... args){
         Role userRole = createRoleIfNotFound(Role.ROLE_USER);
         Role adminRole = createRoleIfNotFound(Role.ROLE_ADMIN);
-        createUserIfNotFound("admin@javachinna.com", Set.of(userRole, adminRole));
+        //createUserIfNotFound("admin@javachinna.com", Set.of(userRole, adminRole));
     }
 
     @Transactional
