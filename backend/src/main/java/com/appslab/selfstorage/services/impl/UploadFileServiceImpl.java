@@ -154,4 +154,9 @@ public class UploadFileServiceImpl implements UploadFileService {
     public List<UploadedFile> getPublicFiles() {
         return fileRepositoryDB.findByAccess(true);
     }
+
+    @Override
+    public List<UploadedFile> getFiles() {
+        return fileRepositoryDB.findAllByFolderId(null);
+    }
 }

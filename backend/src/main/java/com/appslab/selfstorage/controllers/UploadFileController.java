@@ -17,7 +17,7 @@ public class UploadFileController {
     }
 
     @GetMapping
-    public List<UploadedFile> getListOfFiles(){
+    public List<UploadedFile> getListOfAllFiles(){
         return uploadFileService.getListOfMyFiles();
     }
 
@@ -45,6 +45,11 @@ public class UploadFileController {
     @GetMapping("/share/myFiles")
     public List<UploadedFile> getShareFiles(){
         return uploadFileService.returnShareFiles();
+    }
+
+    @GetMapping("/files")
+    public List<UploadedFile> getFiles(){
+        return uploadFileService.getFiles();
     }
 
     @PostMapping

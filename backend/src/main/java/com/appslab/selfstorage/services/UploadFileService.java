@@ -36,4 +36,6 @@ public interface UploadFileService {
     List<UploadedFile> returnShareFiles();
 
     List<UploadedFile> getPublicFiles();
+
+    List<UploadedFile> getFiles();
 }
