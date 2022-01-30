@@ -27,8 +27,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<UploadedFile> getCategory(Long id) {
-        return categoryRepository.findById(id).get().getFiles();
+    public List<UploadedFile> getCategory(String name) {
+        return categoryRepository.findByName(name);
     }
 
     @Override

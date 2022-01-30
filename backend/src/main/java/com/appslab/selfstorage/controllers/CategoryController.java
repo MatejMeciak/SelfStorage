@@ -15,14 +15,14 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public List<Category> getCategories(){
         return categoryService.getListOfCategories();
     }
 
-    @GetMapping("/{id}")
-    public List<UploadedFile> getCategory(@PathVariable Long id){
-        return categoryService.getCategory(id);
+    @GetMapping
+    public List<UploadedFile> getCategory(@RequestParam String name){
+        return categoryService.getCategory(name);
     }
 
     @PostMapping("/{categoryId}/add")
