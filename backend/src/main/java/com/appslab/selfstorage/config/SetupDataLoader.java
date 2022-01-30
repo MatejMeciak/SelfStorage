@@ -36,7 +36,7 @@ public class SetupDataLoader implements CommandLineRunner {
     }
 
     @Transactional
-    private final CustomUser createUserIfNotFound(final String email, Set<Role> roles) {
+    protected CustomUser createUserIfNotFound(final String email, Set<Role> roles) {
         CustomUser user = userRepository.findByEmail(email);
         if (user == null) {
             user = new CustomUser();
@@ -55,7 +55,7 @@ public class SetupDataLoader implements CommandLineRunner {
     }
 
     @Transactional
-    private final Role createRoleIfNotFound(final String name) {
+    protected Role createRoleIfNotFound(final String name) {
         Role role = roleRepository.findByName(name);
         if (role == null) {
             role = roleRepository.save(new Role(name));
