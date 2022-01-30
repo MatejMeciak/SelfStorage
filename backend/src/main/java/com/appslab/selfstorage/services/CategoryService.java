@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CategoryService {
     List<Category> getListOfCategories();
-    List<UploadedFile> getCategory(Long id);
+    List<UploadedFile> getCategory(String name);
     Category createCategory(String categoryName);
     Object addContentToCategory(Long categoryId, Long requestId);
     void deleteCategory(Long id);
