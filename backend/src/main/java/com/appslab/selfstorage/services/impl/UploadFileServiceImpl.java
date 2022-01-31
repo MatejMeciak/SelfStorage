@@ -157,6 +157,6 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     public List<UploadedFile> getFiles() {
-        return fileRepositoryDB.findAllByFolderId(null);
+        return fileRepositoryDB.findAllByFolderIdAndOwnerId(null, userService.getSpecifyUserId());
     }
 }

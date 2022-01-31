@@ -17,5 +17,5 @@ public interface FileRepositoryDB extends CrudRepository<UploadedFile,Long> {
 
     List<UploadedFile> findByOwner(CustomUser customUser);
 
-    List<UploadedFile> findAllByFolderId(Long id);
+    List<UploadedFile> findAllByFolderIdAndOwnerId(Long id, Long ownerId);
 }
