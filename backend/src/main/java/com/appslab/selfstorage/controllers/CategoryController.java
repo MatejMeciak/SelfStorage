@@ -21,8 +21,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<UploadedFile> getCategory(@RequestParam String name){
-        return categoryService.getCategory(name);
+    public List<UploadedFile> getCategory(@RequestParam String category){
+        return categoryService.getCategory(category);
     }
 
     @PostMapping("/{categoryId}/add")
