@@ -1,7 +1,7 @@
 <app-main-sidenav>
   <div class="main-content">
     <app-navigation-bar></app-navigation-bar>
-    <div class="router-container" *ngIf="!showAdminBoard; else elseBlock">
+    <div class="router-container" *ngIf="!showAdminBoard; else elseBlock" >
       <router-outlet></router-outlet>
     </div>
     <ng-template #elseBlock>

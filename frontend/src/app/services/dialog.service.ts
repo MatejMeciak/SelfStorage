@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {CreateFolderDialogComponent} from "../components/dialogs/create-folder-dialog/create-folder-dialog.component";
 import {Folder} from "../models/folder";
 import {File} from "../models/file";
-import {ContentDetailComponent} from "../components/file-components/content-detail/content-detail.component";
+import {FileDetailComponent} from "../components/file-components/file-detail/file-detail.component";
 import {EditFileDialogComponent} from "../components/dialogs/edit-file-dialog/edit-file-dialog.component";
 import {MoveToFolderDialogComponent} from "../components/dialogs/move-to-folder-dialog/move-to-folder-dialog.component";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
@@ -11,7 +11,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
   providedIn: 'root'
 })
 export class DialogService {
-  private dialogRef: MatDialogRef<ContentDetailComponent>
+  private dialogRef: MatDialogRef<FileDetailComponent>
 
   constructor(private dialog: MatDialog) { }
 
@@ -51,7 +51,7 @@ export class DialogService {
   }
 
   openDetailDialogOf(file: File): void {
-    const dialogRef = this.dialog.open(ContentDetailComponent, { data: file, panelClass: 'custom-dialog' });
+    const dialogRef = this.dialog.open(FileDetailComponent, { data: file, panelClass: 'custom-dialog' });
     dialogRef.afterClosed().subscribe(deleteFile => {
      /* if (deleteFile) {
         this.fileService.deleteFile(file).subscribe(() =>

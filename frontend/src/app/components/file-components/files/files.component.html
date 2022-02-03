@@ -1,44 +1,8 @@
-<mat-drawer-container>
-  <mat-drawer #detailSidenav class="detail-sidenav" mode="side" position="end">
-    <app-content-detail [file]="selectedFile"></app-content-detail>
-  </mat-drawer>
-  <mat-drawer-content>
-    <div class="container">
-      <div class="files-header">
-        <h1>Your Storage</h1>
-        <div class="search">
-          <mat-icon>search</mat-icon>
-          <p>Search in content</p>
-        </div>
-        <button class="highlight" [matMenuTriggerFor]="menu">Upload a file</button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="fileInput.click()">
-            <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/>
-            <mat-icon>post_add</mat-icon>
-            <span>Upload file from device</span>
-          </button>
-          <button mat-menu-item (click)="openFolderDialog()">
-            <mat-icon>folder</mat-icon>
-            <span>Create folder</span>
-          </button>
-        </mat-menu>
-        <mat-icon>more_vert</mat-icon>
-      </div>
-      <div class="spacer"></div>
-      <div *ngIf="files || (folders$|async); else elseBlock">
-        <div>
-          <h2>Folders</h2>
-          <div class="file-grid"><app-content-card *ngFor="let folder of (folders$|async)" [content]="folder" [routerLink]="['/folder', folder.id]"></app-content-card></div>
-        </div>
-        <div class="spacer"></div>
-        <div>
-          <h2>Files</h2>
-          <div class="file-grid"><app-content-card *ngFor="let file of files" [content]="file" (click)="selectedFile = file"></app-content-card></div>
-        </div>
-      </div>
-      <ng-template #elseBlock>
-        <p>No content</p>
-      </ng-template>
-    </div>
-  </mat-drawer-content>
-</mat-drawer-container>
+<div class="content-container">
+  <h2>Files</h2>
+  <div class="file-grid">
+    <app-content-card *ngFor="let file of files$ | async" (clickEvent)="openFileDetail($event)"
+                      [content]="file" [image]="getImage(file) | async" [category]="category">
+    </app-content-card>
+  </div>
+</div>

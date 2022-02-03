@@ -1,1 +1,33 @@
-<p>admin works!</p>
+<div class="container">
+  <h2>Reports</h2>
+  <mat-accordion *ngIf="reports$|async; else elseBlock">
+    <mat-expansion-panel hideToggle *ngFor="let report of reports$|async">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          reported file
+<!--          {{ report.content.name }}-->
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ report.reason }}
+          <div class="user">
+            <mat-icon>account_circle</mat-icon>
+            user
+<!--          {{ report.creator.name }}-->
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Age</mat-label>
+        <input matInput type="number" min="1">
+      </mat-form-field>
+      <mat-action-row>
+        <button mat-button color="warn" (click)="submitReport(report.id)">Submit</button>
+        <button mat-button color="accent" (click)="dismissReport(report.id)">Dismiss</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <ng-template #elseBlock>
+    <p>No reports</p>
+  </ng-template>
+</div>

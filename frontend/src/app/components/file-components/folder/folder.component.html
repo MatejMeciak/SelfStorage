@@ -16,7 +16,9 @@
 </div>
 <div *ngIf="files; else elseBlock">
   <h2>Files</h2>
-  <div class="file-grid"><app-content-card *ngFor="let file of files" [content]="file" (click)="openDetailDialogOf(file)"></app-content-card></div>
+  <div class="file-grid">
+    <app-content-card *ngFor="let file of files" [content]="file" (click)="openDetailDialogOf(file)"></app-content-card>
+  </div>
 </div>
 <ng-template #elseBlock>
   <p>No data</p>

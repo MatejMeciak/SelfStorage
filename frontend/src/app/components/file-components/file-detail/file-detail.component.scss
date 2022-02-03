@@ -24,3 +24,6 @@
 .spacer {
   @include spacer;
 }
+.view > div {
+  margin-bottom: 0.5rem;
+}

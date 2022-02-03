@@ -1,6 +1,6 @@
-<div class="card">
+<div class="card" (click)="onClick(content)">
   <div class="card-content">
-    <img src="{{ fileUrl }}" alt="{{ content.name }}">
+    <img src="{{ image }}" alt="{{ content.name }}">
   </div>
   <div class="card-footer">
     <p class="card-name">{{ content.name }}</p>

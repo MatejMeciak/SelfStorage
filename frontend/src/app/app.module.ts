@@ -12,8 +12,8 @@ import { FileService } from './services/file.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ContentCardComponent } from './components/file-components/content-card/content-card.component';
 import { RegistrationFormComponent } from './components/auth-forms/registration-form/registration-form.component';
-import { FilesComponent } from './components/file-components/files/files.component';
-import { ContentDetailComponent } from './components/file-components/content-detail/content-detail.component';
+import { ContentComponent } from './components/file-components/content/content.component';
+import { FileDetailComponent } from './components/file-components/file-detail/file-detail.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './auth/interceptor/auth.interceptor';
@@ -30,6 +30,12 @@ import { FolderService } from "./services/folder.service";
 import { CategoryService } from "./services/category.service";
 import { DialogService } from "./services/dialog.service";
 import { AdminComponent } from './components/admin/admin.component';
+import { ReportService } from "./services/report.service";
+import { FoldersComponent } from './components/file-components/folders/folders.component';
+import { FilesComponent } from './components/file-components/files/files.component';
+import { ImageService } from "./services/image.service";
+import { SidenavService } from "./services/sidenav.service";
+import { TokenStorageService } from "./services/token-storage.service";
 
 @NgModule({
   declarations: [
@@ -39,8 +45,8 @@ import { AdminComponent } from './components/admin/admin.component';
     LandingPageComponent,
     ContentCardComponent,
     RegistrationFormComponent,
-    FilesComponent,
-    ContentDetailComponent,
+    ContentComponent,
+    FileDetailComponent,
     SearchPageComponent,
     EditFileDialogComponent,
     UploadFileDialogComponent,
@@ -51,6 +57,8 @@ import { AdminComponent } from './components/admin/admin.component';
     MainSidenavComponent,
     NavbarProfileMenuComponent,
     AdminComponent,
+    FoldersComponent,
+    FilesComponent,
   ],
   imports: [
     MaterialModule,
@@ -64,7 +72,9 @@ import { AdminComponent } from './components/admin/admin.component';
   providers: [
     FileService, FolderService,
     CategoryService, DialogService,
-    AuthService,
+    AuthService, ReportService,
+    ImageService, SidenavService,
+    TokenStorageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

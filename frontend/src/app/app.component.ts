@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TokenStorageService} from "./services/token-storage.service";
 import {AuthService} from "./services/auth.service";
 import { Subscription } from 'rxjs';
+import { SidenavService } from "./services/sidenav.service";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent implements OnInit, OnDestroy {
   showAdminBoard = false;
   subscription: Subscription;
   constructor(private tokenStorageService: TokenStorageService,
+              private sidenavService: SidenavService,
               private authService: AuthService) { }
 
   ngOnInit() {

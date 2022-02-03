@@ -16,10 +16,10 @@ export class CategoryService {
 
   // GET
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoryUrl);
+    return this.http.get<Category[]>(`${this.categoryUrl}/list`);
   }
-  getCategory(id: number): Observable<Category> {
-    return this.http.get<Category>(`${this.categoryUrl}/${id}`);
+  getCategoryContent(category: string): Observable<File[]> {
+    return this.http.get<File[]>(`${this.categoryUrl}?category=${category}`);
   }
 
   // POST

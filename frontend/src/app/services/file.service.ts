@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
@@ -11,7 +11,16 @@ import { File as FileModel } from '../models/file';
 export class FileService {
   fileUrl = `${environment.apiUrl}/file`;
 
+  private selectedFile = new Subject<FileModel>();
+
   constructor(private http: HttpClient) { }
+
+  getSelectedFile(): Observable<FileModel> {
+    return this.selectedFile;
+  }
+  setSelectedFile(file: FileModel): void {
+    this.selectedFile.next(file);
+  }
 
   // GET
   getFiles(): Observable<FileModel[]> {

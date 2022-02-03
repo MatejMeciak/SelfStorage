@@ -34,8 +34,4 @@ export class NavigationBarComponent implements OnInit {
   async toggleSideNav(): Promise<void> {
     await this.sidenavService.toggleMainSidenav();
   }
-  logout() {
-
-  }
-
 }

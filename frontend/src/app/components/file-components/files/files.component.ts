@@ -1,63 +1,45 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import { Observable, Subject, takeUntil } from "rxjs";
-
-import { FileService } from '../../../services/file.service';
-import { FolderService } from "../../../services/folder.service";
-
-import { File } from '../../../models/file';
-import { Folder } from '../../../models/folder';
-
-import { CreateFolderDialogComponent } from '../../dialogs/create-folder-dialog/create-folder-dialog.component';
-import { ContentDetailComponent } from "../content-detail/content-detail.component";
-
-import { MatDialog } from '@angular/material/dialog';
-import {MatDrawer} from "@angular/material/sidenav";
-import {SidenavService} from "../../../services/sidenav.service";
+import { Component, OnInit } from '@angular/core';
+import { FileService } from "../../../services/file.service";
+import { CategoryService } from "../../../services/category.service";
+import { ActivatedRoute } from "@angular/router";
+import { map, mergeMap, Observable, of, tap } from "rxjs";
+import { File } from "../../../models/file";
+import { ImageService } from "../../../services/image.service";
+import { SidenavService } from "../../../services/sidenav.service";
 
 @Component({
   selector: 'app-files',
   templateUrl: './files.component.html',
   styleUrls: ['./files.component.scss']
 })
-export class FilesComponent implements OnInit, OnDestroy {
-  @ViewChild('detailSidenav', { static: true }) public detailSidenav: MatDrawer;
+export class FilesComponent implements OnInit {
+  files$: Observable<File[]>;
+  category: string | null;
 
-  selectedFile: File;
-  files: File[];
-  folders$:  Observable<Folder[]>;
-
-  unsubscribe$ = new Subject();
   constructor(private fileService: FileService,
-              private folderService: FolderService,
-              private sidenavService:SidenavService,
-              private dialog: MatDialog) { }
+              private categoryService: CategoryService,
+              private imageService: ImageService,
+              private sidenavService: SidenavService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.fileService.getFiles().pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe(files => this.files = files);
-    this.folders$ = this.folderService.getFolders();
-    this.sidenavService.setDetailSidenav(this.detailSidenav);
+    this.files$ = this.route.queryParamMap.pipe(
+      map(queryMap => queryMap.get('category')),
+      tap(category => this.category = category),
+      mergeMap(category => !!category
+        ? this.categoryService.getCategoryContent(category)
+        : this.fileService.getFiles()
+      )
+    );
   }
 
-  onFileInput(files: FileList): void {
-    for (let i = 0; i < files.length; i++) {
-      this.fileService.uploadFile(files.item(i)).pipe(
-        takeUntil(this.unsubscribe$)
-      ).subscribe(file => this.files.push(file));
-    }
+  getImage(file: File): Observable<string> {
+    return file.mimeType.includes('image') ?
+      this.imageService.getImageForFile(file.id) :
+      of('assets/images/file_icon.png');
   }
-
-  openFolderDialog(): void {
-    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: { name: '', access: false } as Folder });
-    dialogRef.afterClosed().subscribe(folder => {
-      this.folderService.createFolder(folder).subscribe();
-      this.folders$ = this.folderService.getFolders();
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next(true);
-    this.unsubscribe$.complete();
+  openFileDetail(file): void {
+    this.fileService.setSelectedFile(file);
+    this.sidenavService.openDetailSidenav();
   }
 }

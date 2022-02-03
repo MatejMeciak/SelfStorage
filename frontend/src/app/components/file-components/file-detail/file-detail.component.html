@@ -1,19 +1,21 @@
 <div class="container" *ngIf="file">
-  <img class="image" src="{{ fileUrl }}" alt="file-image">
+  <img class="image" src="{{ getImage(file) | async }}" alt="file-image">
   <div class="title">
     <span>{{ file.name }}</span>
     <div class="shared-with"></div>
     <div class="sub-title">
-      <span>{{ fileType }}</span>
+      <span>{{ fileType(file) }}</span>
       <span class="date">{{ file.date | date : 'MMM d y hh:mm'}}</span>
     </div>
   </div>
   <div class="spacer"></div>
+  <div class="view" *ngIf="file.mimeType.includes('image')">
     <div class="highlight">
       <mat-icon>wallpaper</mat-icon>
       <span>View</span>
     </div>
     <div class="spacer"></div>
+  </div>
   <div class="highlight">
     <mat-icon>edit</mat-icon>
     <span>Edit</span>

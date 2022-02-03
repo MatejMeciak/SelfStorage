@@ -1,0 +1,33 @@
+<mat-drawer-container>
+  <mat-drawer #detailSidenav class="detail-sidenav" mode="side" position="end">
+    <app-file-detail></app-file-detail>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="container">
+      <div class="files-header">
+        <h1>Your Storage</h1>
+        <div class="search">
+          <mat-icon>search</mat-icon>
+          <p>Search in content</p>
+        </div>
+        <button class="highlight" [matMenuTriggerFor]="menu">Upload content</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="fileInput.click()">
+            <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/>
+            <mat-icon>post_add</mat-icon>
+            <span>Upload file from device</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>folder</mat-icon>
+            <span>Create folder</span>
+          </button>
+        </mat-menu>
+        <mat-icon>more_vert</mat-icon>
+      </div>
+      <div class="spacer"></div>
+      <app-folders></app-folders>
+      <div class="spacer"></div>
+      <app-files></app-files>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
