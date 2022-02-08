@@ -7,9 +7,10 @@ import com.appslab.selfstorage.exception.OAuth2AuthenticationProcessingException
 import com.appslab.selfstorage.exception.UserAlreadyExistAuthenticationException;
 import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.CustomUser;
-import com.appslab.selfstorage.dto.RegistrationRequestDto;
 import com.appslab.selfstorage.models.Role;
+import com.appslab.selfstorage.models.UploadedFile;
 import com.appslab.selfstorage.repositories.CategoryRepository;
+import com.appslab.selfstorage.repositories.FileRepositoryDB;
 import com.appslab.selfstorage.repositories.RoleRepository;
 import com.appslab.selfstorage.repositories.UserRepository;
 import com.appslab.selfstorage.security.oauth2.user.OAuth2UserInfo;
@@ -18,6 +19,7 @@ import com.appslab.selfstorage.services.CategoryService;
 import com.appslab.selfstorage.services.UserService;
 
 import com.appslab.selfstorage.util.GeneralUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,18 +30,23 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private RoleRepository roleRepository;
+    private FileRepositoryDB fileRepositoryDB;
+    private CategoryRepository categoryRepository;
 
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, FileRepositoryDB fileRepositoryDB, CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+        this.fileRepositoryDB = fileRepositoryDB;
+        this.categoryRepository = categoryRepository;
     }
 
 //    @Override
@@ -52,35 +59,15 @@ public class UserServiceImpl implements UserService {
 //        categoryRepository.save(favouriteFiles);
 //    }
 
-//    @Override
-//    public Boolean userAlreadyExists(RegistrationRequestDto registrationRequest) {
-//        Boolean username = userRepository.existsByUsername(registrationRequest.getUsername());
-//        if (username != true){
-//            createUser(registrationRequest);
-//            return false;
-//        }
-//        else{
-//            return true;
-//        }
-//    }
 
     @Override
-    public void changePassword(String password) {
+    public void changePassword(String oldPassword, String newPassword) {
         CustomUser customUser = userRepository.findById(getSpecifyUserId()).get();
-        customUser.setPassword(passwordEncoder.encode(password));
-        userRepository.save(customUser);
+        if(customUser.getPassword().equals(oldPassword)) {
+            customUser.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(customUser);
+        }
     }
-
-    @Override
-    public CustomUser getUser() {
-        CustomUser user = userRepository.findById(getSpecifyUserId()).get();
-        return user;
-    }
-
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException(String.format(USER_NOT_FOUND,username)));
-//    }
 
     @Override
     @Transactional(value = "transactionManager")
@@ -94,8 +81,15 @@ public class UserServiceImpl implements UserService {
         Date now = Calendar.getInstance().getTime();
         user.setCreatedDate(now);
         user.setModifiedDate(now);
+        user.setSpaceSize(2000000000L);
         user = userRepository.save(user);
         userRepository.flush();
+
+        Category category = new Category();
+        category.setName("Favourite");
+        category.setCreatorId(user.getId());
+        categoryRepository.save(category);
+
         return user;
     }
 
@@ -145,6 +139,33 @@ public class UserServiceImpl implements UserService {
         return LocalUser.create(user, attributes, idToken, userInfo);
     }
 
+    @Override
+    public Long usedSpaceOfStorage() {
+        List<Long> sizesOfFiles = fileRepositoryDB.findByOwnerId(getSpecifyUserId()).stream().map(UploadedFile::getFileSize).collect(Collectors.toList());
+        Long usedSpace = 0L;
+        for(int i = 0; i<fileRepositoryDB.findByOwnerId(getSpecifyUserId()).stream().map(UploadedFile::getFileSize).count(); i++ ) {
+            usedSpace += sizesOfFiles.get(i);
+        }
+        return usedSpace;
+    }
+
+    @Override
+    public Long settingSizeOfSpace(Long sizeSpace, Long userId) {
+        CustomUser user = userRepository.findById(userId).get();
+        if(sizeSpace!=null){
+            user.setSpaceSize(sizeSpace);
+            userRepository.save(user);
+        }
+        return sizeSpace;
+    }
+
+    @Override
+    public List<CustomUser> getAllUsers() {
+        List<CustomUser> users = userRepository.findAll();
+        users.remove(getSpecifyUserId());
+        return users;
+    }
+
     private CustomUser updateExistingUser(CustomUser existingUser, OAuth2UserInfo oAuth2UserInfo) {
         existingUser.setUsername(oAuth2UserInfo.getName());
         return userRepository.save(existingUser);
@@ -160,6 +181,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
+
+    @Override
+    public CustomUser getUser() {
+        return userRepository.findById(getSpecifyUserId()).get();
+    }
 
     @Override
     public Long getSpecifyUserId() {

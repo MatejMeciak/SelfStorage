@@ -63,30 +63,7 @@ public class FolderServiceImpl implements FolderService {
         return null;
     }
 
-//    @Override
-//    public UploadedFile addFileToFolder(Long id, UploadedFile uploadedFile) {
-//        Folder folder = folderRepository.findById(id).get();
-//        UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
-//        if (folder.getOwnerId().equals(userService.getSpecifyUserId()))
-//        {
-//            uploadedFile1.setFolderId(folder.getId());
-//            uploadFileService.saveEditFile(uploadedFile1);
-//            return uploadedFile1;
-//        }
-//        return null;
-//    }
-//
-//    @Override
-//    public Link addLinkToFolder(Long id, Link link) {
-//        Folder folder = folderRepository.findById(id).get();
-//        Link link1 =  linkRepository.findById(link.getId()).get();
-//        if(folder.getOwnerId().equals(userService.getSpecifyUserId())){
-//            link1.setFolderId(folder.getId());
-//            linkRepository.save(link1);
-//            return link1;
-//        }
-//        return null;
-//    }
+
 
     @Override
     public void addContentToFolder(Long id, Long requestId ) {

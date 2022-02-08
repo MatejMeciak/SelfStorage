@@ -1,6 +1,7 @@
 package com.appslab.selfstorage.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -10,9 +11,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotEmpty
     private String name;
-
-    private Boolean adminAccess;
 
     @JoinColumn(name = "creator_id",updatable = false, insertable = false)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -24,11 +24,13 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<UploadedFile> files;
 
-    @OneToMany
+    @OneToMany(mappedBy = "category")
     private List<Folder> folders;
 
     public Category() {
     }
+
+
 
     public String getName() {
         return name;
@@ -36,10 +38,6 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Boolean getAdminAccess() {
-        return adminAccess;
     }
 
     public CustomUser getCreator() {
@@ -66,15 +64,19 @@ public class Category {
         this.folders = folders;
     }
 
-    public void setAdminAccess(Boolean adminAccess) {
-        this.adminAccess = adminAccess;
-    }
-
     public Long getCreatorId() {
         return creatorId;
     }
 
     public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

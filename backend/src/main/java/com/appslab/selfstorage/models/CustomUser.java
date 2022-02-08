@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.*;
 
@@ -21,6 +22,7 @@ public class CustomUser implements UserDetails {
     @JsonIgnore
     private String providerUserId;
 
+    @NotBlank
     private String email;
 
     @Column(columnDefinition = "BIT", length = 1)
@@ -36,11 +38,14 @@ public class CustomUser implements UserDetails {
 
     private String provider;
 
+    private Long spaceSize;
+
     @JsonIgnore
+    @NotBlank
     private String password;
 
     @NotNull
-    @NotEmpty
+    @NotBlank
     private String username;
 
     @JsonIgnore
@@ -179,5 +184,13 @@ public class CustomUser implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Long getSpaceSize() {
+        return spaceSize;
+    }
+
+    public void setSpaceSize(Long spaceSize) {
+        this.spaceSize = spaceSize;
     }
 }

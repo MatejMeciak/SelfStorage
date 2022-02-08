@@ -1,8 +1,10 @@
 package com.appslab.selfstorage.controllers;
 
+import com.appslab.selfstorage.models.CustomUser;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
 import com.appslab.selfstorage.services.UploadFileService;
 import com.appslab.selfstorage.models.UploadedFile;
+import com.appslab.selfstorage.services.UserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
@@ -11,9 +13,11 @@ import java.util.List;
 @RestController
 public class UploadFileController {
     private final UploadFileService uploadFileService;
+    private UserService userService;
 
-    public UploadFileController(UploadFileService uploadFileService, FileRepositoryDB fileRepositoryDB) {
+    public UploadFileController(UploadFileService uploadFileService, UserService userService) {
         this.uploadFileService = uploadFileService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -43,8 +47,8 @@ public class UploadFileController {
     }
 
     @GetMapping("/share/myFiles")
-    public List<UploadedFile> getShareFiles(){
-        return uploadFileService.returnShareFiles();
+    public List<UploadedFile> getSharedFiles(){
+        return uploadFileService.getMySharedFiles();
     }
 
     @GetMapping("/files")
@@ -53,11 +57,15 @@ public class UploadFileController {
     }
 
     @PostMapping
-    public UploadedFile uploadFile(@RequestParam("file") MultipartFile multipartFile,@RequestParam(required = false) Boolean access) throws Exception {
+    public UploadedFile uploadFile(@RequestBody MultipartFile multipartFile,@RequestParam(required = false) Boolean access) throws Exception {
         UploadedFile uploadedFile = uploadFileService.uploadedFile(multipartFile,access);
-        uploadFileService.saveFileToStorage(uploadedFile,multipartFile);
-        uploadFileService.saveUploadedFileToDB(uploadedFile);
-        return uploadedFile;
+        CustomUser signInUser = userService.getUser();
+        if (uploadedFile.getFileSize()+userService.usedSpaceOfStorage()<= signInUser.getSpaceSize()) {
+            uploadFileService.saveFileToStorage(uploadedFile, multipartFile);
+            uploadFileService.saveUploadedFileToDB(uploadedFile);
+            return uploadedFile;
+        }
+        return null;
     }
 
     @DeleteMapping("/{id}")
@@ -71,7 +79,7 @@ public class UploadFileController {
     }
 
     @PutMapping("/share")
-    public void saveEditFileWithUser(@RequestBody UploadedFile uploadedFile, @RequestParam String username){
-        uploadFileService.saveEditFileWithUser(username, uploadedFile);
+    public void saveEditFileWithUser(@RequestBody UploadedFile uploadedFile, @RequestParam String email){
+        uploadFileService.saveEditFileWithUser(email, uploadedFile);
     }
 }

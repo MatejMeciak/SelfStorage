@@ -30,7 +30,7 @@ public class FolderController {
     }
 
     @GetMapping("/search")
-    public List<Folder> searchFolders(@RequestParam("keyword") String keyword){
+    public List<Folder> searchFolders(@RequestParam String keyword){
         return folderService.searchFoldersByFolderName(keyword);
     }
 
@@ -49,9 +49,9 @@ public class FolderController {
         folderService.createFolder(folder);
     }
 
-    @PutMapping("/{id}/upload")
-    public void addFileOrLinkToFolder(@PathVariable Long id, @RequestParam Long requestId){
-        folderService.addContentToFolder(id, requestId);
+    @PostMapping("/{id}/upload")
+    public void addFileToFolder(@PathVariable Long id, @RequestParam Long fileId){
+        folderService.addContentToFolder(id, fileId);
     }
 
     @DeleteMapping("/{id}")
@@ -60,7 +60,7 @@ public class FolderController {
     }
 
     @DeleteMapping("/folder/{id}")
-    public void deleteLinkOrFileFromFolder(@RequestParam Long folderId,@PathVariable Long id){
+    public void deleteFileFromFolder(@RequestParam Long folderId,@PathVariable Long id){
         folderService.deleteContent(folderId,id);
     }
 }

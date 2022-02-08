@@ -1,5 +1,6 @@
 package com.appslab.selfstorage.controllers;
 
+import com.appslab.selfstorage.dto.CategoryBasicInfo;
 import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.UploadedFile;
 import com.appslab.selfstorage.services.CategoryService;
@@ -21,18 +22,28 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<UploadedFile> getCategory(@RequestParam String category){
-        return categoryService.getCategory(category);
+    public List<UploadedFile> getCategoryContent(@RequestParam String category){
+        return categoryService.getCategoryContent(category);
+    }
+
+    @GetMapping("{id}")
+    public CategoryBasicInfo getCategory(@PathVariable Long id){
+        Category category = categoryService.getCategory(id);
+        CategoryBasicInfo categoryBasicInfo = new CategoryBasicInfo();
+        categoryBasicInfo.setCreatorId(category.getCreatorId());
+        categoryBasicInfo.setId(categoryBasicInfo.getId());
+        categoryBasicInfo.setName(category.getName());
+        return categoryBasicInfo;
     }
 
     @PostMapping("/{categoryId}/add")
-    public Object addFileOrLinkToCategory(@PathVariable Long categoryId, @RequestParam Long requestId){
+    public Object addContentToCategory(@PathVariable Long categoryId, @RequestParam Long requestId){
         return categoryService.addContentToCategory(categoryId, requestId);
     }
 
     @PostMapping
-    public Category createCategory(@RequestParam String categoryName){
-        return categoryService.createCategory(categoryName);
+    public Category createCategory(@RequestParam String name){
+        return categoryService.createCategory(name);
     }
 
     @DeleteMapping("/content/{id}")

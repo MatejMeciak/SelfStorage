@@ -8,7 +8,7 @@ import java.util.List;
 public interface CategoryService {
     List<Category> getListOfCategories();
 
-    List<UploadedFile> getCategory(String name);
+    List<UploadedFile> getCategoryContent(String name);
 
     Category createCategory(String categoryName);
 
@@ -17,4 +17,6 @@ public interface CategoryService {
     void deleteCategory(Long id);
 
     void deleteContentFromCategory(Long id);
+
+    Category getCategory(Long id);
 }
