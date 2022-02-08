@@ -1,6 +1,8 @@
 package com.appslab.selfstorage.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class Folder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    @NotEmpty
     protected String name;
 
     protected Long date;
@@ -19,6 +22,13 @@ public class Folder {
     protected List<UploadedFile> uploadedFileList;
 
     protected Boolean access;
+
+    @JoinColumn(name = "category_id", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    protected Category category;
+
+    @Column(name = "category_id")
+    protected Long categoryId;
 
     @JoinColumn(name = "owner_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -76,5 +86,13 @@ public class Folder {
 
     public void setUploadedFileList(List<UploadedFile> uploadedFileList) {
         this.uploadedFileList = uploadedFileList;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }

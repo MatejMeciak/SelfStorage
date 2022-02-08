@@ -20,7 +20,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UploadFileServiceImpl implements UploadFileService {
@@ -134,8 +137,8 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public void saveEditFileWithUser(String username, UploadedFile uploadedFile) {
-        CustomUser user = userRepository.findByUsername(username).get();
+    public void saveEditFileWithUser(String email, UploadedFile uploadedFile) {
+        CustomUser user = userRepository.findByEmail(email);
         UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
         if(!uploadedFile1.getFriends().contains(user))
         {
@@ -145,9 +148,16 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public List<UploadedFile> returnShareFiles() {
+    public List<UploadedFile> getMySharedFiles() {
+        CustomUser user = userRepository.findById(userService.getSpecifyUserId()).get();
+        List<UploadedFile> getMySharedFiles = fileRepositoryDB.findByOwnerId(user.getId()).stream().filter(u -> u.getFriends() != null).collect(Collectors.toList());
+        return getMySharedFiles;
+    }
+
+    @Override
+    public List<UploadedFile> getSharedFilesFromOtherUsers() {
         CustomUser customUser = userRepository.findById(userService.getSpecifyUserId()).get();
-        return fileRepositoryDB.findByOwner(customUser);
+        return customUser.getSharedFiles();
     }
 
     @Override

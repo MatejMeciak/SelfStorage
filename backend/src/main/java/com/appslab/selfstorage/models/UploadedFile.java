@@ -1,6 +1,7 @@
 package com.appslab.selfstorage.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +16,7 @@ public class UploadedFile {
 
     protected Long fileSize;
 
+    @NotEmpty
     protected String name;
 
     protected String mimeType;

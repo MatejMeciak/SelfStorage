@@ -31,9 +31,11 @@ public interface UploadFileService {
 
     ResponseEntity<InputStreamResource> getFile(UploadedFile uploadedFile) throws Exception;
 
-    void saveEditFileWithUser(String username, UploadedFile uploadedFile);
+    void saveEditFileWithUser(String email, UploadedFile uploadedFile);
 
-    List<UploadedFile> returnShareFiles();
+    List<UploadedFile> getMySharedFiles();
+
+    List<UploadedFile> getSharedFilesFromOtherUsers();
 
     List<UploadedFile> getPublicFiles();
 
