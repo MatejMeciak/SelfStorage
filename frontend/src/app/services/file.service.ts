@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
@@ -53,16 +53,16 @@ export class FileService {
   }
 
   // DELETE
-  deleteFile(file: FileModel): Observable<FileModel> {
-    return this.http.delete<FileModel>(`${this.fileUrl}/${file.id}`);
+  deleteFile(fileId: number): Observable<FileModel> {
+    return this.http.delete<FileModel>(`${this.fileUrl}/${fileId}`);
   }
 
   // PUT
   updateFile(file: FileModel): Observable<FileModel> {
+    delete file['friends'];
     return this.http.put<FileModel>(`${this.fileUrl}/edit`, file);
   }
   shareFileWithUser(username: string, file:FileModel): Observable<FileModel> {
     return this.http.put<FileModel>(`${this.fileUrl}/share/?username=${username}`, file)
   }
-
 }

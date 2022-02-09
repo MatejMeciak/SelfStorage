@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {FileService} from '../../../services/file.service';
 import { File} from '../../../models/file';
 import {FileDetailComponent} from '../file-detail/file-detail.component';
-import {CreateFolderDialogComponent} from '../../dialogs/create-folder-dialog/create-folder-dialog.component';
+import {CreateFolderOrCategoryDialogComponent} from '../../dialogs/create-folder-dialog/create-folder-or-category-dialog.component';
 import {Folder} from '../../../models/folder';
 import {MatDialog} from '@angular/material/dialog';
 import {FolderService} from "../../../services/folder.service";
@@ -41,7 +41,7 @@ export class FolderComponent implements OnInit {
     this.dialog.open(FileDetailComponent, { data: file, panelClass: 'custom-dialog' });
   }
   openFolderDialog(): void {
-    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {name: '', access: false } as Folder });
+    const dialogRef = this.dialog.open(CreateFolderOrCategoryDialogComponent, { data: {name: '', access: false } as Folder });
     dialogRef.afterClosed().subscribe(folder => {
       this.folderService.createFolder(folder).subscribe();
     });

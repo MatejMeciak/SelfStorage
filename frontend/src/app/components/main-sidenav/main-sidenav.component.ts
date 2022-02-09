@@ -9,6 +9,9 @@ import { SidenavService } from "../../services/sidenav.service";
 import { TokenStorageService } from "../../services/token-storage.service";
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
+import { DialogService } from "../../services/dialog.service";
+import { Folder } from "../../models/folder";
+import { FolderService } from "../../services/folder.service";
 
 @Component({
   selector: 'app-main-sidenav',
@@ -24,17 +27,20 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
 
   categories$: Observable<Category[]> = new Observable<Category[]>();
   routerLinkList = [
+    { title: 'Storage', link: 'storage', matIcon: 'source' },
     { title: 'All files', link: 'files', matIcon: 'file_copy' },
-    { title: 'Folders', link: 'files?category=test', matIcon: 'folder' },
+    { title: 'Folders', link: 'folders', matIcon: 'folder' },
     { title: 'Category', link: '', matIcon: 'category', sub: [] },
     { title: 'Shared with', link: 'search', matIcon: 'folder_shared' },
   ];
 
   constructor(private fileService: FileService,
+              private folderService: FolderService,
               private tokenStorageService: TokenStorageService,
               private categoryService: CategoryService,
               private sidenavService: SidenavService,
               private authService: AuthService,
+              private dialogService: DialogService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -54,11 +60,20 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
     for (let i = 0; i < files.length; i++) {
       this.fileService.uploadFile(files.item(i)).pipe(
         takeUntil(this.unsubscribe$)
-      ).subscribe();
+      ).subscribe(() => {
+        location.reload();
+      });
     }
   }
   redirectTo(url: string) {
     this.router.navigateByUrl(url);
+  }
+  createFolder(): void {
+    this.dialogService.createFolderOrCategoryDialog({ name: '' } as Folder, 'folder').subscribe(result => {
+      if (result) {
+        this.folderService.createFolder(result).subscribe(() => location.reload());
+      }
+    });
   }
 
   ngOnDestroy(): void {

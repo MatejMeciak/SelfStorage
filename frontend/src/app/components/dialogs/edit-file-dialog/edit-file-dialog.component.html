@@ -1,9 +1,10 @@
-<div mat-dialog-content style="width: 1000px">
-  <mat-label><b>Enter new file name</b></mat-label>
-  <input matInput [(ngModel)]="data.name" type="text">
-  <mat-slide-toggle [(ngModel)]="data.access">Public {{ data.access }}</mat-slide-toggle>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data">Ok</button>
-</div>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Enter new name</mat-label>
+    <input required matInput [(ngModel)]="content.name" #inputModel="ngModel" type="text">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-button [mat-dialog-close]="content" [disabled]="!inputModel.valid">Ok</button>
+</mat-dialog-actions>

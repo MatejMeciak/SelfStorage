@@ -12,7 +12,7 @@ import { FileService } from './services/file.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ContentCardComponent } from './components/file-components/content-card/content-card.component';
 import { RegistrationFormComponent } from './components/auth-forms/registration-form/registration-form.component';
-import { ContentComponent } from './components/file-components/content/content.component';
+import { ContentPageComponent } from './components/file-components/content/content-page.component';
 import { FileDetailComponent } from './components/file-components/file-detail/file-detail.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { AuthService } from './services/auth.service';
@@ -20,8 +20,8 @@ import { AuthInterceptor } from './auth/interceptor/auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditFileDialogComponent } from './components/dialogs/edit-file-dialog/edit-file-dialog.component';
 import { UploadFileDialogComponent } from './components/dialogs/upload-file-dialog/upload-file-dialog.component';
-import { CreateFolderDialogComponent } from './components/dialogs/create-folder-dialog/create-folder-dialog.component';
-import { MoveToFolderDialogComponent } from './components/dialogs/move-to-folder-dialog/move-to-folder-dialog.component';
+import { CreateFolderOrCategoryDialogComponent } from './components/dialogs/create-folder-dialog/create-folder-or-category-dialog.component';
+import { SelectContentDialogComponent } from './components/dialogs/move-to-folder-dialog/select-content-dialog.component';
 import { FolderComponent } from './components/file-components/folder/folder.component';
 import { ProfilePageComponent } from './components/user-components/profile-page/profile-page.component';
 import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.component';
@@ -36,6 +36,9 @@ import { FilesComponent } from './components/file-components/files/files.compone
 import { ImageService } from "./services/image.service";
 import { SidenavService } from "./services/sidenav.service";
 import { TokenStorageService } from "./services/token-storage.service";
+import { OpenContentDialogComponent } from './components/dialogs/open-content-dialog/open-content-dialog.component';
+import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
+import { InputUserDialogComponent } from './components/dialogs/input-user-dialog/input-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,13 +48,13 @@ import { TokenStorageService } from "./services/token-storage.service";
     LandingPageComponent,
     ContentCardComponent,
     RegistrationFormComponent,
-    ContentComponent,
+    ContentPageComponent,
     FileDetailComponent,
     SearchPageComponent,
     EditFileDialogComponent,
     UploadFileDialogComponent,
-    CreateFolderDialogComponent,
-    MoveToFolderDialogComponent,
+    CreateFolderOrCategoryDialogComponent,
+    SelectContentDialogComponent,
     FolderComponent,
     ProfilePageComponent,
     MainSidenavComponent,
@@ -59,6 +62,9 @@ import { TokenStorageService } from "./services/token-storage.service";
     AdminComponent,
     FoldersComponent,
     FilesComponent,
+    OpenContentDialogComponent,
+    ConfirmDialogComponent,
+    InputUserDialogComponent,
   ],
   imports: [
     MaterialModule,

@@ -1,65 +1,49 @@
 import { Injectable } from '@angular/core';
-import {CreateFolderDialogComponent} from "../components/dialogs/create-folder-dialog/create-folder-dialog.component";
-import {Folder} from "../models/folder";
-import {File} from "../models/file";
-import {FileDetailComponent} from "../components/file-components/file-detail/file-detail.component";
-import {EditFileDialogComponent} from "../components/dialogs/edit-file-dialog/edit-file-dialog.component";
-import {MoveToFolderDialogComponent} from "../components/dialogs/move-to-folder-dialog/move-to-folder-dialog.component";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import { CreateFolderOrCategoryDialogComponent } from "../components/dialogs/create-folder-dialog/create-folder-or-category-dialog.component";
+import { Folder } from "../models/folder";
+import { File } from "../models/file";
+import { EditFileDialogComponent } from "../components/dialogs/edit-file-dialog/edit-file-dialog.component";
+import { SelectContentDialogComponent } from "../components/dialogs/move-to-folder-dialog/select-content-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
+import { OpenContentDialogComponent } from "../components/dialogs/open-content-dialog/open-content-dialog.component";
+import { FileDialogData } from "../models/FileDialogData";
+import { Observable } from "rxjs";
+import { ConfirmDialogComponent } from "../components/dialogs/confirm-dialog/confirm-dialog.component";
+import { InputUserDialogComponent } from "../components/dialogs/input-user-dialog/input-user-dialog.component";
+import { Category } from "../models/category";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DialogService {
-  private dialogRef: MatDialogRef<FileDetailComponent>
-
   constructor(private dialog: MatDialog) { }
 
-  openFolderDialog(): void {
-    const dialogRef = this.dialog.open(CreateFolderDialogComponent, { data: {name: '', access: false } as Folder });
-    dialogRef.afterClosed().subscribe(folder => {
-      //this.folderService.createFolder(folder).subscribe();
-    });
+  confirmDialog(content: File | Folder, action: string): Observable<any> {
+    return this.dialog.open(ConfirmDialogComponent,
+      { data: { content: content, action: action } }
+    ).afterClosed();
   }
-
-  openEditFileDialog(): void {
-    const dialogRef = this.dialog.open(EditFileDialogComponent, { /*data: this.file*/ });
-    dialogRef.afterClosed().subscribe(newFile => {
-      //this.fileService.updateFile(newFile).subscribe();
-    });
+  editContentDialog(content: File | Folder): Observable<any> {
+    return this.dialog.open(EditFileDialogComponent,
+      { data: content }
+    ).afterClosed();
   }
-  openCopyToFolderDialog(): void {
-    const dialogRef = this.dialog.open(MoveToFolderDialogComponent, { /*data: {file: this.file, folder: this.folder, action: 'copy'}*/ });
-    dialogRef.afterClosed().subscribe(data => {
-      //this.folderService.updateFolderWithFile(data.folder.id, data.file).subscribe();
-    });
+  openViewContentDialog(dialogData: FileDialogData): Observable<any> {
+    return this.dialog.open(OpenContentDialogComponent,
+      { data: dialogData, panelClass: 'custom-dialog' }
+    ).afterClosed();
   }
-  openMoveToFolderDialog(): void {
-    const dialogRef = this.dialog.open(MoveToFolderDialogComponent, { /*data: {file: this.file, folder: this.folder, action: 'move'}*/ });
-    dialogRef.afterClosed().subscribe(data => {
-      //this.folderService.updateFolderWithFile(data.folder.id, data.file.id).subscribe();
-    });
+  shareWithUserDialog(): Observable<any> {
+    return this.dialog.open(InputUserDialogComponent).afterClosed();
   }
-  shareWithDialog(): void {
-    // TODO
+  selectContentDialog(target: string): Observable<any> {
+    return this.dialog.open(SelectContentDialogComponent,
+      { data: { content: {}, category: {}, target: target } }
+    ).afterClosed();
   }
-
-  downloadFile(): void {
-    /*this.fileService.downloadFile(this.file).subscribe(blob => {
-      fileSaver.saveAs(blob, this.file.name);
-    });*/
-  }
-
-  openDetailDialogOf(file: File): void {
-    const dialogRef = this.dialog.open(FileDetailComponent, { data: file, panelClass: 'custom-dialog' });
-    dialogRef.afterClosed().subscribe(deleteFile => {
-     /* if (deleteFile) {
-        this.fileService.deleteFile(file).subscribe(() =>
-          this.fileService.getFiles().subscribe(files => this.files = files));
-      }*/
-    });
-  }
-  closeFileDetailDialog(deleteFile: boolean): void {
-    this.dialogRef.close(deleteFile);
+  createFolderOrCategoryDialog(content: Folder | Category, type: string): Observable<any> {
+    return this.dialog.open(CreateFolderOrCategoryDialogComponent,
+      { data: { content: content, type: type } }
+    ).afterClosed();
   }
 }

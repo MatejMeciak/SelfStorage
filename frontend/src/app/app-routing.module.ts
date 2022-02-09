@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { RegistrationFormComponent } from './components/auth-forms/registration-form/registration-form.component';
-import { ContentComponent } from './components/file-components/content/content.component';
+import { ContentPageComponent } from './components/file-components/content/content-page.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { AuthGuardService } from './auth/guard/auth-guard.service';
 import { FolderComponent } from './components/file-components/folder/folder.component';
@@ -11,7 +11,7 @@ import { ProfilePageComponent } from './components/user-components/profile-page/
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
-  { path: 'files', component: ContentComponent, canActivate: [AuthGuardService] },
+  { path: 'storage', component: ContentPageComponent, canActivate: [AuthGuardService] },
   { path: 'folder/:id', component: FolderComponent, canActivate: [AuthGuardService] },
   { path: 'search', component: SearchPageComponent },
   { path: 'login', component: LoginFormComponent },

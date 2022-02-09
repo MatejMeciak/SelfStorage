@@ -36,9 +36,13 @@ mat-drawer-container {
 .container {
   padding-left: 0.5rem;
 }
-
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fafafa;
+}
 .detail-sidenav {
-  padding: 1em;
   width: max(20%, 235px);
   border-left: 1px solid #e1e1e1;
   background-color: #fafafa;
