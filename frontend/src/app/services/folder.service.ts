@@ -25,7 +25,7 @@ export class FolderService {
     return this.http.get(`${this.folderUrl}/${id}/content`);
   }
   searchFolders(keyword: string): Observable<Folder[]> {
-    return this.http.get<Folder[]>(`${this.folderUrl}/search/?keyword=${keyword}`);
+    return this.http.get<Folder[]>(`${this.folderUrl}/search?keyword=${keyword}`);
   }
 
   // POST
@@ -35,7 +35,7 @@ export class FolderService {
 
   // PUT
   updateFolderWithFile(folderId: number, fileId: number): Observable<Folder> {
-    return this.http.put<Folder>(`${this.folderUrl}/${folderId}/upload`, fileId);
+    return this.http.put<Folder>(`${this.folderUrl}/${folderId}/upload?requestId=${fileId}`, {});
   }
 
   //DELETE
@@ -43,6 +43,6 @@ export class FolderService {
     return this.http.delete<Folder>(`${this.folderUrl}/${id}`);
   }
   deleteContentInFolder(folderId: number, fileId): Observable<Folder> {
-    return this.http.delete<Folder>(`${this.folderUrl}/${fileId}/?folderId=${folderId}`);
+    return this.http.delete<Folder>(`${this.folderUrl}/${fileId}?folderId=${folderId}`);
   }
 }

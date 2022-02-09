@@ -1,0 +1,11 @@
+<mat-dialog-content>
+  <p>Creating {{ data.type }}</p>
+  <mat-form-field>
+    <mat-label>Enter {{ data.type | titlecase }} Name</mat-label>
+    <input required matInput [(ngModel)]="data.content.name" #inputModel="ngModel">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.content" [disabled]="!inputModel.valid">Create</button>
+</mat-dialog-actions>

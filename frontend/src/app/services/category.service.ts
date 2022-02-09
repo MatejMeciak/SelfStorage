@@ -15,8 +15,11 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
   // GET
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.categoryUrl}/list`);
+  getCategory(contentId: number): Observable<any> {
+    return this.http.get<any>(`${this.categoryUrl}/${contentId}`);
+  }
+  getCategories(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.categoryUrl}/list`);
   }
   getCategoryContent(category: string): Observable<File[]> {
     return this.http.get<File[]>(`${this.categoryUrl}?category=${category}`);
@@ -24,10 +27,10 @@ export class CategoryService {
 
   // POST
   createCategory(category: Category): Observable<Category> {
-    return this.http.post<Category>(`${this.categoryUrl}`, category.name);
+    return this.http.post<Category>(`${this.categoryUrl}?name=${category.name}`, {});
   }
-  addContentToCategory(id: number, file: File): any {
-    return this.http.post(`${this.categoryUrl}/${id}/add`, file.id);
+  addContentToCategory(id: number, fileId: number): Observable<Category> {
+    return this.http.post<Category>(`${this.categoryUrl}/${id}/add?requestId=${fileId}`, {});
   }
   // DELETE
   deleteCategory(category: Category): Observable<Category> {

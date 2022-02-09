@@ -20,3 +20,6 @@
 mat-icon:hover {
   cursor: pointer;
 }
+button.mat-menu-item > * {
+  color: black !important;
+}
