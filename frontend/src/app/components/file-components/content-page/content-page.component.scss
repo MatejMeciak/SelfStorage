@@ -1,0 +1,4 @@
+@use 'src/scss/abstracts/mixins' as *;
+.spacer {
+  @include spacer($space: 1.5rem);
+}

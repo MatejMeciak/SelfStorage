@@ -21,50 +21,56 @@
     </div>
     <div class="spacer"></div>
   </div>
-  <div class="highlight" (click)="editFile()">
-    <mat-icon>edit</mat-icon>
-    <span>Edit name</span>
-  </div>
-  <div class="highlight" [matMenuTriggerFor]="shareOptions">
-    <mat-icon>share</mat-icon>
-    <span>Share</span>
-  </div>
-  <mat-menu #shareOptions="matMenu">
-    <button mat-menu-item (click)="shareWithUser()">
-      <mat-icon>folder_shared</mat-icon>
-      Share with user
-    </button>
-    <button *ngIf="!file.access" mat-menu-item (click)="publishFile(true)">
-      <mat-icon>public</mat-icon>
-      Make content public
-    </button>
-  </mat-menu>
-  <div class="highlight" (click)="moveFileToFolder()">
-    <mat-icon>drive_folder_upload</mat-icon>
-    <span>Move</span>
-  </div>
-  <div class="highlight" (click)="addCategory()">
-    <mat-icon>add_circle</mat-icon>
-    <span>Add category</span>
-  </div>
   <div class="highlight" (click)="downloadFile()">
     <mat-icon>download</mat-icon>
     <span>Download</span>
   </div>
-  <div class="spacer"></div>
-  <div class="temp" *ngIf="file.access || file.categoryId">
-    <div class="highlight" *ngIf="file.access" (click)="publishFile(false)">
-      <mat-icon>public_off</mat-icon>
-      <span>Remove from public</span>
+  <div class="highlight" *ngIf="file.ownerId === this.user.id" (click)="reportFile()">
+    <mat-icon>report</mat-icon>
+    <span>Report</span>
+  </div>
+  <div class="temp" *ngIf="file.ownerId !== this.user.id">
+    <div class="highlight" (click)="editFile()">
+      <mat-icon>edit</mat-icon>
+      <span>Edit name</span>
     </div>
-    <div class="highlight" *ngIf="file.categoryId" (click)="removeCategory()">
-      <mat-icon>highlight_off</mat-icon>
-      <span>Remove category</span>
+    <div class="highlight" [matMenuTriggerFor]="shareOptions">
+      <mat-icon>share</mat-icon>
+      <span>Share</span>
+    </div>
+    <mat-menu #shareOptions="matMenu">
+      <button mat-menu-item (click)="shareWithUser()">
+        <mat-icon>folder_shared</mat-icon>
+        Share with user
+      </button>
+      <button *ngIf="!file.access" mat-menu-item (click)="publishFile(true)">
+        <mat-icon>public</mat-icon>
+        Make content public
+      </button>
+    </mat-menu>
+    <div class="highlight" (click)="moveFileToFolder()">
+      <mat-icon>drive_folder_upload</mat-icon>
+      <span>Move</span>
+    </div>
+    <div class="highlight" (click)="addCategory()">
+      <mat-icon>add_circle</mat-icon>
+      <span>Add category</span>
     </div>
     <div class="spacer"></div>
-  </div>
-  <div class="highlight" (click)="deleteFile()">
-    <mat-icon>delete</mat-icon>
-    <span>Delete</span>
+    <div class="temp" *ngIf="file.access || file.categoryId">
+      <div class="highlight" *ngIf="file.access" (click)="publishFile(false)">
+        <mat-icon>public_off</mat-icon>
+        <span>Remove from public</span>
+      </div>
+      <div class="highlight" *ngIf="file.categoryId" (click)="removeCategory()">
+        <mat-icon>highlight_off</mat-icon>
+        <span>Remove category</span>
+      </div>
+      <div class="spacer"></div>
+    </div>
+    <div class="highlight" (click)="deleteFile()">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </div>
   </div>
 </div>

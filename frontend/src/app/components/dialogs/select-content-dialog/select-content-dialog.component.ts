@@ -7,7 +7,7 @@ import { CategoryService } from "../../../services/category.service";
 import { Category } from "../../../models/category";
 
 @Component({
-  selector: 'app-move-to-folder-dialog',
+  selector: 'app-select-content-dialog',
   templateUrl: './select-content-dialog.component.html',
   styleUrls: ['./select-content-dialog.component.scss']
 })

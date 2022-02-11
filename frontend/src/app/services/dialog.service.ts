@@ -3,7 +3,7 @@ import { CreateFolderOrCategoryDialogComponent } from "../components/dialogs/cre
 import { Folder } from "../models/folder";
 import { File } from "../models/file";
 import { EditFileDialogComponent } from "../components/dialogs/edit-file-dialog/edit-file-dialog.component";
-import { SelectContentDialogComponent } from "../components/dialogs/move-to-folder-dialog/select-content-dialog.component";
+import { SelectContentDialogComponent } from "../components/dialogs/select-content-dialog/select-content-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { OpenContentDialogComponent } from "../components/dialogs/open-content-dialog/open-content-dialog.component";
 import { FileDialogData } from "../models/FileDialogData";
@@ -38,7 +38,7 @@ export class DialogService {
   }
   selectContentDialog(target: string): Observable<any> {
     return this.dialog.open(SelectContentDialogComponent,
-      { data: { content: {}, category: {}, target: target } }
+      { data: { content: {}, selected: {}, target: target } }
     ).afterClosed();
   }
   createFolderOrCategoryDialog(content: Folder | Category, type: string): Observable<any> {

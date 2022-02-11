@@ -24,7 +24,6 @@ export class NavigationBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
-    console.log(this.tokenStorageService.getToken());
     if (this.isLoggedIn) {
       this.user = this.tokenStorageService.getUser();
       this.username = this.user.username;

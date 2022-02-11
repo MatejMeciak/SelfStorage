@@ -1,35 +1,28 @@
-import { Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from "rxjs";
-
-import { FileService } from '../../../services/file.service';
-import { FolderService } from "../../../services/folder.service";
-import { SidenavService } from "../../../services/sidenav.service";
-
-import { MatDrawer } from "@angular/material/sidenav";
-import { Folder } from "../../../models/folder";
+import { FileService } from "../../../services/file.service";
 import { DialogService } from "../../../services/dialog.service";
-import { Category } from "../../../models/category";
+import { FolderService } from "../../../services/folder.service";
 import { CategoryService } from "../../../services/category.service";
-
+import { Category } from "../../../models/category";
+import { Folder } from "../../../models/folder";
 
 @Component({
-  selector: 'app-content-page',
-  templateUrl: './content-page.component.html',
-  styleUrls: ['./content-page.component.scss']
+  selector: 'app-content-header',
+  templateUrl: './content-header.component.html',
+  styleUrls: ['./content-header.component.scss']
 })
-export class ContentPageComponent implements OnInit, OnDestroy {
-  @ViewChild('detailSidenav', { static: true }) public detailSidenav: MatDrawer;
+export class ContentHeaderComponent implements OnInit, OnDestroy {
+  @Input() title: string;
+  @Input() actions: boolean = true;
 
   unsubscribe$ = new Subject();
   constructor(private fileService: FileService,
               private dialogService: DialogService,
               private folderService: FolderService,
-              private categoryService: CategoryService,
-              private sidenavService: SidenavService) { }
+              private categoryService: CategoryService) { }
 
-  ngOnInit(): void {
-    this.sidenavService.setDetailSidenav(this.detailSidenav);
-  }
+  ngOnInit(): void { }
 
   onFileInput(files: FileList): void {
     for (let i = 0; i < files.length; i++) {

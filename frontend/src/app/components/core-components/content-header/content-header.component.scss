@@ -1,14 +1,14 @@
 @use 'src/scss/abstracts/mixins' as *;
-mat-drawer-container {
-  height: 100%;
+.spacer {
+  @include spacer($space: 1.5rem);
 }
-
 .files-header {
   display: flex;
   gap: 2rem;
   h1  {
     flex-shrink: 0;
     font-size: 42px;
+    min-width: 225px;
   }
   mat-icon, button {
     margin: auto 0;
@@ -17,10 +17,6 @@ mat-drawer-container {
 .files-header:nth-child(1) {
   margin-right: 1rem;
 }
-.spacer {
-  @include spacer($space: 1.5rem);
-}
-
 .search {
   width: 100%;
   display: flex;
@@ -33,17 +29,9 @@ mat-drawer-container {
     margin: 0;
   }
 }
-.container {
-  padding-left: 0.5rem;
-}
 .sticky {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: #fafafa;
-}
-.detail-sidenav {
-  width: max(20%, 235px);
-  border-left: 1px solid #e1e1e1;
   background-color: #fafafa;
 }

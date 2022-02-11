@@ -12,7 +12,7 @@ import { FileService } from './services/file.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ContentCardComponent } from './components/file-components/content-card/content-card.component';
 import { RegistrationFormComponent } from './components/auth-forms/registration-form/registration-form.component';
-import { ContentPageComponent } from './components/file-components/content/content-page.component';
+import { ContentPageComponent } from './components/file-components/content-page/content-page.component';
 import { FileDetailComponent } from './components/file-components/file-detail/file-detail.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { AuthService } from './services/auth.service';
@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditFileDialogComponent } from './components/dialogs/edit-file-dialog/edit-file-dialog.component';
 import { UploadFileDialogComponent } from './components/dialogs/upload-file-dialog/upload-file-dialog.component';
 import { CreateFolderOrCategoryDialogComponent } from './components/dialogs/create-folder-dialog/create-folder-or-category-dialog.component';
-import { SelectContentDialogComponent } from './components/dialogs/move-to-folder-dialog/select-content-dialog.component';
+import { SelectContentDialogComponent } from './components/dialogs/select-content-dialog/select-content-dialog.component';
 import { FolderComponent } from './components/file-components/folder/folder.component';
 import { ProfilePageComponent } from './components/user-components/profile-page/profile-page.component';
 import { MainSidenavComponent } from './components/main-sidenav/main-sidenav.component';
@@ -39,6 +39,10 @@ import { TokenStorageService } from "./services/token-storage.service";
 import { OpenContentDialogComponent } from './components/dialogs/open-content-dialog/open-content-dialog.component';
 import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
 import { InputUserDialogComponent } from './components/dialogs/input-user-dialog/input-user-dialog.component';
+import { ContentHeaderComponent } from './components/core-components/content-header/content-header.component';
+import { FilesPlusDetailComponent } from './components/file-components/files-plus-detail/files-plus-detail.component';
+import { OnlyFilesComponent } from './components/file-components/only-files/only-files.component';
+import { OnlyFoldersComponent } from './components/file-components/only-folders/only-folders.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +69,10 @@ import { InputUserDialogComponent } from './components/dialogs/input-user-dialog
     OpenContentDialogComponent,
     ConfirmDialogComponent,
     InputUserDialogComponent,
+    ContentHeaderComponent,
+    FilesPlusDetailComponent,
+    OnlyFilesComponent,
+    OnlyFoldersComponent,
   ],
   imports: [
     MaterialModule,
