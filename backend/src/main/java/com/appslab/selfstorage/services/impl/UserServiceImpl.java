@@ -15,11 +15,9 @@ import com.appslab.selfstorage.repositories.RoleRepository;
 import com.appslab.selfstorage.repositories.UserRepository;
 import com.appslab.selfstorage.security.oauth2.user.OAuth2UserInfo;
 import com.appslab.selfstorage.security.oauth2.user.OAuth2UserInfoFactory;
-import com.appslab.selfstorage.services.CategoryService;
 import com.appslab.selfstorage.services.UserService;
 
 import com.appslab.selfstorage.util.GeneralUtils;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,17 +46,6 @@ public class UserServiceImpl implements UserService {
         this.fileRepositoryDB = fileRepositoryDB;
         this.categoryRepository = categoryRepository;
     }
-
-//    @Override
-//    public void createUser(RegistrationRequestDto registrationRequest){
-//        CustomUser customUser = new CustomUser(passwordEncoder.encode(registrationRequest.getPassword()), registrationRequest.getUsername());
-//        customUser = userRepository.save(customUser);
-//        Category favouriteFiles = new Category();
-//        favouriteFiles.setName("Favourite");
-//        favouriteFiles.setCreatorId(customUser.getId());
-//        categoryRepository.save(favouriteFiles);
-//    }
-
 
     @Override
     public void changePassword(String oldPassword, String newPassword) {
@@ -164,6 +151,14 @@ public class UserServiceImpl implements UserService {
         List<CustomUser> users = userRepository.findAll();
         users.remove(getSpecifyUserId());
         return users;
+    }
+
+    @Override
+    public List<CustomUser> getFriends() {
+        return this.fileRepositoryDB.findByOwnerId(getSpecifyUserId()).stream()
+                .flatMap(file -> file.getFriends().stream())
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     private CustomUser updateExistingUser(CustomUser existingUser, OAuth2UserInfo oAuth2UserInfo) {

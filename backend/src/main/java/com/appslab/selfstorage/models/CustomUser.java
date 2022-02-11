@@ -2,6 +2,8 @@ package com.appslab.selfstorage.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,13 +13,15 @@ import javax.validation.constraints.NotEmpty;
 import java.util.*;
 
 @Entity
+@Getter
+@Setter
 public class CustomUser implements UserDetails {
 
     private static final long serialVersionUID = 65981149772133526L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    private Long id;
 
     @JsonIgnore
     private String providerUserId;
@@ -30,11 +34,11 @@ public class CustomUser implements UserDetails {
 
     @Column(name = "created_date", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date createdDate;
+    private Date createdDate;
 
     @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date modifiedDate;
+    private Date modifiedDate;
 
     private String provider;
 
@@ -54,16 +58,19 @@ public class CustomUser implements UserDetails {
     private Set<Role> roles;
 
     @OneToMany
-    protected List<Category> categories;
+    private List<Category> categories;
 
     @OneToMany
-    protected List<UploadedFile> uploadedFiles;
+    private List<UploadedFile> uploadedFiles;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    protected List<UploadedFile> sharedFiles;
+    private List<UploadedFile> sharedFiles;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Folder> sharedFolder;
 
     @OneToMany
-    protected List<Report> reports;
+    private List<Report> reports;
 
     public CustomUser() {
     }
@@ -73,33 +80,33 @@ public class CustomUser implements UserDetails {
         this.username = username;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public List<UploadedFile> getSharedFiles() {
-        return sharedFiles;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
+//
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
+//
+//    public List<UploadedFile> getSharedFiles() {
+//        return sharedFiles;
+//    }
 
     public void setSharedFiles(List<UploadedFile> uploadedFiles1) {
         this.sharedFiles = uploadedFiles1;
@@ -134,63 +141,65 @@ public class CustomUser implements UserDetails {
         return true ;
     }
 
-    public String getProviderUserId() {
-        return providerUserId;
-    }
+//    public String getProviderUserId() {
+//        return providerUserId;
+//    }
+//
+//    public void setProviderUserId(String providerUserId) {
+//        this.providerUserId = providerUserId;
+//    }
+//
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+//
+//    public void setEnabled(boolean enabled) {
+//        this.enabled = enabled;
+//    }
+//
+//    public Date getCreatedDate() {
+//        return createdDate;
+//    }
+//
+//    public void setCreatedDate(Date createdDate) {
+//        this.createdDate = createdDate;
+//    }
+//
+//    public Date getModifiedDate() {
+//        return modifiedDate;
+//    }
+//
+//    public void setModifiedDate(Date modifiedDate) {
+//        this.modifiedDate = modifiedDate;
+//    }
+//
+//    public String getProvider() {
+//        return provider;
+//    }
+//
+//    public void setProvider(String provider) {
+//        this.provider = provider;
+//    }
+//
+//    public Set<Role> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(Set<Role> roles) {
+//        this.roles = roles;
+//    }
+//
+//    public Long getSpaceSize() {
+//        return spaceSize;
+//    }
+//
+//    public void setSpaceSize(Long spaceSize) {
+//        this.spaceSize = spaceSize;
+//    }
 
-    public void setProviderUserId(String providerUserId) {
-        this.providerUserId = providerUserId;
-    }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    public String getProvider() {
-        return provider;
-    }
-
-    public void setProvider(String provider) {
-        this.provider = provider;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public Long getSpaceSize() {
-        return spaceSize;
-    }
-
-    public void setSpaceSize(Long spaceSize) {
-        this.spaceSize = spaceSize;
-    }
 }

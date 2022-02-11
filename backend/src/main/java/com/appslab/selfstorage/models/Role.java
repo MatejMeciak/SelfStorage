@@ -1,5 +1,8 @@
 package com.appslab.selfstorage.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -11,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
+@Getter
+@Setter
 public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
     public static final String ROLE_USER = "ROLE_USER";
@@ -67,27 +72,27 @@ public class Role implements Serializable {
         return builder.toString();
     }
 
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<CustomUser> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<CustomUser> users) {
-        this.users = users;
-    }
+//    public Long getRoleId() {
+//        return roleId;
+//    }
+//
+//    public void setRoleId(Long roleId) {
+//        this.roleId = roleId;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public Set<CustomUser> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(Set<CustomUser> users) {
+//        this.users = users;
+//    }
 }

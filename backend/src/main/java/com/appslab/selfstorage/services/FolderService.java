@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FolderService {
 
-    List<UploadedFile> getContentInFolder(Long id);
+    List<UploadedFile> getFolderContent(Long id);
 
     void createFolder(Folder folder);
 
@@ -17,9 +17,19 @@ public interface FolderService {
 
     Folder getFolder(Long id);
 
-    void addContentToFolder(Long id, Long requestId);
+    void addContentToFolder(Long id, Long fileId);
 
     Folder deleteFolder(Long id);
 
     void deleteContent(Long folderId,Long id);
+
+    void shareFolderWithFriends(String email, Long id);
+
+    List<Folder> getMySharedFolders();
+
+    List<Folder> getSharedFoldersFromOtherUsers();
+
+    List<Folder> getPublicFolders();
+
+    Folder editFolder(Folder folder);
 }

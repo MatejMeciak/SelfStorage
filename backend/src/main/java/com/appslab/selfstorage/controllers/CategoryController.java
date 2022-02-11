@@ -22,7 +22,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<UploadedFile> getCategoryContent(@RequestParam String category){
+    public List<Object> getCategoryContent(@RequestParam String category){
         return categoryService.getCategoryContent(category);
     }
 
@@ -46,9 +46,9 @@ public class CategoryController {
         return categoryService.createCategory(name);
     }
 
-    @DeleteMapping("/content/{id}")
-    public void deleteContentFromCategory(@PathVariable Long id){
-        categoryService.deleteContentFromCategory(id);
+    @DeleteMapping ("/{categoryId}/content")
+    public List<Category> deleteContentFromCategory(@PathVariable Long categoryId, @RequestParam Long id){
+        return categoryService.deleteContentFromCategory(categoryId, id);
     }
 
     @DeleteMapping("/{id}")

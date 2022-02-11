@@ -50,4 +50,9 @@ public class UserController {
     public Long settingSpace(@RequestParam Long sizeSpace, @RequestParam Long userId){
         return userService.settingSizeOfSpace(sizeSpace, userId);
     }
+
+    @GetMapping("/friends")
+    public List<CustomUser> getFriends(){
+        return userService.getFriends();
+    }
 }
