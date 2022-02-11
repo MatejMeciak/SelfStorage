@@ -35,4 +35,6 @@ public interface UserService {
     Long settingSizeOfSpace(Long sizeSpace, Long userId);
 
     List<CustomUser> getAllUsers();
+
+    List<CustomUser> getFriends();
 }

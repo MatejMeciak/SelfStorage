@@ -1,7 +1,6 @@
 package com.appslab.selfstorage.controllers;
 
 import com.appslab.selfstorage.models.CustomUser;
-import com.appslab.selfstorage.repositories.FileRepositoryDB;
 import com.appslab.selfstorage.services.UploadFileService;
 import com.appslab.selfstorage.models.UploadedFile;
 import com.appslab.selfstorage.services.UserService;
@@ -78,8 +77,13 @@ public class UploadFileController {
         return uploadFileService.saveEditFile(uploadedFile);
     }
 
-    @PutMapping("/share")
-    public void saveEditFileWithUser(@RequestBody UploadedFile uploadedFile, @RequestParam String email){
-        uploadFileService.saveEditFileWithUser(email, uploadedFile);
+    @PutMapping("/{id}/share")
+    public void saveEditFileWithUser(@PathVariable Long id, @RequestParam String email){
+        uploadFileService.shareFileWithFriends(email, id);
+    }
+
+    @GetMapping("/share/fromFriends")
+    public List<UploadedFile> filesFromFriends(){
+        return uploadFileService.getSharedFilesFromOtherUsers();
     }
 }

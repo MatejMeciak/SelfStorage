@@ -7,7 +7,6 @@ import com.appslab.selfstorage.repositories.FileRepositoryDB;
 import com.appslab.selfstorage.repositories.UserRepository;
 import com.appslab.selfstorage.services.UploadFileService;
 import com.appslab.selfstorage.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
@@ -20,10 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class UploadFileServiceImpl implements UploadFileService {
@@ -137,13 +134,13 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public void saveEditFileWithUser(String email, UploadedFile uploadedFile) {
+    public void shareFileWithFriends(String email, Long id) {
         CustomUser user = userRepository.findByEmail(email);
-        UploadedFile uploadedFile1 = fileRepositoryDB.findById(uploadedFile.getId()).get();
-        if(!uploadedFile1.getFriends().contains(user))
+        UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
+        if(!uploadedFile.getFriends().contains(user))
         {
-            uploadedFile1.setFriends(user);
-            fileRepositoryDB.save(uploadedFile1);
+            uploadedFile.setFriends(user);
+            fileRepositoryDB.save(uploadedFile);
         }
     }
 

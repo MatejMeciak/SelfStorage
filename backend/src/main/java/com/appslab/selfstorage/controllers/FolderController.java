@@ -26,7 +26,7 @@ public class FolderController {
 
     @GetMapping("/{id}/content")
     public List<UploadedFile> getContentInFolder(@PathVariable Long id){
-         return folderService.getContentInFolder(id);
+         return folderService.getFolderContent(id);
     }
 
     @GetMapping("/search")
@@ -44,6 +44,11 @@ public class FolderController {
         return folderService.getFolder(id);
     }
 
+    @GetMapping("/public")
+    public List<Folder> pulicFolders(){
+        return folderService.getPublicFolders();
+    }
+
     @PostMapping
     public void createNewFolder(@RequestBody Folder folder){
         folderService.createFolder(folder);
@@ -52,6 +57,11 @@ public class FolderController {
     @PostMapping("/{id}/upload")
     public void addFileToFolder(@PathVariable Long id, @RequestParam Long fileId){
         folderService.addContentToFolder(id, fileId);
+    }
+
+    @PutMapping("/{id}/edit")
+    public Folder editFolder(@RequestBody Folder folder){
+        return folderService.editFolder(folder);
     }
 
     @DeleteMapping("/{id}")
@@ -63,4 +73,20 @@ public class FolderController {
     public void deleteFileFromFolder(@RequestParam Long folderId,@PathVariable Long id){
         folderService.deleteContent(folderId,id);
     }
+
+    @PutMapping("{id}/share")
+    public void shareFolderWithFriends(@PathVariable Long id,@RequestParam String email){
+        folderService.shareFolderWithFriends(email, id);
+    }
+
+    @GetMapping("/share/myFolders")
+    public List<Folder> mySharedFolders(){
+        return folderService.getMySharedFolders();
+    }
+
+    @GetMapping("/share/fromFriends")
+    public List<Folder> foldersFromFriends(){
+        return folderService.getSharedFoldersFromOtherUsers();
+    }
+
 }
