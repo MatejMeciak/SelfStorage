@@ -4,7 +4,7 @@
     <div class="flex" *ngIf="!showAdminBoard; else elseBlock">
       <div class="header">
         <img class="logo-image" src="assets/images/logo.png" alt="logo">
-        <button class="highlight" [disabled]="!isLoggedIn" [matMenuTriggerFor]="menu">Upload content</button>
+        <button class="highlight" [disabled]="!isLoggedIn" [matMenuTriggerFor]="menu">Add content</button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="fileInput.click()">
             <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/>
@@ -18,7 +18,7 @@
         </mat-menu>
       </div>
       <div class="spacer"></div>
-      <div class="column highlight" routerLink="/" routerLinkActive="active">
+      <div class="column highlight" [routerLink]="" [routerLinkActive]="'active'">
         <mat-icon fontSet="material-icons-round">home</mat-icon>
         <span>Home</span>
       </div>
@@ -32,7 +32,7 @@
         </mat-expansion-panel-header>
         <div class="flex">
           <ng-container *ngFor="let list of routerLinkList">
-            <div *ngIf="!list.sub" (click)="redirectTo(list.link)" routerLinkActive="active" class="column highlight">
+            <div *ngIf="!list.sub" [routerLink]="list.link" routerLinkActive="active" class="column highlight">
               <mat-icon>{{list.matIcon}}</mat-icon>
               <span>{{list.title}}</span>
             </div>
@@ -44,7 +44,7 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="flex">
-                <div *ngFor="let subList of this.categories$|async" [routerLink]="subList.name" routerLinkActive="active" class="column highlight">
+                <div *ngFor="let subList of this.categories$|async" [routerLink]="['categories']" [queryParams]="{category: subList.name}" routerLinkActive="active" class="column highlight">
                   <mat-icon *ngIf="subList.name === 'Favourite'; else elseBlock">favorite</mat-icon>
                   <ng-template #elseBlock>
                     <mat-icon>star</mat-icon>

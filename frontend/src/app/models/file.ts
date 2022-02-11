@@ -5,6 +5,7 @@ export interface File {
   categoryId: number;
   mimeType: string;
   date: number;
+  ownerId: number;
   access: boolean;
 }
 

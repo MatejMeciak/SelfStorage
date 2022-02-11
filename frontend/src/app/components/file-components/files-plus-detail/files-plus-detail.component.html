@@ -1,0 +1,11 @@
+<mat-drawer-container>
+  <mat-drawer #detailSidenav class="detail-sidenav" mode="side" position="end">
+    <app-file-detail></app-file-detail>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="container">
+      <ng-content></ng-content>
+      <app-files></app-files>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

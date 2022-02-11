@@ -28,7 +28,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
   categories$: Observable<Category[]> = new Observable<Category[]>();
   routerLinkList = [
     { title: 'Storage', link: 'storage', matIcon: 'source' },
-    { title: 'All files', link: 'files', matIcon: 'file_copy' },
+    { title: 'All files', link: 'allFiles', matIcon: 'file_copy' },
     { title: 'Folders', link: 'folders', matIcon: 'folder' },
     { title: 'Category', link: '', matIcon: 'category', sub: [] },
     { title: 'Shared with', link: 'search', matIcon: 'folder_shared' },

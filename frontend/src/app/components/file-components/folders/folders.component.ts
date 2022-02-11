@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { map, mergeMap, Observable, tap } from "rxjs";
 import { Folder } from "../../../models/folder";
 import { FolderService } from "../../../services/folder.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CategoryService } from "../../../services/category.service";
 
 @Component({
@@ -17,6 +17,7 @@ export class FoldersComponent implements OnInit {
 
   constructor(private folderService: FolderService,
               private route: ActivatedRoute,
+              private router: Router,
               private categoryService: CategoryService) { }
 
   ngOnInit(): void {
@@ -29,5 +30,7 @@ export class FoldersComponent implements OnInit {
       )
     );
   }
-
+  openFolder(folder: Folder): void {
+    this.router.navigate([`folder/${folder.id}`]);
+  }
 }

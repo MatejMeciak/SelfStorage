@@ -8,6 +8,8 @@ import * as fileSaver from 'file-saver';
 import { DialogService } from "../../../services/dialog.service";
 import { FolderService } from "../../../services/folder.service";
 import { CategoryService } from "../../../services/category.service";
+import { User } from "../../../models/user";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: 'app-file-detail',
@@ -16,6 +18,7 @@ import { CategoryService } from "../../../services/category.service";
 })
 export class FileDetailComponent implements OnInit, OnDestroy {
   file: File;
+  user: User;
 
   unsubscribe$ = new Subject();
   constructor(private fileService: FileService,
@@ -23,9 +26,13 @@ export class FileDetailComponent implements OnInit, OnDestroy {
               private folderService: FolderService,
               private categoryService: CategoryService,
               private sidenavService: SidenavService,
-              private dialogService: DialogService) { }
+              private dialogService: DialogService,
+              private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authService.getCurrentUser().pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(user => this.user = user);
     this.fileService.getSelectedFile().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(file => this.file = file);
@@ -108,12 +115,9 @@ export class FileDetailComponent implements OnInit, OnDestroy {
       filter(result => !!result),
       mergeMap(result => this.categoryService.deleteContentFromCategory(result)),
     ).subscribe();
+  }
+  reportFile(): void {
 
-    this.dialogService.selectContentDialog('remove').pipe(
-      takeUntil(this.unsubscribe$),
-      filter(result => !!result),
-      mergeMap(result => this.categoryService.deleteContentFromCategory(result)),
-    ).subscribe();
   }
 
   ngOnDestroy(): void {

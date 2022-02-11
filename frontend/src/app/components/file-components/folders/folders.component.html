@@ -1,7 +1,8 @@
 <div class="content-container">
   <h2>Folders</h2>
   <div class="file-grid">
-    <app-content-card *ngFor="let folder of folders$ | async" [content]="folder" [image]="image" [category]="category">
+    <app-content-card *ngFor="let folder of folders$ | async" (clickEvent)="openFolder($event)"
+                      [content]="folder" [image]="image" [category]="category">
     </app-content-card>
   </div>
 </div>

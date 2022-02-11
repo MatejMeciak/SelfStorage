@@ -48,7 +48,7 @@ export class FileService {
   // POST
   uploadFile(file: File): Observable<FileModel> {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('multipartFile', file);
     return this.http.post<FileModel>(this.fileUrl, formData);
   }
 

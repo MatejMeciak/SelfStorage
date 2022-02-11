@@ -1,0 +1,30 @@
+<div class="sticky">
+  <div class="files-header">
+    <h1 *ngIf="title">{{ title }}</h1>
+    <h1 *ngIf="!title">Your Storage</h1>
+    <div class="search" *ngIf="actions">
+      <mat-icon>search</mat-icon>
+      <p>Search in content</p>
+    </div>
+    <button class="highlight" *ngIf="actions" [matMenuTriggerFor]="uploadMenu">Add content</button>
+    <mat-menu #uploadMenu="matMenu">
+      <button mat-menu-item (click)="fileInput.click()">
+        <input hidden multiple type="file" #fileInput (change)="onFileInput(fileInput.files)"/>
+        <mat-icon>post_add</mat-icon>
+        <span>Upload file from device</span>
+      </button>
+      <button mat-menu-item (click)="createFolder()">
+        <mat-icon>folder</mat-icon>
+        <span>Create folder</span>
+      </button>
+    </mat-menu>
+    <mat-icon *ngIf="actions" [matMenuTriggerFor]="moreMenu">more_vert</mat-icon>
+    <mat-menu #moreMenu="matMenu">
+      <button mat-menu-item (click)="createCategory()">
+        <mat-icon>add_circle</mat-icon>
+        <span>Create category</span>
+      </button>
+    </mat-menu>
+  </div>
+  <div class="spacer"></div>
+</div>
