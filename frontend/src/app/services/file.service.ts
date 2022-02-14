@@ -23,8 +23,11 @@ export class FileService {
   }
 
   // GET
-  getFiles(): Observable<FileModel[]> {
+  getAllFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(this.fileUrl);
+  }
+  getFiles(): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.fileUrl}/files`);
   }
   getFile(id: number): Observable<FileModel> {
     return this.http.get<FileModel>(`${this.fileUrl}/${id}`);

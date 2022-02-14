@@ -22,6 +22,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: true }) sideNav: MatSidenav;
   isLoggedIn = false;
   showAdminBoard = false;
+  homeUlr = '/';
 
   unsubscribe$ = new Subject();
 
@@ -51,6 +52,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
       this.authService.getCurrentUser().pipe(
         takeUntil(this.unsubscribe$)
       ).subscribe(user => {
+        this.homeUlr = 'storage';
         this.showAdminBoard = user.roles.includes('ROLE_ADMIN');
       });
     }

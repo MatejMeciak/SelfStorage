@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from "rxjs";
+import { File } from "../../../models/file";
+import { FileService } from "../../../services/file.service";
 
 @Component({
   selector: 'app-only-files',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OnlyFilesComponent implements OnInit {
 
-  constructor() { }
+  files$: Observable<File[]>;
+  constructor(private fileService: FileService) { }
 
   ngOnInit(): void {
+    this.files$ = this.fileService.getAllFiles();
   }
 
 }

@@ -23,11 +23,4 @@ export class FolderComponent implements OnInit {
     this.folder$ = this.folderService.getFolder(id);
     this.files$ = this.folderService.getFolderContent(id);
   }
-
-  onFileInput(files: FileList): void {
-    for (let i = 0; i < files.length; i++) {
-      this.fileService.uploadFile(files.item(i)).subscribe();
-    }
-  }
-
 }

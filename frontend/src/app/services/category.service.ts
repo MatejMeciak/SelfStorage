@@ -29,8 +29,8 @@ export class CategoryService {
   createCategory(category: Category): Observable<Category> {
     return this.http.post<Category>(`${this.categoryUrl}?name=${category.name}`, {});
   }
-  addContentToCategory(id: number, fileId: number): Observable<Category> {
-    return this.http.post<Category>(`${this.categoryUrl}/${id}/add?requestId=${fileId}`, {});
+  addContentToCategory(id: number, contentId: number): Observable<Category> {
+    return this.http.post<Category>(`${this.categoryUrl}/${id}/add?requestId=${contentId}`, {});
   }
   // DELETE
   deleteCategory(category: Category): Observable<Category> {

@@ -1,6 +1,6 @@
 <mat-dialog-content>
   <mat-form-field>
-    <mat-label>Move to {{ data.target }}</mat-label>
+    <mat-label>Select {{ data.target }}</mat-label>
       <mat-select [(value)]="data.selected">
         <mat-option *ngFor="let c of content$ | async" [value]="c">
           {{ c.name }}

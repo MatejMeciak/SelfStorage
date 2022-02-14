@@ -10,6 +10,7 @@ import { FolderService } from "../../../services/folder.service";
 import { CategoryService } from "../../../services/category.service";
 import { User } from "../../../models/user";
 import { AuthService } from "../../../services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-file-detail',
@@ -27,7 +28,8 @@ export class FileDetailComponent implements OnInit, OnDestroy {
               private categoryService: CategoryService,
               private sidenavService: SidenavService,
               private dialogService: DialogService,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.authService.getCurrentUser().pipe(
@@ -36,6 +38,7 @@ export class FileDetailComponent implements OnInit, OnDestroy {
     this.fileService.getSelectedFile().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(file => this.file = file);
+    console.log( this.file.ownerId === this.user.id)
   }
 
   getImage(file: File): Observable<string> {
@@ -78,7 +81,9 @@ export class FileDetailComponent implements OnInit, OnDestroy {
       if (result) {
         this.fileService.deleteFile(this.file.id).pipe(
           takeUntil(this.unsubscribe$)
-        ).subscribe(() => location.reload());
+        ).subscribe(() => {
+          this.router.navigate(['storage']);
+        });
       }
     });
   }
@@ -96,21 +101,21 @@ export class FileDetailComponent implements OnInit, OnDestroy {
     });
   }
   moveFileToFolder(): void {
-    this.dialogService.selectContentDialog('folder').subscribe( (result) => {
+    this.dialogService.selectContentDialog({},'folder').subscribe( (result) => {
       if (result) {
-        this.folderService.updateFolderWithFile(result.id, this.file.id).subscribe();
+        this.folderService.addFileToFolder(result.id, this.file.id).subscribe(() => location.reload())
       }
     });
   }
   addCategory(): void {
-    this.dialogService.selectContentDialog('category').subscribe((result) => {
+    this.dialogService.selectContentDialog({}, 'category').subscribe((result) => {
       if (result) {
         this.categoryService.addContentToCategory(result.id, this.file.id).subscribe();
       }
     });
   }
   removeCategory(): void {
-    this.dialogService.selectContentDialog('remove').pipe(
+    this.dialogService.selectContentDialog(this.file,'remove',).pipe(
       takeUntil(this.unsubscribe$),
       filter(result => !!result),
       mergeMap(result => this.categoryService.deleteContentFromCategory(result)),
