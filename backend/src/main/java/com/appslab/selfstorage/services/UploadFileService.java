@@ -1,5 +1,6 @@
 package com.appslab.selfstorage.services;
 
+import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.UploadedFile;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UploadFileService {
-    UploadedFile deleteFile(Long id) throws Exception;
+    String deleteFile(Long id) throws Exception;
 
     List<UploadedFile> getListOfMyFiles();
 
@@ -39,5 +40,9 @@ public interface UploadFileService {
 
     List<UploadedFile> getPublicFiles();
 
+    ResponseEntity<InputStreamResource> getPublicFile(Long id) throws Exception;
+
     List<UploadedFile> getFiles();
+
+    List<Category> categoriesFromFile(Long id);
 }

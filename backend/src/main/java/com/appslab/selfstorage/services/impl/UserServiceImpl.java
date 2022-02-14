@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(customUser);
             return "success";
         }
-        return "unsuccess";
+        return "failed";
     }
 
     @Override
@@ -152,7 +152,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<CustomUser> getAllUsers() {
         List<CustomUser> users = userRepository.findAll();
-        users.remove(getSpecifyUserId());
+        users.remove(getUser());
         return users;
     }
 

@@ -1,5 +1,6 @@
 package com.appslab.selfstorage.controllers;
 
+import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.CustomUser;
 import com.appslab.selfstorage.services.UploadFileService;
 import com.appslab.selfstorage.models.UploadedFile;
@@ -45,6 +46,11 @@ public class UploadFileController {
         return uploadFileService.findSearchFilesInPublicList(keyword,true);
     }
 
+    @GetMapping("/public/{id}")
+    public Object getPublicFile(@PathVariable Long id) throws Exception{
+        return uploadFileService.getPublicFile(id);
+    }
+
     @GetMapping("/share/myFiles")
     public List<UploadedFile> getSharedFiles(){
         return uploadFileService.getMySharedFiles();
@@ -53,6 +59,26 @@ public class UploadFileController {
     @GetMapping("/files")
     public List<UploadedFile> getFiles(){
         return uploadFileService.getFiles();
+    }
+
+    @GetMapping("/share/fromFriends")
+    public List<UploadedFile> filesFromFriends(){
+        return uploadFileService.getSharedFilesFromOtherUsers();
+    }
+
+    @GetMapping("/categories")
+    public List<Category> categoriesFromfile(@RequestParam Long id){
+        return uploadFileService.categoriesFromFile(id);
+    }
+
+    @PutMapping("/edit")
+    public UploadedFile saveEditFile(@RequestBody UploadedFile uploadedFile){
+        return uploadFileService.saveEditFile(uploadedFile);
+    }
+
+    @PutMapping("/{id}/share")
+    public void saveEditFileWithUser(@PathVariable Long id, @RequestParam String email){
+        uploadFileService.shareFileWithFriends(email, id);
     }
 
     @PostMapping
@@ -68,22 +94,7 @@ public class UploadFileController {
     }
 
     @DeleteMapping("/{id}")
-    public UploadedFile deleteFile(@PathVariable Long id) throws Exception{
+    public String deleteFile(@PathVariable Long id) throws Exception{
         return uploadFileService.deleteFile(id);
-    }
-
-    @PutMapping("/edit")
-    public UploadedFile saveEditFile(@RequestBody UploadedFile uploadedFile){
-        return uploadFileService.saveEditFile(uploadedFile);
-    }
-
-    @PutMapping("/{id}/share")
-    public void saveEditFileWithUser(@PathVariable Long id, @RequestParam String email){
-        uploadFileService.shareFileWithFriends(email, id);
-    }
-
-    @GetMapping("/share/fromFriends")
-    public List<UploadedFile> filesFromFriends(){
-        return uploadFileService.getSharedFilesFromOtherUsers();
     }
 }

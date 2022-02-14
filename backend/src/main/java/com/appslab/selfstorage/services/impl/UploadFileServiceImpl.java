@@ -1,6 +1,7 @@
 package com.appslab.selfstorage.services.impl;
 
 import com.appslab.selfstorage.config.DocumentStorageProperty;
+import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.CustomUser;
 import com.appslab.selfstorage.models.UploadedFile;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
@@ -39,7 +40,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public UploadedFile deleteFile(Long id) throws Exception{
+    public String deleteFile(Long id) throws Exception{
         UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
         if (uploadedFile.getOwnerId().equals(userService.getSpecifyUserId()))
         {
@@ -47,9 +48,9 @@ public class UploadFileServiceImpl implements UploadFileService {
                 Files.delete(pathToSpecificFile(uploadedFile));
             }
             fileRepositoryDB.deleteById(id);
-            return uploadedFile;
+            return "success";
         }
-        return null;
+        return "failed";
     }
 
     @Override
@@ -125,8 +126,8 @@ public class UploadFileServiceImpl implements UploadFileService {
             FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
             return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
         }
-        else if(uploadedFile.getAccess().equals(true))
-        {
+
+        else if(uploadedFile.getFriends().contains(userService.getSpecifyUserId())){
             FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
             return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
         }
@@ -163,7 +164,21 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
+    public ResponseEntity<InputStreamResource> getPublicFile(Long id) throws Exception {
+        UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
+        if (uploadedFile.getAccess().equals(true)) {
+            FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
+        }
+        return null;
+    }
+    @Override
     public List<UploadedFile> getFiles() {
         return fileRepositoryDB.findAllByFolderIdAndOwnerId(null, userService.getSpecifyUserId());
+    }
+
+    @Override
+    public List<Category> categoriesFromFile(Long id) {
+        return fileRepositoryDB.findById(id).get().getCategories();
     }
 }

@@ -8,6 +8,7 @@ import com.appslab.selfstorage.services.ReportService;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -27,6 +28,7 @@ public class ReportServiceImpl implements ReportService {
         Report report = new Report();
         report.setCreatorId(userService.getSpecifyUserId());
         report.setReason(reason);
+        report.setCreatedDate(Calendar.getInstance().getTime().getTime());
         report.setFileId(uploadedFile.getId());
         return reportRepository.save(report);
     }

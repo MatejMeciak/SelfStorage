@@ -2,6 +2,7 @@ package com.appslab.selfstorage.controllers;
 
 import com.appslab.selfstorage.config.CurrentUser;
 import com.appslab.selfstorage.dto.LocalUser;
+import com.appslab.selfstorage.dto.RequestPasswords;
 import com.appslab.selfstorage.models.CustomUser;
 import com.appslab.selfstorage.services.ReportService;
 import com.appslab.selfstorage.services.UserService;
@@ -24,9 +25,10 @@ public class UserController {
         this.reportService = reportService;
     }
 
-    @PutMapping("/changePassword")
-    public String changePassword(@RequestParam String oldPassword, @RequestParam String newPassword){
-        return userService.changePassword(oldPassword, newPassword);
+
+    @GetMapping("/friends")
+    public List<CustomUser> getFriends(){
+        return userService.getFriends();
     }
 
     @GetMapping()
@@ -51,8 +53,11 @@ public class UserController {
         return userService.settingSizeOfSpace(sizeSpace, userId);
     }
 
-    @GetMapping("/friends")
-    public List<CustomUser> getFriends(){
-        return userService.getFriends();
+    @PutMapping("/changePassword")
+    public String changePassword(@RequestBody RequestPasswords requestPasswords){
+        String oldPassword = requestPasswords.getOldPassword();
+        String newPassword = requestPasswords.getNewPassword();
+
+        return userService.changePassword(oldPassword,newPassword);
     }
 }
