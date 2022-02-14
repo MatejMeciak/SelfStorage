@@ -36,9 +36,9 @@ export class DialogService {
   shareWithUserDialog(): Observable<any> {
     return this.dialog.open(InputUserDialogComponent).afterClosed();
   }
-  selectContentDialog(target: string): Observable<any> {
+  selectContentDialog(content= {}, target: string): Observable<any> {
     return this.dialog.open(SelectContentDialogComponent,
-      { data: { content: {}, selected: {}, target: target } }
+      { data: { content: content, selected: {}, target: target } }
     ).afterClosed();
   }
   createFolderOrCategoryDialog(content: Folder | Category, type: string): Observable<any> {

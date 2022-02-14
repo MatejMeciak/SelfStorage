@@ -1,20 +1,20 @@
-<div class="container">
-  <h1>Search for public files</h1>
-  <div class="search">
-    <form>
-      <mat-form-field>
-        <mat-label>Enter File Name</mat-label>
-        <input type="text"
-               #searchBox
-               placeholder="Search"
-               aria-label="Enter File Name"
-               matInput
-               (input)="inputChange(searchBox.value)">
-      </mat-form-field>
-    </form>
-    <div class="filter" matRipple (click)="allPublicFiles()">Show Shared Files</div>
+<app-files-plus-detail [content$]="files$">
+  <div class="container">
+    <h1>Search for public content</h1>
+    <div class="search">
+      <form>
+        <mat-form-field>
+          <mat-label>Enter Content Name</mat-label>
+          <input type="text"
+                 #searchBox
+                 placeholder="Search"
+                 aria-label="Enter Content Name"
+                 matInput
+                 (input)="inputChange(searchBox.value)">
+        </mat-form-field>
+      </form>
+    </div>
   </div>
-</div>
-<div class="file-grid"><app-content-card *ngFor="let file of files | async" [content]="file" (click)="selectedFile=file"></app-content-card></div>
+</app-files-plus-detail>
 
 

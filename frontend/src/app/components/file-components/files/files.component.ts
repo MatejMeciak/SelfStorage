@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FileService } from "../../../services/file.service";
 import { CategoryService } from "../../../services/category.service";
 import { ActivatedRoute } from "@angular/router";
@@ -13,6 +13,7 @@ import { SidenavService } from "../../../services/sidenav.service";
   styleUrls: ['./files.component.scss']
 })
 export class FilesComponent implements OnInit {
+  @Input() content$: Observable<File[]>;
   files$: Observable<File[]>;
   category: string | null;
 
@@ -23,7 +24,7 @@ export class FilesComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.files$ = this.route.queryParamMap.pipe(
+    this.files$ = this.content$ ? this.content$ : this.route.queryParamMap.pipe(
       map(queryMap => queryMap.get('category')),
       tap(category => this.category = category),
       mergeMap(category => !!category

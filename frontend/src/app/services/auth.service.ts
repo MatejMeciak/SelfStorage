@@ -21,7 +21,6 @@ export class AuthService {
     return sessionStorage.getItem('auth-token');
   }
   isLoggedIn(): boolean {
-    //return this.getCurrentUser();
     return !!this.getToken();
   }
 
@@ -43,5 +42,8 @@ export class AuthService {
 
   getCurrentUser(): Observable<any> {
     return this.http.get(this.userUrl , httpOptions);
+  }
+  changePassword(oldPassword: string, newPassword: string): Observable<any> {
+    return this.http.put(`http://localhost:8080/api/changePassword?oldPassword=${oldPassword}&newPassword=${newPassword}`, {})
   }
 }

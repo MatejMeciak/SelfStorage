@@ -5,7 +5,7 @@
   <mat-drawer-content>
     <div class="container">
       <ng-content></ng-content>
-      <app-files></app-files>
+      <app-files [content$]="content$"></app-files>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
