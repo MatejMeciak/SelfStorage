@@ -20,7 +20,7 @@ public interface UserService {
 
     Long getSpecifyUserId();
 
-    void changePassword(String oldPassword, String newPassword);
+    String changePassword(String oldPassword, String newPassword);
 
     CustomUser registerNewUser(SignUpRequest signUpRequest) throws UserAlreadyExistAuthenticationException;
 

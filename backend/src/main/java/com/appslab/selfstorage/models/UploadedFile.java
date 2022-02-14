@@ -30,11 +30,11 @@ public class UploadedFile {
 
     protected Boolean access=false;
 
-    @JoinColumn(name = "customUser_id", insertable = false, updatable = false)
+    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     protected CustomUser owner;
 
-    @Column(name = "customUser_id")
+    @Column(name = "owner_id")
     protected Long ownerId;
 
     @JoinColumn(name = "folder_id", insertable = false, updatable = false)

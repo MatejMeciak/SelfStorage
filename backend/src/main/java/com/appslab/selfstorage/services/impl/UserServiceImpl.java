@@ -48,12 +48,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(String oldPassword, String newPassword) {
+    public String changePassword(String oldPassword, String newPassword) {
         CustomUser customUser = userRepository.findById(getSpecifyUserId()).get();
-        if(customUser.getPassword().equals(oldPassword)) {
+        if (passwordEncoder.matches(oldPassword, customUser.getPassword())) {
             customUser.setPassword(passwordEncoder.encode(newPassword));
             userRepository.save(customUser);
+            return "success";
         }
+        return "unsuccess";
     }
 
     @Override
@@ -69,7 +71,8 @@ public class UserServiceImpl implements UserService {
         user.setCreatedDate(now);
         user.setModifiedDate(now);
         user.setSpaceSize(2000000000L);
-        user = userRepository.save(user);
+
+        userRepository.save(user);
         userRepository.flush();
 
         Category category = new Category();

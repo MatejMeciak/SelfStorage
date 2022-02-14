@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @RestController
 public class UserController {
 
@@ -25,11 +25,11 @@ public class UserController {
     }
 
     @PutMapping("/changePassword")
-    public void changePassword(@RequestParam String oldPassword, @RequestParam String newPassword){
-        userService.changePassword(oldPassword, newPassword);
+    public String changePassword(@RequestParam String oldPassword, @RequestParam String newPassword){
+        return userService.changePassword(oldPassword, newPassword);
     }
 
-    @GetMapping("/user")
+    @GetMapping()
     public ResponseEntity<?> getCurrentUser(@CurrentUser LocalUser user) {
         return ResponseEntity.ok(GeneralUtils.buildUserInfo(user));
     }
@@ -45,7 +45,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/settingSpace")
+    @PostMapping("/setSpace")
     @PreAuthorize("hasRole('ADMIN')")
     public Long settingSpace(@RequestParam Long sizeSpace, @RequestParam Long userId){
         return userService.settingSizeOfSpace(sizeSpace, userId);
