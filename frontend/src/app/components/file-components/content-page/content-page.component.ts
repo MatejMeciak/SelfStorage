@@ -1,14 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import { Subject, takeUntil } from "rxjs";
+import { Subject } from "rxjs";
 
 import { FileService } from '../../../services/file.service';
 import { FolderService } from "../../../services/folder.service";
 import { SidenavService } from "../../../services/sidenav.service";
 
 import { MatDrawer } from "@angular/material/sidenav";
-import { Folder } from "../../../models/folder";
 import { DialogService } from "../../../services/dialog.service";
-import { Category } from "../../../models/category";
 import { CategoryService } from "../../../services/category.service";
 
 

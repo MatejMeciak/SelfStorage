@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'folders', component: OnlyFoldersComponent, canActivate: [AuthGuardService] },
   { path: 'folder/:id', component: FolderComponent, canActivate: [AuthGuardService] },
   { path: 'categories', component: ContentPageComponent, canActivate: [AuthGuardService] },
-  { path: 'search', component: SearchPageComponent },
+  { path: 'public', component: SearchPageComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'registration', component: RegistrationFormComponent },
   { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuardService] },

@@ -13,7 +13,7 @@ import { ActivatedRoute } from "@angular/router";
   templateUrl: './content-header.component.html',
   styleUrls: ['./content-header.component.scss']
 })
-export class ContentHeaderComponent implements OnInit, AfterContentInit ,OnDestroy {
+export class ContentHeaderComponent implements OnInit, OnDestroy {
   @Input() title: string;
   @Input() actions: boolean = true;
   @Input() component: string;
@@ -27,12 +27,15 @@ export class ContentHeaderComponent implements OnInit, AfterContentInit ,OnDestr
               private categoryService: CategoryService,
               private route: ActivatedRoute) { }
 
-  ngOnInit(): void { }
-  ngAfterContentInit(): void {
+  ngOnInit(): void {
     this.route.paramMap.pipe(
       map(param => Number(param.get('id'))),
       tap(id => this.id = id),
-    );
+      map( id => id!! ? this.folderService.getFolder(id).pipe(
+          tap(folder => this.folder = folder)
+        ).subscribe() : null
+      )
+    ).subscribe();
   }
 
   onFileInput(files: FileList): void {
@@ -60,7 +63,7 @@ export class ContentHeaderComponent implements OnInit, AfterContentInit ,OnDestr
   editFolder(): void {
     this.dialogService.editContentDialog(this.folder).subscribe((result) => {
       if (result){
-        this.fileService.updateFile(result).subscribe(() => location.reload());
+        this.folderService.editFolder(result).subscribe(() => location.reload());
       }
     });
   }
