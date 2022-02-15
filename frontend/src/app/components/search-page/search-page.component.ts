@@ -15,9 +15,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
   files$: Observable<File[]>;
   private searchKeyword = new Subject<string>();
-  constructor(private fileService: FileService,
-              private sidenavService: SidenavService,
-              private imageService: ImageService,) { }
+  constructor(private fileService: FileService) { }
 
   ngOnInit(): void {
     this.files$ = this.searchKeyword.pipe(
@@ -35,14 +33,5 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
   inputChange(keyword: string): void {
     this.searchKeyword.next(keyword);
-  }
-  getImage(file: File): Observable<string> {
-    return file.mimeType.includes('image') ?
-      this.imageService.getImageForFile(file.id) :
-      of('assets/images/file_icon.png');
-  }
-  openFileDetail(file): void {
-    this.fileService.setSelectedFile(file);
-    this.sidenavService.openDetailSidenav();
   }
 }

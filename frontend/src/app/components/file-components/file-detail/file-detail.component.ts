@@ -11,6 +11,8 @@ import { CategoryService } from "../../../services/category.service";
 import { User } from "../../../models/user";
 import { AuthService } from "../../../services/auth.service";
 import { Router } from "@angular/router";
+import { TokenStorageService } from "../../../services/token-storage.service";
+import { ReportService } from "../../../services/report.service";
 
 @Component({
   selector: 'app-file-detail',
@@ -19,12 +21,14 @@ import { Router } from "@angular/router";
 })
 export class FileDetailComponent implements OnInit, OnDestroy {
   file: File;
-  user: User;
+  user?: User;
 
   unsubscribe$ = new Subject();
   constructor(private fileService: FileService,
+              private tokenStorageService: TokenStorageService,
               private imageService: ImageService,
               private folderService: FolderService,
+              private reportService: ReportService,
               private categoryService: CategoryService,
               private sidenavService: SidenavService,
               private dialogService: DialogService,
@@ -32,13 +36,14 @@ export class FileDetailComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.authService.getCurrentUser().pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe(user => this.user = user);
+    if (!!this.tokenStorageService.getToken()) {
+      this.authService.getCurrentUser().pipe(
+        takeUntil(this.unsubscribe$)
+      ).subscribe(user => this.user = user);
+    }
     this.fileService.getSelectedFile().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(file => this.file = file);
-    console.log( this.file.ownerId === this.user.id)
   }
 
   getImage(file: File): Observable<string> {
@@ -89,7 +94,9 @@ export class FileDetailComponent implements OnInit, OnDestroy {
   }
   shareWithUser(): void {
     this.dialogService.shareWithUserDialog().subscribe((result) => {
-      console.log(result);
+      if (result) {
+        this.fileService.shareFileWithUser(result, this.file).subscribe()
+      }
     });
   }
   publishFile(state: boolean): void {
@@ -122,7 +129,7 @@ export class FileDetailComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
   reportFile(): void {
-
+    this.reportService.createReport(this.file, 'test').subscribe();
   }
 
   ngOnDestroy(): void {

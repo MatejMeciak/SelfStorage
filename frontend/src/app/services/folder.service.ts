@@ -35,6 +35,12 @@ export class FolderService {
   addFileToFolder(folderId: number, fileId: number): Observable<Folder> {
     return this.http.post<Folder>(`${this.folderUrl}/${folderId}/upload?fileId=${fileId}`, {});
   }
+  // PUT
+  editFolder(folder: Folder): Observable<Folder> {
+    delete folder['owner']
+    delete folder['friends']
+    return this.http.put<Folder>(`${this.folderUrl}/${folder.id}/edit`, folder);
+  }
 
   //DELETE
   deleteFolder(id: number): Observable<Folder> {

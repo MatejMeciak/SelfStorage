@@ -23,6 +23,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   showAdminBoard = false;
   homeUlr = '/';
+  storage: any[];
 
   unsubscribe$ = new Subject();
 
@@ -53,6 +54,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$)
       ).subscribe(user => {
         this.homeUlr = 'storage';
+        this.authService.getUserSpace().subscribe(list => this.storage = list);
         this.showAdminBoard = user.roles.includes('ROLE_ADMIN');
       });
     }

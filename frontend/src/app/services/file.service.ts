@@ -63,9 +63,10 @@ export class FileService {
   // PUT
   updateFile(file: FileModel): Observable<FileModel> {
     delete file['friends'];
+    delete file['owner'];
     return this.http.put<FileModel>(`${this.fileUrl}/edit`, file);
   }
-  shareFileWithUser(username: string, file:FileModel): Observable<FileModel> {
-    return this.http.put<FileModel>(`${this.fileUrl}/share/?username=${username}`, file)
+  shareFileWithUser(email: string, file:FileModel): Observable<FileModel> {
+    return this.http.put<FileModel>(`${this.fileUrl}/${file.id}/share?email=${email}`, {})
   }
 }

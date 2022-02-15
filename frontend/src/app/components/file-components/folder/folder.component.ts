@@ -5,7 +5,7 @@ import { File} from '../../../models/file';
 import { Folder } from '../../../models/folder';
 import { MatDialog } from '@angular/material/dialog';
 import { FolderService } from "../../../services/folder.service";
-import { Observable } from "rxjs";
+import { map, mergeMap, Observable, tap } from "rxjs";
 
 @Component({
   selector: 'app-folder',
@@ -22,5 +22,11 @@ export class FolderComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.folder$ = this.folderService.getFolder(id);
     this.files$ = this.folderService.getFolderContent(id);
-  }
+    }
+    // this.folder$ = this.route.paramMap.pipe(
+    //   map(paramMap => Number(paramMap.get('id'))),
+    //   tap(id => this.files$ = this.folderService.getFolderContent(id)),
+    //   mergeMap(id => this.folderService.getFolder(id)
+    //   )
+    // );
 }

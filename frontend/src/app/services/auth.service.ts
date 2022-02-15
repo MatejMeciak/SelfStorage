@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {User} from "../models/user";
+import { User } from "../models/user";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -40,10 +40,20 @@ export class AuthService {
     }, httpOptions);
   }
 
-  getCurrentUser(): Observable<any> {
-    return this.http.get(this.userUrl , httpOptions);
+  getCurrentUser(): Observable<User> {
+    return this.http.get<User>(this.userUrl , httpOptions);
   }
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
-    return this.http.put(`http://localhost:8080/api/changePassword?oldPassword=${oldPassword}&newPassword=${newPassword}`, {})
+    return this.http.put(this.userUrl + '/changePassword' , { oldPassword: oldPassword, newPassword: newPassword })
+  }
+  // TODO dat do samostatnej service
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.userUrl + '/listUsers');
+  }
+  getUserSpace(): Observable<any[]> {
+    return this.http.get<any[]>(this.userUrl + '/storageSpace');
+  }
+  setUserSpace(spaceSize: number, userId: number): Observable<User[]> {
+    return this.http.post<User[]>(this.userUrl + '/setSpace' +`?sizeSpace=${spaceSize}&userId=${userId}`, {});
   }
 }

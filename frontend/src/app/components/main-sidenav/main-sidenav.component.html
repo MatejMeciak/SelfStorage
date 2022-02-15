@@ -36,7 +36,7 @@
               <mat-icon>{{list.matIcon}}</mat-icon>
               <span>{{list.title}}</span>
             </div>
-            <mat-expansion-panel *ngIf="list.sub && isLoggedIn">
+            <mat-expansion-panel *ngIf="list.sub && isLoggedIn" expanded>
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <mat-icon>{{list.matIcon}}</mat-icon>
@@ -57,11 +57,19 @@
         </div>
       </mat-expansion-panel>
       <div class="spacer"></div>
-      <div class="column highlight" routerLink="search" routerLinkActive="active">
+      <div class="column highlight" routerLink="public" routerLinkActive="active">
         <mat-icon fontSet="material-icons-round">public</mat-icon>
         <span>Public content</span>
       </div>
       <div class="spacer"></div>
+      <div class="storage-size" *ngIf="storage">
+        <p>Used Storage</p>
+        <mat-progress-bar color="accent" [value]="storage[0]*100/storage[1]"></mat-progress-bar>
+        <div class="storage-values">
+          <span>{{ storage[0]/1000000000 | number: '1.0-2' }}</span>
+          <span>{{ storage[1]/1000000000 }} GB</span>
+        </div>
+      </div>
     </div>
     <ng-template #elseBlock>
       <div class="flex">
