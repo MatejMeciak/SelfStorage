@@ -50,13 +50,13 @@ public class FolderController {
     }
 
     @PostMapping
-    public void createNewFolder(@RequestBody Folder folder){
-        folderService.createFolder(folder);
+    public Folder createNewFolder(@RequestBody Folder folder){
+        return folderService.createFolder(folder);
     }
 
     @PostMapping("/{id}/upload")
-    public void addFileToFolder(@PathVariable Long id, @RequestParam Long fileId){
-        folderService.addContentToFolder(id, fileId);
+    public Folder addFileToFolder(@PathVariable Long id, @RequestParam Long fileId){
+        return folderService.addContentToFolder(id, fileId);
     }
 
     @PutMapping("/{id}/edit")
@@ -69,14 +69,14 @@ public class FolderController {
         return folderService.deleteFolder(id);
     }
 
-    @DeleteMapping("/folder/{id}")
-    public void deleteFileFromFolder(@RequestParam Long folderId,@PathVariable Long id){
-        folderService.deleteContent(folderId,id);
+    @DeleteMapping("/file/{id}")
+    public UploadedFile deleteFileFromFolder(@RequestParam Long folderId,@PathVariable Long id){
+        return folderService.deleteContent(folderId,id);
     }
 
     @PutMapping("{id}/share")
-    public void shareFolderWithFriends(@PathVariable Long id,@RequestParam String email){
-        folderService.shareFolderWithFriends(email, id);
+    public Folder shareFolderWithFriends(@PathVariable Long id,@RequestParam String email){
+        return folderService.shareFolderWithFriends(email, id);
     }
 
     @GetMapping("/share/myFolders")

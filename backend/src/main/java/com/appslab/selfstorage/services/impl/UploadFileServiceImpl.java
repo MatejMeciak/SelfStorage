@@ -1,6 +1,7 @@
 package com.appslab.selfstorage.services.impl;
 
 import com.appslab.selfstorage.config.DocumentStorageProperty;
+import com.appslab.selfstorage.dto.FileBasicInfo;
 import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.CustomUser;
 import com.appslab.selfstorage.models.UploadedFile;
@@ -40,7 +41,7 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public String deleteFile(Long id) throws Exception{
+    public FileBasicInfo deleteFile(Long id) throws Exception{
         UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
         if (uploadedFile.getOwnerId().equals(userService.getSpecifyUserId()))
         {
@@ -48,9 +49,15 @@ public class UploadFileServiceImpl implements UploadFileService {
                 Files.delete(pathToSpecificFile(uploadedFile));
             }
             fileRepositoryDB.deleteById(id);
-            return "success";
+
+            FileBasicInfo file = new FileBasicInfo();
+            file.setName(uploadedFile.getName());
+            file.setFileSize(uploadedFile.getFileSize());
+            file.setDate(uploadedFile.getDate());
+
+            return file;
         }
-        return "failed";
+        return null;
     }
 
     @Override

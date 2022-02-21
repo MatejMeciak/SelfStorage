@@ -1,12 +1,11 @@
 package com.appslab.selfstorage.repositories;
 
-import com.appslab.selfstorage.models.CustomUser;
 import com.appslab.selfstorage.models.UploadedFile;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface FileRepositoryDB extends CrudRepository<UploadedFile,Long> {
+public interface FileRepositoryDB extends JpaRepository<UploadedFile,Long> {
     List<UploadedFile> findByNameContainingAndOwnerId(String keyword, Long ownerId);
 
     List<UploadedFile> findByNameContainingAndAccess(String name,Boolean access);

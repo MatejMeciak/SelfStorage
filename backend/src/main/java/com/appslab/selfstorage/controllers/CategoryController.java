@@ -2,6 +2,7 @@ package com.appslab.selfstorage.controllers;
 
 import com.appslab.selfstorage.dto.CategoryBasicInfo;
 import com.appslab.selfstorage.models.Category;
+import com.appslab.selfstorage.models.Folder;
 import com.appslab.selfstorage.models.UploadedFile;
 import com.appslab.selfstorage.services.CategoryService;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,17 @@ public class CategoryController {
         return categoryService.getListOfCategories();
     }
 
-    @GetMapping
-    public List<Object> getCategoryContent(@RequestParam String category){
-        return categoryService.getCategoryContent(category);
+    @GetMapping("/content/files")
+    public List<UploadedFile> getFilesInCategory(@RequestParam Long id){
+        return categoryService.getFilesInCategory(id);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/content/folders")
+    public List<Folder> getFoldersInCategory(@RequestParam Long id){
+        return categoryService.getFoldersInCategory(id);
+    }
+
+    @GetMapping("/{id}")
     public CategoryBasicInfo getCategory(@PathVariable Long id){
         Category category = categoryService.getCategory(id);
         CategoryBasicInfo categoryBasicInfo = new CategoryBasicInfo();

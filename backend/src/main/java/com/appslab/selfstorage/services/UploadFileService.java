@@ -1,5 +1,6 @@
 package com.appslab.selfstorage.services;
 
+import com.appslab.selfstorage.dto.FileBasicInfo;
 import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.UploadedFile;
 import org.springframework.core.io.InputStreamResource;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UploadFileService {
-    String deleteFile(Long id) throws Exception;
+    FileBasicInfo deleteFile(Long id) throws Exception;
 
     List<UploadedFile> getListOfMyFiles();
 

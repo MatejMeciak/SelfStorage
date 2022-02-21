@@ -1,6 +1,7 @@
 package com.appslab.selfstorage.services;
 
 import com.appslab.selfstorage.models.Category;
+import com.appslab.selfstorage.models.Folder;
 import com.appslab.selfstorage.models.UploadedFile;
 
 import java.util.List;
@@ -8,7 +9,9 @@ import java.util.List;
 public interface CategoryService {
     List<Category> getListOfCategories();
 
-    List<Object> getCategoryContent(String name);
+    List<UploadedFile> getFilesInCategory(Long id);
+
+    List<Folder> getFoldersInCategory(Long id);
 
     Category createCategory(String categoryName);
 

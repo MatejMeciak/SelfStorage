@@ -6,7 +6,7 @@ import com.appslab.selfstorage.models.UploadedFile;
 import java.util.List;
 
 public interface ReportService{
-    Report createReport(UploadedFile uploadedFile, String reason);
+    Report createReport(Long fileId, String reason);
 
     List<Report> getAllReports();
 

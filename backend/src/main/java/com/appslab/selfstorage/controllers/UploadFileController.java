@@ -1,5 +1,6 @@
 package com.appslab.selfstorage.controllers;
 
+import com.appslab.selfstorage.dto.FileBasicInfo;
 import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.CustomUser;
 import com.appslab.selfstorage.services.UploadFileService;
@@ -62,12 +63,12 @@ public class UploadFileController {
     }
 
     @GetMapping("/share/fromFriends")
-    public List<UploadedFile> filesFromFriends(){
+    public List<UploadedFile> getfilesFromFriends(){
         return uploadFileService.getSharedFilesFromOtherUsers();
     }
 
     @GetMapping("/categories")
-    public List<Category> categoriesFromfile(@RequestParam Long id){
+    public List<Category> categoriesFromFile(@RequestParam Long id){
         return uploadFileService.categoriesFromFile(id);
     }
 
@@ -77,7 +78,7 @@ public class UploadFileController {
     }
 
     @PutMapping("/{id}/share")
-    public void saveEditFileWithUser(@PathVariable Long id, @RequestParam String email){
+    public void shareFileWithUser(@PathVariable Long id, @RequestParam String email){
         uploadFileService.shareFileWithFriends(email, id);
     }
 
@@ -94,7 +95,7 @@ public class UploadFileController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteFile(@PathVariable Long id) throws Exception{
+    public FileBasicInfo deleteFile(@PathVariable Long id) throws Exception{
         return uploadFileService.deleteFile(id);
     }
 }
