@@ -1,5 +1,5 @@
 import { AfterContentInit, AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { map, mergeMap, Subject, takeUntil, tap } from "rxjs";
+import { map, mergeMap, of, Subject, takeUntil, tap } from "rxjs";
 import { FileService } from "../../../services/file.service";
 import { DialogService } from "../../../services/dialog.service";
 import { FolderService } from "../../../services/folder.service";
@@ -79,9 +79,12 @@ export class ContentHeaderComponent implements OnInit, OnDestroy {
       takeUntil(this.unsubscribe$)
     ).subscribe((result) => {
       if (result) {
-        this.folderService.deleteFolder(this.folder.id).pipe(
-          takeUntil(this.unsubscribe$)
-        ).subscribe(() => location.reload());
+        this.folderService.getFolderContent(this.folder.id).subscribe(files => {
+          files.forEach( file => this.fileService.updateFile({ ...file, folderId: null }).subscribe())
+          this.folderService.deleteFolder(this.folder.id).pipe(
+            takeUntil(this.unsubscribe$)
+          ).subscribe(() => location.replace('/'));
+        });
       }
     });
   }

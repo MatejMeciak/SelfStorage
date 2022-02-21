@@ -1,29 +1,32 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FileService } from "../../../services/file.service";
-import { filter, map, mergeMap, Observable, of, Subject, takeUntil, tap } from "rxjs";
-import { File } from "../../../models/file";
-import { ImageService } from "../../../services/image.service";
-import { SidenavService } from "../../../services/sidenav.service";
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { filter, Observable, of, Subject, takeUntil } from 'rxjs';
+import { FileService } from '../../services/file.service';
+import {debounceTime, distinctUntilChanged, mergeMap} from 'rxjs/operators';
+import { File } from '../../models/file';
+import { SidenavService } from "../../services/sidenav.service";
+import { ImageService } from "../../services/image.service";
+import { MatDrawer } from "@angular/material/sidenav";
+import { TokenStorageService } from "../../services/token-storage.service";
+import { FolderService } from "../../services/folder.service";
+import { ReportService } from "../../services/report.service";
+import { CategoryService } from "../../services/category.service";
+import { DialogService } from "../../services/dialog.service";
+import { AuthService } from "../../services/auth.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { User } from "../../models/user";
 import * as fileSaver from 'file-saver';
-import { DialogService } from "../../../services/dialog.service";
-import { FolderService } from "../../../services/folder.service";
-import { CategoryService } from "../../../services/category.service";
-import { User } from "../../../models/user";
-import { AuthService } from "../../../services/auth.service";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { TokenStorageService } from "../../../services/token-storage.service";
-import { ReportService } from "../../../services/report.service";
 
 @Component({
-  selector: 'app-file-detail',
-  templateUrl: './file-detail.component.html',
-  styleUrls: ['./file-detail.component.scss']
+  selector: 'app-search-page',
+  templateUrl: './public-page.component.html',
+  styleUrls: ['./public-page.component.scss']
 })
-export class FileDetailComponent implements OnInit, OnDestroy {
+export class PublicPageComponent implements OnInit, AfterViewInit {
+  @ViewChild('detailSidenav', { static: true }) public detailSidenav: MatDrawer;
+  files$: Observable<File[]>;
   file: File;
   user?: User;
-
-  unsubscribe$ = new Subject();
+  private searchKeyword = new Subject<string>();
   constructor(private fileService: FileService,
               private tokenStorageService: TokenStorageService,
               private imageService: ImageService,
@@ -38,20 +41,40 @@ export class FileDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (!!this.tokenStorageService.getToken()) {
-      this.authService.getCurrentUser().pipe(
-        takeUntil(this.unsubscribe$)
-      ).subscribe(user => this.user = user);
+      this.authService.getCurrentUser().subscribe(user => this.user = user);
     }
+    this.sidenavService.setDetailSidenav(this.detailSidenav);
+    this.files$ = this.searchKeyword.pipe(
+      debounceTime(250),
+      distinctUntilChanged(),
+      mergeMap((keyword: string) => !!keyword ?
+        this.fileService.getSearchedPublicFiles(keyword) :
+        this.fileService.getPublicFiles()
+      )
+    );
     this.fileService.getSelectedFile().subscribe(file => this.file = file);
+  }
+
+  getImage(file: File): Observable<string> {
+    return file.mimeType.includes('image') ?
+      of(`http://localhost:8080/api/file/public/${file.id}`) :
+      of('assets/images/file_icon.png');
+  }
+  ngAfterViewInit() {
+    this.searchKeyword.next(undefined);
+  }
+
+  inputChange(keyword: string): void {
+    this.searchKeyword.next(keyword);
+  }
+  openFileDetail(file): void {
+    this.fileService.setSelectedFile(file);
+    this.sidenavService.openDetailSidenav();
   }
   isOwner(): boolean {
     return this.file.ownerId == this.user.id;
   }
-  getImage(file: File): Observable<string> {
-    return file.mimeType.includes('image') ?
-      this.imageService.getImageForFile(file.id) :
-      of('assets/images/file_icon.png');
-  }
+
   fileType(file: File) {
     return file.mimeType.split('/')[1];
   }
@@ -74,20 +97,14 @@ export class FileDetailComponent implements OnInit, OnDestroy {
     });
   }
   downloadFile(): void {
-    this.fileService.getFileBlob(this.file.id).pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe(blob => {
+    this.fileService.getPublicFileBlob(this.file.id).subscribe(blob => {
       fileSaver.saveAs(blob, this.file.name);
     });
   }
   deleteFile(): void {
-    this.dialogService.confirmDialog(this.file, 'delete').pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe((result) => {
+    this.dialogService.confirmDialog(this.file, 'delete').subscribe((result) => {
       if (result) {
-        this.fileService.deleteFile(this.file.id).pipe(
-          takeUntil(this.unsubscribe$)
-        ).subscribe(() => {
+        this.fileService.deleteFile(this.file.id).subscribe(() => {
           this.router.navigate(['storage']);
         });
       }
@@ -110,10 +127,7 @@ export class FileDetailComponent implements OnInit, OnDestroy {
   }
   moveFileToFolder(): void {
     this.dialogService.selectContentDialog({},'folder').subscribe( (result) => {
-      if (result === 'storage') {
-        this.folderService.deleteFileFromFolder(Number(this.route.snapshot.paramMap.get('id')), this.file.id).subscribe(() => location.reload())
-      }
-      else if (result) {
+      if (result) {
         this.folderService.addFileToFolder(result.id, this.file.id).subscribe(() => location.reload())
       }
     });
@@ -127,7 +141,6 @@ export class FileDetailComponent implements OnInit, OnDestroy {
   }
   removeCategory(): void {
     this.dialogService.selectContentDialog(this.file,'remove',).pipe(
-      takeUntil(this.unsubscribe$),
       filter(result => !!result),
       mergeMap(result => this.categoryService.deleteContentFromCategory(result)),
     ).subscribe();
@@ -138,10 +151,5 @@ export class FileDetailComponent implements OnInit, OnDestroy {
         this.reportService.createReport(this.file, result).subscribe();
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$?.next(true);
-    this.unsubscribe$?.complete();
   }
 }

@@ -54,8 +54,10 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$)
       ).subscribe(user => {
         this.homeUlr = 'storage';
-        this.authService.getUserSpace().subscribe(list => this.storage = list);
         this.showAdminBoard = user.roles.includes('ROLE_ADMIN');
+        if (!this.showAdminBoard) {
+          this.authService.getUserSpace().subscribe(list => this.storage = list);
+        }
       });
     }
   }

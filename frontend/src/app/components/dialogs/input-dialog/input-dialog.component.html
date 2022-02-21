@@ -1,0 +1,11 @@
+<mat-dialog-content>
+  <p>{{ data.title }}</p>
+  <mat-form-field>
+    <mat-label>{{ data.title }}</mat-label>
+    <input required matInput [(ngModel)]="data.content" #inputModel="ngModel">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.content" [disabled]="!inputModel.valid">Ok</button>
+</mat-dialog-actions>

@@ -14,7 +14,7 @@ import { ContentCardComponent } from './components/file-components/content-card/
 import { RegistrationFormComponent } from './components/auth-forms/registration-form/registration-form.component';
 import { ContentPageComponent } from './components/file-components/content-page/content-page.component';
 import { FileDetailComponent } from './components/file-components/file-detail/file-detail.component';
-import { SearchPageComponent } from './components/search-page/search-page.component';
+import { PublicPageComponent } from './components/public-page/public-page.component';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './auth/interceptor/auth.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,11 +38,12 @@ import { SidenavService } from "./services/sidenav.service";
 import { TokenStorageService } from "./services/token-storage.service";
 import { OpenContentDialogComponent } from './components/dialogs/open-content-dialog/open-content-dialog.component';
 import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
-import { InputUserDialogComponent } from './components/dialogs/input-user-dialog/input-user-dialog.component';
+import { InputDialogComponent } from './components/dialogs/input-dialog/input-dialog.component';
 import { ContentHeaderComponent } from './components/core-components/content-header/content-header.component';
 import { FilesPlusDetailComponent } from './components/file-components/files-plus-detail/files-plus-detail.component';
 import { OnlyFilesComponent } from './components/file-components/only-files/only-files.component';
 import { OnlyFoldersComponent } from './components/file-components/only-folders/only-folders.component';
+import { SharedPageComponent } from './components/shared-page/shared-page.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { OnlyFoldersComponent } from './components/file-components/only-folders/
     RegistrationFormComponent,
     ContentPageComponent,
     FileDetailComponent,
-    SearchPageComponent,
+    PublicPageComponent,
     EditFileDialogComponent,
     UploadFileDialogComponent,
     CreateFolderOrCategoryDialogComponent,
@@ -68,11 +69,12 @@ import { OnlyFoldersComponent } from './components/file-components/only-folders/
     FilesComponent,
     OpenContentDialogComponent,
     ConfirmDialogComponent,
-    InputUserDialogComponent,
+    InputDialogComponent,
     ContentHeaderComponent,
     FilesPlusDetailComponent,
     OnlyFilesComponent,
     OnlyFoldersComponent,
+    SharedPageComponent,
   ],
   imports: [
     MaterialModule,

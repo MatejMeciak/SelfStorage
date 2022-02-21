@@ -37,8 +37,7 @@ export class FolderService {
   }
   // PUT
   editFolder(folder: Folder): Observable<Folder> {
-    delete folder['owner']
-    delete folder['friends']
+
     return this.http.put<Folder>(`${this.folderUrl}/${folder.id}/edit`, folder);
   }
 
@@ -46,7 +45,10 @@ export class FolderService {
   deleteFolder(id: number): Observable<Folder> {
     return this.http.delete<Folder>(`${this.folderUrl}/${id}`);
   }
-  deleteContentInFolder(folderId: number, fileId): Observable<Folder> {
+  deleteFileFromFolder(folderId: number, fileId: number): Observable<Folder> {
+    return this.http.delete<Folder>(`${this.folderUrl}/file/${fileId}?folderId=${folderId}`);
+  }
+  deleteContentInFolder(folderId: number, fileId: number): Observable<Folder> {
     return this.http.delete<Folder>(`${this.folderUrl}/${fileId}?folderId=${folderId}`);
   }
 }

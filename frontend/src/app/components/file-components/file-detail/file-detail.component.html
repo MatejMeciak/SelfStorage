@@ -25,11 +25,11 @@
     <mat-icon>download</mat-icon>
     <span>Download</span>
   </div>
-  <div class="highlight" *ngIf="file.ownerId != user.id" (click)="reportFile()">
+  <div class="highlight" *ngIf="user && !isOwner()" (click)="reportFile()">
     <mat-icon>report</mat-icon>
     <span>Report</span>
   </div>
-  <div class="temp" *ngIf="file.ownerId == user.id">
+  <div class="temp" *ngIf="user && isOwner()">
     <div class="highlight" (click)="editFile()">
       <mat-icon>edit</mat-icon>
       <span>Edit name</span>
@@ -57,12 +57,12 @@
       <span>Add category</span>
     </div>
     <div class="spacer"></div>
-    <div class="temp" *ngIf="file.access || file.categoryId">
+    <div class="temp" *ngIf="file.access || file.categories">
       <div class="highlight" *ngIf="file.access" (click)="publishFile(false)">
         <mat-icon>public_off</mat-icon>
         <span>Remove from public</span>
       </div>
-      <div class="highlight" *ngIf="file.categoryId" (click)="removeCategory()">
+      <div class="highlight" *ngIf="file.categories" (click)="removeCategory()">
         <mat-icon>highlight_off</mat-icon>
         <span>Remove category</span>
       </div>

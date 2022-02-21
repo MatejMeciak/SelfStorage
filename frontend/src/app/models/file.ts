@@ -2,10 +2,12 @@ export interface File {
   id: number;
   name: string;
   fileSize: number;
-  categoryId: number;
+  folderId: number;
+  categories: number[];
   mimeType: string;
   date: number;
   ownerId: number;
   access: boolean;
 }
+
 

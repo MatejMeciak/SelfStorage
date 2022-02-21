@@ -1,10 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Folder } from '../../../models/folder';
+import { File } from '../../../models/file';
 import { FolderService } from "../../../services/folder.service";
 import { Observable } from "rxjs";
 import { CategoryService } from "../../../services/category.service";
-import { Category } from "../../../models/category";
 
 @Component({
   selector: 'app-select-content-dialog',

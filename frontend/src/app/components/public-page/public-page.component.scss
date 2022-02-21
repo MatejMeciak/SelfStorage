@@ -1,0 +1,86 @@
+@use 'src/scss/abstracts/mixins' as *;
+
+form {
+  width: 150px;
+}
+mat-form-field {
+  width: 100%;
+}
+
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 0.7fr));
+  grid-gap: 1.5rem;
+  justify-self: stretch;
+}
+app-file-card {
+  width: 100%;
+}
+
+.filter {
+  width: 185px;
+  height: 3em;
+  background-color: white;
+  border-radius: 12px;
+  line-height: 3em;
+  padding: 0 1.5em;
+  transition: all 150ms ease-out;
+}
+.filter:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 2em;
+}
+
+
+
+mat-drawer-container {
+  height: 100%;
+}
+.detail-sidenav {
+  width: max(20%, 235px);
+  border-left: 1px solid #e1e1e1;
+  background-color: #fafafa;
+}
+
+.image {
+  object-fit: contain;
+  border-radius: 4px;
+}
+.title {
+  padding: 0 0.5rem;
+  margin: 0.8rem 0;
+}
+.sub-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 12px;
+}
+.container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 1em 1em;
+  .highlight {
+    padding: 0.8rem;
+    gap: 1rem;
+  }
+}
+.spacer {
+  @include spacer;
+}
+.temp > * {
+  margin-bottom: 0.5rem;
+}
+.back-arrow {
+  margin-left: 0.4rem;
+  padding: 0.5rem 1rem;
+}
