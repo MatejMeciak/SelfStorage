@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ReportRepository extends CrudRepository<Report,Long> {
     List<Report> findAll();
+
     void deleteAllByFileId(Long id);
 }

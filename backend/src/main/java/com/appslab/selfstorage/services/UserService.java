@@ -12,9 +12,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {
-    //void createUser(RegistrationRequestDto registrationRequestDTO);
-
-    //Boolean userAlreadyExists(RegistrationRequestDto registrationRequestDTO);
 
     CustomUser getUser();
 

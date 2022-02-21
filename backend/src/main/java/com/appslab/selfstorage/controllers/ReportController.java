@@ -26,8 +26,8 @@ public class ReportController {
     }
 
     @PostMapping("/create")
-    public Report createReport(@RequestBody UploadedFile uploadedFile, @RequestParam String reason){
-        return reportService.createReport(uploadedFile, reason);
+    public Report createReport(@RequestParam Long fileId, @RequestParam String reason){
+        return reportService.createReport(fileId, reason);
     }
 
     @GetMapping

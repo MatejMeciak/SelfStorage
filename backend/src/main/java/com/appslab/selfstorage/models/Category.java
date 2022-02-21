@@ -1,5 +1,7 @@
 package com.appslab.selfstorage.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,61 +27,14 @@ public class Category {
     @Column(name = "creator_id")
     private Long creatorId;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
+    @JsonBackReference
     private List<UploadedFile> files;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
+    @JsonBackReference
     private List<Folder> folders;
 
     public Category() {
     }
-
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public CustomUser getCreator() {
-//        return creator;
-//    }
-//
-//    public void setCreator(CustomUser creator) {
-//        this.creator = creator;
-//    }
-//
-//    public List<UploadedFile> getFiles() {
-//        return files;
-//    }
-//
-//    public void setFiles(List<UploadedFile> files) {
-//        this.files = files;
-//    }
-//
-//    public List<Folder> getFolders() {
-//        return folders;
-//    }
-//
-//    public void setFolders(List<Folder> folders) {
-//        this.folders = folders;
-//    }
-//
-//    public Long getCreatorId() {
-//        return creatorId;
-//    }
-//
-//    public void setCreatorId(Long creatorId) {
-//        this.creatorId = creatorId;
-//    }
-//
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
 }

@@ -42,10 +42,10 @@ public class FolderServiceImpl implements FolderService {
     }
 
     @Override
-    public void createFolder(Folder folder) {
+    public Folder createFolder(Folder folder) {
         folder.setDate();
         folder.setOwnerId(userService.getSpecifyUserId());
-        folderRepository.save(folder);
+        return folderRepository.save(folder);
     }
 
     @Override
@@ -68,22 +68,28 @@ public class FolderServiceImpl implements FolderService {
         return null;
     }
 
-
-
     @Override
-    public void addContentToFolder(Long id, Long fileId ) {
+    public Folder addContentToFolder(Long id, Long fileId ) {
         Folder folder = folderRepository.findById(id).get();
         if (folder.getOwnerId().equals(userService.getSpecifyUserId())) {
             UploadedFile uploadedFile1 = fileRepositoryDB.findById(fileId).get();
             uploadedFile1.setFolderId(id);
             fileRepositoryDB.save(uploadedFile1);
+            return folder;
         }
+        return null;
     }
 
     @Override
     public Folder deleteFolder(Long id) {
         Folder folder = folderRepository.findById(id).get();
         if (folder.getOwnerId().equals(userService.getSpecifyUserId())) {
+            List<UploadedFile> files = folder.getUploadedFileList();
+            for(int i = 0;i<files.size();i++){
+                UploadedFile file = fileRepositoryDB.findById(files.get(i).getId()).get();
+                file.setFolderId(null);
+                fileRepositoryDB.save(file);
+            }
             folderRepository.deleteById(id);
             return folder;
         }
@@ -91,22 +97,26 @@ public class FolderServiceImpl implements FolderService {
     }
 
     @Override
-    public void deleteContent(Long folderId, Long id) {
+    public UploadedFile deleteContent(Long folderId, Long id) {
         Folder folder = folderRepository.findById(folderId).get();
         if(fileRepositoryDB.existsById(id)==true&&fileRepositoryDB.findById(id).get().getOwnerId().equals(userService.getSpecifyUserId())){
-            fileRepositoryDB.findById(id).get().setFolderId(null);
+            UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
+            uploadedFile.setFolderId(null);
+            return fileRepositoryDB.save(uploadedFile);
         }
+        return null;
     }
 
     @Override
-    public void shareFolderWithFriends(String email, Long id) {
+    public Folder shareFolderWithFriends(String email, Long id) {
         CustomUser user = userRepository.findByEmail(email);
         Folder folder = folderRepository.findById(id).get();
         if(!folder.getFriends().contains(user))
         {
             folder.setFriends(user);
-            folderRepository.save(folder);
+            return folderRepository.save(folder);
         }
+        return null;
     }
 
     @Override

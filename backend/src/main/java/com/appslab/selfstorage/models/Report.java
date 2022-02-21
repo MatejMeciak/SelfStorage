@@ -35,50 +35,6 @@ public class Report {
     public Report() {
     }
 
-//    public String getReason() {
-//        return reason;
-//    }
-//
-//    public void setReason(String reason) {
-//        this.reason = reason;
-//    }
-//
-//    public Long getFileId() {
-//        return fileId;
-//    }
-//
-//    public void setFileId(Long fileId) {
-//        this.fileId = fileId;
-//    }
-//
-//    public CustomUser getCreator() {
-//        return creator;
-//    }
-//
-//    public void setCreator(CustomUser creator) {
-//        this.creator = creator;
-//    }
-//
-//    public Long getCreatorId() {
-//        return creatorId;
-//    }
-//
-//    public void setCreatorId(Long creatorId) {
-//        this.creatorId = creatorId;
-//    }
-//
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public Long getCreatedDate() {
-//        return createdDate;
-//    }
-
     public void setCreatedDate(Long createdDate) {
         this.createdDate = Calendar.getInstance().getTime().getTime();
     }

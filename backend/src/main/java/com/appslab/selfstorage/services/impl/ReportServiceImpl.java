@@ -24,12 +24,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Report createReport(UploadedFile uploadedFile,String reason) {
+    public Report createReport(Long fileId,String reason) {
         Report report = new Report();
         report.setCreatorId(userService.getSpecifyUserId());
         report.setReason(reason);
         report.setCreatedDate(Calendar.getInstance().getTime().getTime());
-        report.setFileId(uploadedFile.getId());
+        report.setFileId(fileRepositoryDB.findById(fileId).get().getId());
         return reportRepository.save(report);
     }
 

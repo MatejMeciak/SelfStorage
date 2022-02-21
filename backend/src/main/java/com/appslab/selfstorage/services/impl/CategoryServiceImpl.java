@@ -9,7 +9,6 @@ import com.appslab.selfstorage.repositories.FolderRepository;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +32,13 @@ public class CategoryServiceImpl implements com.appslab.selfstorage.services.Cat
     }
 
     @Override
-    public List<Object> getCategoryContent(String name) {
-        return List.of(categoryRepository.findByName(name).getFiles(),categoryRepository.findByName(name).getFolders());
+    public List<UploadedFile> getFilesInCategory(Long id) {
+        return categoryRepository.findById(id).get().getFiles();
+    }
+
+    @Override
+    public List<Folder> getFoldersInCategory(Long id){
+        return categoryRepository.findById(id).get().getFolders();
     }
 
     @Override

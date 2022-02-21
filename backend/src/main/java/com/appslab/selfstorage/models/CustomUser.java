@@ -80,34 +80,6 @@ public class CustomUser implements UserDetails {
         this.username = username;
     }
 
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(long id) {
-//        this.id = id;
-//    }
-//
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
-//
-//    public String getUsername() {
-//        return username;
-//    }
-//
-//    public void setUsername(String username) {
-//        this.username = username;
-//    }
-//
-//    public List<UploadedFile> getSharedFiles() {
-//        return sharedFiles;
-//    }
-
     public void setSharedFiles(List<UploadedFile> uploadedFiles1) {
         this.sharedFiles = uploadedFiles1;
     }
@@ -140,66 +112,4 @@ public class CustomUser implements UserDetails {
     public boolean isEnabled() {
         return true ;
     }
-
-//    public String getProviderUserId() {
-//        return providerUserId;
-//    }
-//
-//    public void setProviderUserId(String providerUserId) {
-//        this.providerUserId = providerUserId;
-//    }
-//
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-//
-//    public void setEnabled(boolean enabled) {
-//        this.enabled = enabled;
-//    }
-//
-//    public Date getCreatedDate() {
-//        return createdDate;
-//    }
-//
-//    public void setCreatedDate(Date createdDate) {
-//        this.createdDate = createdDate;
-//    }
-//
-//    public Date getModifiedDate() {
-//        return modifiedDate;
-//    }
-//
-//    public void setModifiedDate(Date modifiedDate) {
-//        this.modifiedDate = modifiedDate;
-//    }
-//
-//    public String getProvider() {
-//        return provider;
-//    }
-//
-//    public void setProvider(String provider) {
-//        this.provider = provider;
-//    }
-//
-//    public Set<Role> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(Set<Role> roles) {
-//        this.roles = roles;
-//    }
-//
-//    public Long getSpaceSize() {
-//        return spaceSize;
-//    }
-//
-//    public void setSpaceSize(Long spaceSize) {
-//        this.spaceSize = spaceSize;
-//    }
-
-
 }
