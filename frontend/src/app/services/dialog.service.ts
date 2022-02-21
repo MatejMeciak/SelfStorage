@@ -9,7 +9,7 @@ import { OpenContentDialogComponent } from "../components/dialogs/open-content-d
 import { FileDialogData } from "../models/FileDialogData";
 import { Observable } from "rxjs";
 import { ConfirmDialogComponent } from "../components/dialogs/confirm-dialog/confirm-dialog.component";
-import { InputUserDialogComponent } from "../components/dialogs/input-user-dialog/input-user-dialog.component";
+import { InputDialogComponent } from "../components/dialogs/input-dialog/input-dialog.component";
 import { Category } from "../models/category";
 
 @Injectable({
@@ -33,8 +33,10 @@ export class DialogService {
       { data: dialogData, panelClass: 'custom-dialog' }
     ).afterClosed();
   }
-  shareWithUserDialog(): Observable<any> {
-    return this.dialog.open(InputUserDialogComponent).afterClosed();
+  inputDialog(title: string): Observable<any> {
+    return this.dialog.open(InputDialogComponent,
+      { data: { content: '', title: title } }
+      ).afterClosed();
   }
   selectContentDialog(content= {}, target: string): Observable<any> {
     return this.dialog.open(SelectContentDialogComponent,

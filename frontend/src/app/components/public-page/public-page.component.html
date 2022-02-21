@@ -1,0 +1,107 @@
+<mat-drawer-container>
+  <mat-drawer #detailSidenav class="detail-sidenav" mode="side" position="end">
+    <div class="back-arrow highlight" (click)="closeDetail()">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </div>
+    <div class="container" *ngIf="file">
+      <img class="image" src="{{ getImage(file) | async }}" alt="file-image">
+      <div class="title">
+        <span>{{ file.name }}</span>
+        <div class="shared-with"></div>
+        <div class="sub-title">
+          <span>{{ fileType(file) }}</span>
+          <span class="date">{{ file.date | date : 'MMM d y hh:mm'}}</span>
+          <mat-icon title="public file" *ngIf="file.access">public</mat-icon>
+        </div>
+        <span class="sub-title">{{ file.fileSize / 1000 | number: '1.0-0' }} kB</span>
+      </div>
+      <div class="spacer"></div>
+      <div class="temp" *ngIf="file.mimeType.includes('image')">
+        <div class="highlight" (click)="viewFile()">
+          <mat-icon>wallpaper</mat-icon>
+          <span>View</span>
+        </div>
+        <div class="spacer"></div>
+      </div>
+      <div class="highlight" (click)="downloadFile()">
+        <mat-icon>download</mat-icon>
+        <span>Download</span>
+      </div>
+      <div class="highlight" *ngIf="user && !isOwner()" (click)="reportFile()">
+        <mat-icon>report</mat-icon>
+        <span>Report</span>
+      </div>
+      <div class="temp" *ngIf="user && isOwner()">
+        <div class="highlight" (click)="editFile()">
+          <mat-icon>edit</mat-icon>
+          <span>Edit name</span>
+        </div>
+        <div class="highlight" [matMenuTriggerFor]="shareOptions">
+          <mat-icon>share</mat-icon>
+          <span>Share</span>
+        </div>
+        <mat-menu #shareOptions="matMenu">
+          <button mat-menu-item (click)="shareWithUser()">
+            <mat-icon>folder_shared</mat-icon>
+            Share with user
+          </button>
+          <button *ngIf="!file.access" mat-menu-item (click)="publishFile(true)">
+            <mat-icon>public</mat-icon>
+            Make content public
+          </button>
+        </mat-menu>
+        <div class="highlight" (click)="moveFileToFolder()">
+          <mat-icon>drive_folder_upload</mat-icon>
+          <span>Move</span>
+        </div>
+        <div class="highlight" (click)="addCategory()">
+          <mat-icon>add_circle</mat-icon>
+          <span>Add category</span>
+        </div>
+        <div class="spacer"></div>
+        <div class="temp" *ngIf="file.access || file.categories">
+          <div class="highlight" *ngIf="file.access" (click)="publishFile(false)">
+            <mat-icon>public_off</mat-icon>
+            <span>Remove from public</span>
+          </div>
+          <div class="highlight" *ngIf="file.categories" (click)="removeCategory()">
+            <mat-icon>highlight_off</mat-icon>
+            <span>Remove category</span>
+          </div>
+          <div class="spacer"></div>
+        </div>
+        <div class="highlight" (click)="deleteFile()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </div>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="container">
+      <div class="container">
+        <h1>Search for public content</h1>
+        <div class="search">
+          <form>
+            <mat-form-field>
+              <mat-label>Enter Content Name</mat-label>
+              <input type="text"
+                     #searchBox
+                     placeholder="Search"
+                     aria-label="Enter Content Name"
+                     matInput
+                     (input)="inputChange(searchBox.value)">
+            </mat-form-field>
+          </form>
+        </div>
+      </div>
+      <div class="content-container">
+        <div class="file-grid">
+          <app-content-card *ngFor="let file of files$ | async" (clickEvent)="openFileDetail($event)"
+                            [content]="file" [image]="getImage(file) | async" [category]="''">
+          </app-content-card>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

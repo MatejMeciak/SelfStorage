@@ -21,8 +21,8 @@ export class CategoryService {
   getCategories(): Observable<any[]> {
     return this.http.get<any[]>(`${this.categoryUrl}/list`);
   }
-  getCategoryContent(category: string): Observable<File[]> {
-    return this.http.get<File[]>(`${this.categoryUrl}?category=${category}`);
+  getCategoryContent(category: string): Observable<any> {
+    return this.http.get<any>(`${this.categoryUrl}?category=${category}`);
   }
 
   // POST

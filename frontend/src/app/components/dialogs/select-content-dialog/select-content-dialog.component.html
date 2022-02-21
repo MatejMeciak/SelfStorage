@@ -5,6 +5,9 @@
         <mat-option *ngFor="let c of content$ | async" [value]="c">
           {{ c.name }}
         </mat-option>
+        <mat-option value="storage">
+          Storage
+        </mat-option>
       </mat-select>
   </mat-form-field>
 </mat-dialog-content>

@@ -26,6 +26,15 @@ export class FileService {
   getAllFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(this.fileUrl);
   }
+  getPublicFiles(): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.fileUrl}/public`);
+  }
+  getPublicFile(id: number): Observable<FileModel> {
+    return this.http.get<FileModel>(`${this.fileUrl}/public/${id}`);
+  }
+  getPublicFileBlob(id: number): Observable<Blob> {
+    return this.http.get(`${this.fileUrl}/public/${id}`, { responseType: 'blob' });
+  }
   getFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/files`);
   }
@@ -37,9 +46,6 @@ export class FileService {
   }
   getSearchedFiles(keyword: string): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/search?keyword=${keyword}`);
-  }
-  getPublicFiles(): Observable<FileModel[]> {
-    return this.http.get<FileModel[]>(`${this.fileUrl}/public`);
   }
   getSearchedPublicFiles(keyword: string): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/public/search?keyword=${keyword}`);

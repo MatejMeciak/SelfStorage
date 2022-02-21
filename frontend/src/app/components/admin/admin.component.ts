@@ -26,7 +26,9 @@ export class AdminComponent implements OnInit {
     this.users$ = this.authService.getAllUsers();
   }
   changeStorageSpace(spaceSize: number, userId: number) {
-    this.authService.setUserSpace(spaceSize*1000000000, userId).subscribe();
+    this.authService.setUserSpace(spaceSize*1000000000, userId).subscribe(() => {
+      location.reload();
+    });
   }
   dismissReport(id: number): void {
     this.reportService.dismissReport(id).subscribe();

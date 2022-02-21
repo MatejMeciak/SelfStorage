@@ -23,7 +23,7 @@ export class ProfilePageComponent implements OnInit {
   loginFormGroup = new FormGroup({
     oldPassword: new FormControl('', Validators.required)
   });
-
+  storage: any[];
   errorMessage: string;
   matcher = new CustomErrorStateMatcher();
 
@@ -37,8 +37,11 @@ export class ProfilePageComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getCurrentUser().subscribe(user => {
       this.user = user;
-      this.friends = new MatTableDataSource<any>();
+      this.authService.getUserFriends().subscribe(friendList => {
+        this.friends = new MatTableDataSource<any>(friendList);
+      });
       this.friends.paginator = this.paginator;
+      this.authService.getUserSpace().subscribe(list => this.storage = list);
     });
   }
   checkPasswords(group: FormGroup) {

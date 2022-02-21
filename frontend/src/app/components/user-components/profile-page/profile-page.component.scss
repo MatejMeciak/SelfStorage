@@ -48,3 +48,33 @@ mat-tab-group {
 .profile-icon {
   font-size: 32px;
 }
+.overview-list {
+  padding: 1rem 2rem;
+  border-radius: 6px;
+  mat-list-item:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  mat-list-item:first-child {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+  mat-list-item:last-child {
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+}
+.item-flex {
+  display: flex;
+  flex-direction: row;
+  & > :not(:first-child, :nth-child(2)) {
+    margin-left: auto;
+  }
+  & > :first-child {
+    min-width: 18%;
+    margin-right: 30%;
+  }
+  align-items: center;
+  padding: 0 3rem;
+  width: 100%;
+}
+

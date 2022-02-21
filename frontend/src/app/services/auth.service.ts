@@ -46,6 +46,9 @@ export class AuthService {
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
     return this.http.put(this.userUrl + '/changePassword' , { oldPassword: oldPassword, newPassword: newPassword })
   }
+  getUserFriends(): Observable<User[]> {
+    return this.http.get<User[]>(this.userUrl + '/friends');
+  }
   // TODO dat do samostatnej service
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl + '/listUsers');

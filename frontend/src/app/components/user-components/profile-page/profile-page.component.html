@@ -12,12 +12,47 @@
   </mat-card>
   <mat-tab-group>
     <mat-tab label="Overview">
-      <mat-list>
-        <mat-list-item>Item 1</mat-list-item>
+      <mat-list class="overview-list" *ngIf="user">
+        <mat-list-item>
+          <div class="item-flex">
+            <span>Username</span>
+            <mat-icon>more_vert</mat-icon>
+            <span>{{ user.username }}</span>
+          </div>
+        </mat-list-item>
         <mat-divider></mat-divider>
-        <mat-list-item>Item 2</mat-list-item>
+        <mat-list-item>
+          <div class="item-flex">
+            <span>Email</span>
+            <mat-icon>more_vert</mat-icon>
+            <span>{{ user.email }}</span>
+          </div>
+        </mat-list-item>
         <mat-divider></mat-divider>
-        <mat-list-item>Item 3</mat-list-item>
+        <mat-list-item>
+          <div class="item-flex">
+            <span>Provider</span>
+            <mat-icon>more_vert</mat-icon>
+            <span>local</span> <!--TODO-->
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <div class="item-flex" *ngIf="storage">
+            <span>Used Space</span>
+            <mat-icon>more_vert</mat-icon>
+            <span *ngIf="storage[0] >= 100000000">{{ storage[0]/1000000000 | number: '1.0-2' }} GB</span>
+            <span *ngIf="storage[0] < 100000000">{{ storage[0]/1000000000 | number: '1.0-4' }} GB</span>
+          </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <div class="item-flex" *ngIf="storage">
+            <span>Storage Space</span>
+            <mat-icon>more_vert</mat-icon>
+            <span>{{ storage[1]/1000000000 }} GB</span>
+          </div>
+        </mat-list-item>
       </mat-list>
     </mat-tab>
 
