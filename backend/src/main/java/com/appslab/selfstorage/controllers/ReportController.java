@@ -2,9 +2,9 @@ package com.appslab.selfstorage.controllers;
 
 import com.appslab.selfstorage.dto.DetailedReport;
 import com.appslab.selfstorage.models.Report;
-import com.appslab.selfstorage.models.UploadedFile;
+import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.services.ReportService;
-import com.appslab.selfstorage.services.UploadFileService;
+import com.appslab.selfstorage.services.FileService;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -16,23 +16,18 @@ import java.util.List;
 public class ReportController {
 
     private ReportService reportService;
-    private UploadFileService uploadFileService;
+    private FileService fileService;
     private UserService userService;
 
-    public ReportController(ReportService reportService, UploadFileService uploadFileService, UserService userService) {
+    public ReportController(ReportService reportService, FileService fileService, UserService userService) {
         this.reportService = reportService;
-        this.uploadFileService = uploadFileService;
+        this.fileService = fileService;
         this.userService = userService;
-    }
-
-    @PostMapping("/create")
-    public Report createReport(@RequestBody UploadedFile uploadedFile, @RequestParam String reason){
-        return reportService.createReport(uploadedFile, reason);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Report> getAdminContent() {
+    public List<Report> getAllReports() {
         return reportService.getAllReports();
     }
 
@@ -41,11 +36,16 @@ public class ReportController {
     public DetailedReport getCurrentReport(@PathVariable Long id){
         Report report = reportService.getCurrentReport(id);
         DetailedReport detailedReport = new DetailedReport();
-        detailedReport.setUploadedFile(uploadFileService.findFileById(report.getFileId()).get());
+        detailedReport.setFile(fileService.findFileById(report.getFileId()).get());
         detailedReport.setReason(report.getReason());
         detailedReport.setCreator(userService.getUser());
         detailedReport.setDate(report.getCreatedDate());
         return detailedReport;
+    }
+
+    @PostMapping("/create")
+    public Report createReport(@RequestParam Long fileId, @RequestParam String reason){
+        return reportService.createReport(fileId, reason);
     }
 
     @DeleteMapping("/remove/{id}")
@@ -56,7 +56,7 @@ public class ReportController {
 
     @DeleteMapping("/submit/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public UploadedFile submitReport(@PathVariable Long id){
+    public File submitReport(@PathVariable Long id){
         return reportService.submitReport(id);
     }
 }

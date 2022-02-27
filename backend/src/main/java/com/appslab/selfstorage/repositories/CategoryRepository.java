@@ -1,7 +1,6 @@
 package com.appslab.selfstorage.repositories;
 
 import com.appslab.selfstorage.models.Category;
-import com.appslab.selfstorage.models.UploadedFile;
 import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 

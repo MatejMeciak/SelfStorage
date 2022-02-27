@@ -1,15 +1,15 @@
 package com.appslab.selfstorage.services;
 
 import com.appslab.selfstorage.models.Folder;
-import com.appslab.selfstorage.models.UploadedFile;
+import com.appslab.selfstorage.models.File;
 
 import java.util.List;
 
 public interface FolderService {
 
-    List<UploadedFile> getFolderContent(Long id);
+    List<File> getFolderContent(Long id);
 
-    void createFolder(Folder folder);
+    Folder createFolder(String name);
 
     List<Folder> searchFoldersByFolderName(String keyword);
 
@@ -17,13 +17,13 @@ public interface FolderService {
 
     Folder getFolder(Long id);
 
-    void addContentToFolder(Long id, Long fileId);
+    Folder addContentToFolder(Long id, Long fileId);
 
     Folder deleteFolder(Long id);
 
-    void deleteContent(Long folderId,Long id);
+    File deleteContent(Long folderId, Long fileId);
 
-    void shareFolderWithFriends(String email, Long id);
+    Folder shareFolderWithFriends(String email, Long id);
 
     List<Folder> getMySharedFolders();
 

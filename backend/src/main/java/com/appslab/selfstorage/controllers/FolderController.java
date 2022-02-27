@@ -1,10 +1,10 @@
 package com.appslab.selfstorage.controllers;
 
 import com.appslab.selfstorage.models.Folder;
-import com.appslab.selfstorage.models.UploadedFile;
+import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
 import com.appslab.selfstorage.services.FolderService;
-import com.appslab.selfstorage.services.UploadFileService;
+import com.appslab.selfstorage.services.FileService;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -13,19 +13,24 @@ import java.util.List;
 @RequestMapping("/api/folder")
 public class FolderController {
     private final FolderService folderService;
-    private final UploadFileService uploadFileService;
+    private final FileService fileService;
     private final FileRepositoryDB fileRepositoryDB;
     private final UserService userService;
 
-    public FolderController(FolderService folderService, UploadFileService uploadFileService, FileRepositoryDB fileRepositoryDB, UserService userService) {
+    public FolderController(FolderService folderService, FileService fileService, FileRepositoryDB fileRepositoryDB, UserService userService) {
         this.folderService = folderService;
-        this.uploadFileService = uploadFileService;
+        this.fileService = fileService;
         this.fileRepositoryDB = fileRepositoryDB;
         this.userService = userService;
     }
 
+    @GetMapping("/{id}")
+    public Folder getFolder(@PathVariable Long id){
+        return folderService.getFolder(id);
+    }
+
     @GetMapping("/{id}/content")
-    public List<UploadedFile> getContentInFolder(@PathVariable Long id){
+    public List<File> getContentInFolder(@PathVariable Long id){
          return folderService.getFolderContent(id);
     }
 
@@ -39,24 +44,19 @@ public class FolderController {
         return folderService.getAllFolders();
     }
 
-    @GetMapping("/getFolder/{id}")
-    public Folder getFolder(@PathVariable Long id){
-        return folderService.getFolder(id);
-    }
-
     @GetMapping("/public")
-    public List<Folder> pulicFolders(){
+    public List<Folder> publicFolders(){
         return folderService.getPublicFolders();
     }
 
     @PostMapping
-    public void createNewFolder(@RequestBody Folder folder){
-        folderService.createFolder(folder);
-    }
+    public Folder createNewFolder(@RequestParam String name){
+        return folderService.createFolder(name);
+    } // rename requestBody to requestParam(name)
 
-    @PostMapping("/{id}/upload")
-    public void addFileToFolder(@PathVariable Long id, @RequestParam Long fileId){
-        folderService.addContentToFolder(id, fileId);
+    @PostMapping("/{id}/addFile")
+    public Folder addFileToFolder(@PathVariable Long id, @RequestParam Long fileId){
+        return folderService.addContentToFolder(id, fileId);
     }
 
     @PutMapping("/{id}/edit")
@@ -69,22 +69,22 @@ public class FolderController {
         return folderService.deleteFolder(id);
     }
 
-    @DeleteMapping("/folder/{id}")
-    public void deleteFileFromFolder(@RequestParam Long folderId,@PathVariable Long id){
-        folderService.deleteContent(folderId,id);
+    @DeleteMapping("/{id}/file")
+    public File deleteFileFromFolder(@PathVariable Long id, @RequestParam Long fileId){
+        return folderService.deleteContent(id,fileId);
     }
 
     @PutMapping("{id}/share")
-    public void shareFolderWithFriends(@PathVariable Long id,@RequestParam String email){
-        folderService.shareFolderWithFriends(email, id);
+    public Folder shareFolderWithFriends(@PathVariable Long id,@RequestParam String email){
+        return folderService.shareFolderWithFriends(email, id);
     }
 
-    @GetMapping("/share/myFolders")
+    @GetMapping("/shared/myFolders")
     public List<Folder> mySharedFolders(){
         return folderService.getMySharedFolders();
     }
 
-    @GetMapping("/share/fromFriends")
+    @GetMapping("/shared/fromFriends")
     public List<Folder> foldersFromFriends(){
         return folderService.getSharedFoldersFromOtherUsers();
     }

@@ -3,30 +3,29 @@ package com.appslab.selfstorage.dto;
 import java.util.Collection;
 import java.util.Map;
 
-import com.appslab.selfstorage.models.CustomUser;
+import com.appslab.selfstorage.models.User;
 import com.appslab.selfstorage.util.GeneralUtils;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 
-public class LocalUser extends User implements OAuth2User,OidcUser {
+public class LocalUser extends org.springframework.security.core.userdetails.User implements OAuth2User,OidcUser {
     private static final long serialVersionUID = -2845160792248762779L;
     private final OidcIdToken idToken;
     private final OidcUserInfo userInfo;
     private Map<String, Object> attributes;
-    private CustomUser user;
+    private User user;
 
     public LocalUser(final String userID, final String password, final boolean enabled, final boolean accountNonExpired, final boolean credentialsNonExpired,
-                     final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final CustomUser user) {
+                     final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final User user) {
         this(userID, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities, user, null, null);
     }
 
     public LocalUser(final String userID, final String password, final boolean enabled, final boolean accountNonExpired, final boolean credentialsNonExpired,
-                     final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final CustomUser user, OidcIdToken idToken,
+                     final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final User user, OidcIdToken idToken,
                      OidcUserInfo userInfo) {
         super(userID, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.user = user;
@@ -34,7 +33,7 @@ public class LocalUser extends User implements OAuth2User,OidcUser {
         this.userInfo = userInfo;
     }
 
-    public static LocalUser create(CustomUser user, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo) {
+    public static LocalUser create(User user, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo) {
         LocalUser localUser = new LocalUser(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, GeneralUtils.buildSimpleGrantedAuthorities(user.getRoles()),
                 user, idToken, userInfo);
         localUser.setAttributes(attributes);
@@ -70,7 +69,7 @@ public class LocalUser extends User implements OAuth2User,OidcUser {
         return this.idToken;
     }
 
-    public CustomUser getUser() {
+    public User getUser() {
         return user;
     }
 }

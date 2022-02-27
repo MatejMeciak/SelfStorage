@@ -29,7 +29,7 @@ public class Role implements Serializable {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<CustomUser> users;
+    private Set<User> users;
 
     public Role(String name) {
         this.name = name;
@@ -71,28 +71,4 @@ public class Role implements Serializable {
         builder.append("Role [name=").append(name).append("]").append("[id=").append(roleId).append("]");
         return builder.toString();
     }
-
-//    public Long getRoleId() {
-//        return roleId;
-//    }
-//
-//    public void setRoleId(Long roleId) {
-//        this.roleId = roleId;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public Set<CustomUser> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Set<CustomUser> users) {
-//        this.users = users;
-//    }
 }

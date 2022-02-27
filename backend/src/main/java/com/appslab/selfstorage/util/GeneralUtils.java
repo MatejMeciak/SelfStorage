@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.appslab.selfstorage.dto.LocalUser;
 import com.appslab.selfstorage.dto.SocialProvider;
 import com.appslab.selfstorage.dto.UserInfo;
-import com.appslab.selfstorage.models.CustomUser;
+import com.appslab.selfstorage.models.User;
 import com.appslab.selfstorage.models.Role;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -35,7 +35,7 @@ public class GeneralUtils {
 
     public static UserInfo buildUserInfo(LocalUser localUser) {
         List<String> roles = localUser.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
-        CustomUser user = localUser.getUser();
-        return new UserInfo(user.getId().toString(), user.getUsername(), user.getEmail(), roles);
+        User user = localUser.getUser();
+        return new UserInfo(user.getId().toString(), user.getUsername(), user.getEmail(), user.getProvider(), roles);
     }
 }

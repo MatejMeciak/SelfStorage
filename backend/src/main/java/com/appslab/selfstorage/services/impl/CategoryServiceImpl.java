@@ -2,14 +2,13 @@ package com.appslab.selfstorage.services.impl;
 
 import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.Folder;
-import com.appslab.selfstorage.models.UploadedFile;
+import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.repositories.CategoryRepository;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
 import com.appslab.selfstorage.repositories.FolderRepository;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +32,13 @@ public class CategoryServiceImpl implements com.appslab.selfstorage.services.Cat
     }
 
     @Override
-    public List<Object> getCategoryContent(String name) {
-        return List.of(categoryRepository.findByName(name).getFiles(),categoryRepository.findByName(name).getFolders());
+    public List<File> getFilesInCategory(Long id) {
+        return categoryRepository.findById(id).get().getFiles();
+    }
+
+    @Override
+    public List<Folder> getFoldersInCategory(Long id){
+        return categoryRepository.findById(id).get().getFolders();
     }
 
     @Override
@@ -50,15 +54,15 @@ public class CategoryServiceImpl implements com.appslab.selfstorage.services.Cat
         Category category = categoryRepository.findById(categoryId).get();
         if (category.getCreatorId().equals(userservice.getSpecifyUserId())){
             if(fileRepositoryDB.existsById(requestId)&&fileRepositoryDB.findById(requestId).get().getOwnerId().equals(userservice.getSpecifyUserId())) {
-                UploadedFile uploadedFile = fileRepositoryDB.findById(requestId).get();
+                File file = fileRepositoryDB.findById(requestId).get();
 
                 List<Category> categoryList = fileRepositoryDB.findById(requestId).get().getCategories();
                 categoryList.add(category);
 
-                uploadedFile.setCategories(categoryList.stream().distinct().collect(Collectors.toList()));
-                fileRepositoryDB.save(uploadedFile);
+                file.setCategories(categoryList.stream().distinct().collect(Collectors.toList()));
+                fileRepositoryDB.save(file);
 
-                return uploadedFile;
+                return file;
             }
             else if(folderRepository.existsById(requestId)&&folderRepository.findById(requestId).get().getOwnerId().equals(userservice.getSpecifyUserId())){
                 Folder folder = folderRepository.findById(requestId).get();
@@ -76,30 +80,30 @@ public class CategoryServiceImpl implements com.appslab.selfstorage.services.Cat
     }
 
     @Override
-    public void deleteCategory(Long id){
+    public Category deleteCategory(Long id){
         Category category = categoryRepository.findById(id).get();
         if (category.getCreatorId().equals(userservice.getSpecifyUserId())) {
             categoryRepository.delete(category);
+            return category;
         }
+        return null;
     }
 
     @Override
-    public List<Category> deleteContentFromCategory(Long categoryId, Long id) {
+    public Object deleteContentFromCategory(Long categoryId, Long id) {
         if(fileRepositoryDB.existsById(id)&&fileRepositoryDB.findById(id).get().getOwnerId().equals(userservice.getSpecifyUserId())){
-            UploadedFile uploadedFile = fileRepositoryDB.findById(id).get();
-            List<Category> categoryList = uploadedFile.getCategories();
+            File file = fileRepositoryDB.findById(id).get();
+            List<Category> categoryList = file.getCategories();
             categoryList.remove(categoryId.compareTo(categoryId));
-            uploadedFile.setCategories(categoryList);
-            fileRepositoryDB.save(uploadedFile);
-            return categoryList;
+            file.setCategories(categoryList);
+            return fileRepositoryDB.save(file);
         }
         else if(folderRepository.existsById(id)&&folderRepository.findById(id).get().getOwnerId().equals(userservice.getSpecifyUserId())){
             Folder folder = folderRepository.findById(id).get();
             List<Category> categoryList = folder.getCategories();
             categoryList.remove(categoryId.compareTo(categoryId));
             folder.setCategories(categoryList);
-            folderRepository.save(folder);
-            return categoryList;
+            return folderRepository.save(folder);
         }
         return null;
     }
