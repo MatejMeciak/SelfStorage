@@ -1,7 +1,7 @@
 package com.appslab.selfstorage.config;
 
 import com.appslab.selfstorage.dto.SocialProvider;
-import com.appslab.selfstorage.models.CustomUser;
+import com.appslab.selfstorage.models.User;
 import com.appslab.selfstorage.models.Role;
 import com.appslab.selfstorage.repositories.RoleRepository;
 import com.appslab.selfstorage.repositories.UserRepository;
@@ -36,10 +36,10 @@ public class SetupDataLoader implements CommandLineRunner {
     }
 
     @Transactional
-    protected CustomUser createUserIfNotFound(final String email, Set<Role> roles) {
-        CustomUser user = userRepository.findByEmail(email);
+    protected User createUserIfNotFound(final String email, Set<Role> roles) {
+        User user = userRepository.findByEmail(email);
         if (user == null) {
-            user = new CustomUser();
+            user = new User();
             user.setUsername("Admin");
             user.setEmail(email);
             user.setPassword(passwordEncoder.encode("admin@"));

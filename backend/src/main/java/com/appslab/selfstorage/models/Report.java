@@ -1,5 +1,7 @@
 package com.appslab.selfstorage.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,15 +19,17 @@ public class Report {
     private String reason;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
     @JoinColumn(name = "file_id",insertable = false,updatable = false)
-    private UploadedFile uploadedFile;
+    private File file;
 
     @Column(name = "file_id")
     private Long fileId;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
     @JoinColumn(name = "creator_id",insertable = false,updatable = false)
-    private CustomUser creator;
+    private User creator;
 
     @Column(name = "creator_id")
     private Long creatorId;

@@ -1,7 +1,7 @@
 package com.appslab.selfstorage.services.impl;
 
 import com.appslab.selfstorage.models.Report;
-import com.appslab.selfstorage.models.UploadedFile;
+import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
 import com.appslab.selfstorage.repositories.ReportRepository;
 import com.appslab.selfstorage.services.ReportService;
@@ -42,17 +42,18 @@ public class ReportServiceImpl implements ReportService {
     public Report removeReport(Long id) {
         Report report = reportRepository.findById(id).get();
         Long fileId = report.getFileId();
-        reportRepository.deleteAllByFileId(fileId);
+        reportRepository.delete(report);
         return report;
     }
 
     @Override
-    public UploadedFile submitReport(Long id) {
+    public File submitReport(Long id) {
         Report report = reportRepository.findById(id).get();
-        UploadedFile uploadedFile = fileRepositoryDB.findById(report.getFileId()).get();
-        uploadedFile.setAccess(false);
+        File file = fileRepositoryDB.findById(report.getFileId()).get();
+        file.setAccess(false);
+        fileRepositoryDB.save(file);
         reportRepository.deleteAllByFileId(report.getFileId());
-        return fileRepositoryDB.save(uploadedFile);
+        return file;
     }
 
     @Override

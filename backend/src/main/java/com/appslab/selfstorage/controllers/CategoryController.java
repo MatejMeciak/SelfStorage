@@ -3,7 +3,7 @@ package com.appslab.selfstorage.controllers;
 import com.appslab.selfstorage.dto.CategoryBasicInfo;
 import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.Folder;
-import com.appslab.selfstorage.models.UploadedFile;
+import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.services.CategoryService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -23,7 +23,7 @@ public class CategoryController {
     }
 
     @GetMapping("/content/files")
-    public List<UploadedFile> getFilesInCategory(@RequestParam Long id){
+    public List<File> getFilesInCategory(@RequestParam Long id){
         return categoryService.getFilesInCategory(id);
     }
 
@@ -37,7 +37,7 @@ public class CategoryController {
         Category category = categoryService.getCategory(id);
         CategoryBasicInfo categoryBasicInfo = new CategoryBasicInfo();
         categoryBasicInfo.setCreatorId(category.getCreatorId());
-        categoryBasicInfo.setId(categoryBasicInfo.getId());
+        categoryBasicInfo.setId(category.getId());
         categoryBasicInfo.setName(category.getName());
         return categoryBasicInfo;
     }
@@ -53,12 +53,12 @@ public class CategoryController {
     }
 
     @DeleteMapping ("/{categoryId}/content")
-    public List<Category> deleteContentFromCategory(@PathVariable Long categoryId, @RequestParam Long id){
+    public Object deleteContentFromCategory(@PathVariable Long categoryId, @RequestParam Long id){
         return categoryService.deleteContentFromCategory(categoryId, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable Long id){
-        categoryService.deleteCategory(id);
-    }
+    public Category deleteCategory(@PathVariable Long id){
+        return categoryService.deleteCategory(id);
+    } //return category
 }

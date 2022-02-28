@@ -1,6 +1,8 @@
 package com.appslab.selfstorage.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +17,7 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
-public class CustomUser implements UserDetails {
+public class User implements UserDetails {
 
     private static final long serialVersionUID = 65981149772133526L;
 
@@ -57,31 +59,40 @@ public class CustomUser implements UserDetails {
     @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "USER_ID")},inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
     private Set<Role> roles;
 
-    @OneToMany
+    @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Category> categories;
 
-    @OneToMany
-    private List<UploadedFile> uploadedFiles;
+    @OneToMany(mappedBy = "owner")
+    @JsonManagedReference
+    private List<File> files;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<UploadedFile> sharedFiles;
+    @OneToMany(mappedBy = "owner")
+    @JsonManagedReference
+    private List<Folder> folders;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "friends")
+    @JsonManagedReference
+    private List<File> sharedFiles;
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "friends")
+    @JsonManagedReference
     private List<Folder> sharedFolder;
 
-    @OneToMany
+    @OneToMany(mappedBy = "creator")
+    @JsonManagedReference
     private List<Report> reports;
 
-    public CustomUser() {
+    public User() {
     }
 
-    public CustomUser(@NotEmpty String password, @NotEmpty String username) {
+    public User(@NotEmpty String password, @NotEmpty String username) {
         this.password = password;
         this.username = username;
     }
 
-    public void setSharedFiles(List<UploadedFile> uploadedFiles1) {
-        this.sharedFiles = uploadedFiles1;
+    public void setSharedFiles(List<File> files) {
+        this.sharedFiles = files;
     }
 
     @Override

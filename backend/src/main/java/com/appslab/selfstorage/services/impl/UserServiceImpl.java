@@ -6,9 +6,9 @@ import com.appslab.selfstorage.dto.SocialProvider;
 import com.appslab.selfstorage.exception.OAuth2AuthenticationProcessingException;
 import com.appslab.selfstorage.exception.UserAlreadyExistAuthenticationException;
 import com.appslab.selfstorage.models.Category;
-import com.appslab.selfstorage.models.CustomUser;
+import com.appslab.selfstorage.models.User;
 import com.appslab.selfstorage.models.Role;
-import com.appslab.selfstorage.models.UploadedFile;
+import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.repositories.CategoryRepository;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
 import com.appslab.selfstorage.repositories.RoleRepository;
@@ -49,10 +49,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String changePassword(String oldPassword, String newPassword) {
-        CustomUser customUser = userRepository.findById(getSpecifyUserId()).get();
-        if (passwordEncoder.matches(oldPassword, customUser.getPassword())) {
-            customUser.setPassword(passwordEncoder.encode(newPassword));
-            userRepository.save(customUser);
+        User user = userRepository.findById(getSpecifyUserId()).get();
+        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
             return "success";
         }
         return "failed";
@@ -60,13 +60,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(value = "transactionManager")
-    public CustomUser registerNewUser(final SignUpRequest signUpRequest) throws UserAlreadyExistAuthenticationException {
+    public User registerNewUser(final SignUpRequest signUpRequest) throws UserAlreadyExistAuthenticationException {
         if (signUpRequest.getUserID() != null && userRepository.existsById(signUpRequest.getUserID())) {
             throw new UserAlreadyExistAuthenticationException("User with User id " + signUpRequest.getUserID() + " already exist");
         } else if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new UserAlreadyExistAuthenticationException("User with email id " + signUpRequest.getEmail() + " already exist");
         }
-        CustomUser user = buildUser(signUpRequest);
+        User user = buildUser(signUpRequest);
         Date now = Calendar.getInstance().getTime();
         user.setCreatedDate(now);
         user.setModifiedDate(now);
@@ -83,8 +83,8 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private CustomUser buildUser(final SignUpRequest formDTO) {
-        CustomUser user = new CustomUser();
+    private User buildUser(final SignUpRequest formDTO) {
+        User user = new User();
         user.setUsername(formDTO.getUsername());
         user.setEmail(formDTO.getEmail());
         if(formDTO.getPassword() != null)
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public CustomUser findUserByEmail(final String email) {
+    public User findUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
         SignUpRequest userDetails = toUserRegistrationObject(registrationId, oAuth2UserInfo);
-        CustomUser user = findUserByEmail(oAuth2UserInfo.getEmail());
+        User user = findUserByEmail(oAuth2UserInfo.getEmail());
         if (user != null) {
             if (!user.getProvider().equals(registrationId) && !user.getProvider().equals(SocialProvider.LOCAL.getProviderType())) {
                 throw new OAuth2AuthenticationProcessingException(
@@ -131,9 +131,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long usedSpaceOfStorage() {
-        List<Long> sizesOfFiles = fileRepositoryDB.findByOwnerId(getSpecifyUserId()).stream().map(UploadedFile::getFileSize).collect(Collectors.toList());
+        List<Long> sizesOfFiles = fileRepositoryDB.findByOwnerId(getSpecifyUserId()).stream().map(File::getFileSize).collect(Collectors.toList());
         Long usedSpace = 0L;
-        for(int i = 0; i<fileRepositoryDB.findByOwnerId(getSpecifyUserId()).stream().map(UploadedFile::getFileSize).count(); i++ ) {
+        for(int i = 0; i<fileRepositoryDB.findByOwnerId(getSpecifyUserId()).stream().map(File::getFileSize).count(); i++ ) {
             usedSpace += sizesOfFiles.get(i);
         }
         return usedSpace;
@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long settingSizeOfSpace(Long sizeSpace, Long userId) {
-        CustomUser user = userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).get();
         if(sizeSpace!=null){
             user.setSpaceSize(sizeSpace);
             userRepository.save(user);
@@ -150,21 +150,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<CustomUser> getAllUsers() {
-        List<CustomUser> users = userRepository.findAll();
+    public List<User> getAllUsers() {
+        List<User> users = userRepository.findAll();
         users.remove(getUser());
         return users;
     }
 
     @Override
-    public List<CustomUser> getFriends() {
+    public List<User> getFriends() {
         return this.fileRepositoryDB.findByOwnerId(getSpecifyUserId()).stream()
                 .flatMap(file -> file.getFriends().stream())
                 .distinct()
                 .collect(Collectors.toList());
     }
 
-    private CustomUser updateExistingUser(CustomUser existingUser, OAuth2UserInfo oAuth2UserInfo) {
+    @Override
+    public User changeUsername(String username) {
+        User user = getUser();
+        user.setUsername(username);
+        return userRepository.save(user);
+    }
+
+    private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
         existingUser.setUsername(oAuth2UserInfo.getName());
         return userRepository.save(existingUser);
     }
@@ -175,13 +182,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<CustomUser> findUserById(Long id) {
+    public Optional<User> findUserById(Long id) {
         return userRepository.findById(id);
     }
 
 
     @Override
-    public CustomUser getUser() {
+    public User getUser() {
         return userRepository.findById(getSpecifyUserId()).get();
     }
 
@@ -189,7 +196,7 @@ public class UserServiceImpl implements UserService {
     public Long getSpecifyUserId() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
-        CustomUser user = userRepository.findByEmail(username);
+        User user = userRepository.findByEmail(username);
         return user.getId();
     }
 }

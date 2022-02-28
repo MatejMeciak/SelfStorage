@@ -2,14 +2,14 @@ package com.appslab.selfstorage.services;
 
 import com.appslab.selfstorage.models.Category;
 import com.appslab.selfstorage.models.Folder;
-import com.appslab.selfstorage.models.UploadedFile;
+import com.appslab.selfstorage.models.File;
 
 import java.util.List;
 
 public interface CategoryService {
     List<Category> getListOfCategories();
 
-    List<UploadedFile> getFilesInCategory(Long id);
+    List<File> getFilesInCategory(Long id);
 
     List<Folder> getFoldersInCategory(Long id);
 
@@ -17,9 +17,9 @@ public interface CategoryService {
 
     Object addContentToCategory(Long categoryId, Long requestId);
 
-    void deleteCategory(Long id);
+    Category deleteCategory(Long id);
 
-    List<Category> deleteContentFromCategory(Long categoryId, Long id);
+    Object deleteContentFromCategory(Long categoryId, Long id);
 
     Category getCategory(Long id);
 }

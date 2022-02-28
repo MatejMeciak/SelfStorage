@@ -14,25 +14,26 @@ import java.util.List;
 @Setter
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty
     private String name;
 
     @JoinColumn(name = "creator_id",updatable = false, insertable = false)
-    @ManyToOne(fetch = FetchType.EAGER)
-    private CustomUser creator;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private User creator;
 
     @Column(name = "creator_id")
     private Long creatorId;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
-    @JsonBackReference
-    private List<UploadedFile> files;
+    @JsonManagedReference
+    private List<File> files;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
-    @JsonBackReference
+    @JsonManagedReference
     private List<Folder> folders;
 
     public Category() {

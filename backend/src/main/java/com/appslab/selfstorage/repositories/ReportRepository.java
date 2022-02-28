@@ -10,3 +10,4 @@ public interface ReportRepository extends CrudRepository<Report,Long> {
 
     void deleteAllByFileId(Long id);
 }
+

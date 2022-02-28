@@ -5,12 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FileBasicInfo {
+public class FolderBasicInfo {
     private Long id;
     private String name;
-    private Long fileSize;
-    private Long date;
-    private String mimeType;
     private boolean access;
-    //folderId
+    private Long date;
 }

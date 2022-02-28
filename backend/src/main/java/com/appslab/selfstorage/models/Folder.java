@@ -8,7 +8,6 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
 
@@ -26,26 +25,29 @@ public class Folder {
 
     protected Long date;
 
-    @OneToMany
-    protected List<UploadedFile> uploadedFileList;
+    @OneToMany(mappedBy = "folder")
+    @JsonManagedReference
+    protected List<File> fileList;
 
     protected Boolean access;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
+    @JsonBackReference
     @JoinTable(name = "folder_category",joinColumns = @JoinColumn(name = "folder_id"),inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @JsonManagedReference
     protected List<Category> categories;
 
     @JoinColumn(name = "owner_id", insertable = false, updatable = false)
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
-    protected CustomUser owner;
+    protected User owner;
 
     @Column(name = "owner_id")
     protected Long ownerId;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
     @JoinTable(name = "share_folder",joinColumns = @JoinColumn(name = "folder_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
-    protected List<CustomUser> friends;
+    protected List<User> friends;
 
     public Folder() {
     }
@@ -54,7 +56,8 @@ public class Folder {
         this.date = Calendar.getInstance().getTime().getTime();
     }
 
-    public void setFriends(CustomUser friend) {
+
+    public void setFriends(User friend) {
         this.friends.add(friend);
     }
 }

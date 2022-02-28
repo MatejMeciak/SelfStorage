@@ -3,7 +3,8 @@ package com.appslab.selfstorage.controllers;
 import com.appslab.selfstorage.config.CurrentUser;
 import com.appslab.selfstorage.dto.LocalUser;
 import com.appslab.selfstorage.dto.RequestPasswords;
-import com.appslab.selfstorage.models.CustomUser;
+import com.appslab.selfstorage.dto.StorageSpace;
+import com.appslab.selfstorage.models.User;
 import com.appslab.selfstorage.services.ReportService;
 import com.appslab.selfstorage.services.UserService;
 import com.appslab.selfstorage.util.GeneralUtils;
@@ -25,32 +26,34 @@ public class UserController {
         this.reportService = reportService;
     }
 
-
-    @GetMapping("/friends")
-    public List<CustomUser> getFriends(){
-        return userService.getFriends();
-    }
-
     @GetMapping()
     public ResponseEntity<?> getCurrentUser(@CurrentUser LocalUser user) {
         return ResponseEntity.ok(GeneralUtils.buildUserInfo(user));
     }
 
+    @GetMapping("/friends")
+    public List<User> getFriends(){
+        return userService.getFriends();
+    }
+
     @GetMapping("/storageSpace")
-    public List<Long> getStorageSpace(){
-        return List.of(userService.usedSpaceOfStorage(),userService.getUser().getSpaceSize());
+    public StorageSpace getStorageSpace(){
+        StorageSpace storageSpace = new StorageSpace();
+        storageSpace.setSizeSpace(userService.getUser().getSpaceSize());
+        storageSpace.setUsedSpace(userService.usedSpaceOfStorage());
+        return storageSpace; //return object
     }
 
     @GetMapping("/listUsers")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<CustomUser> getAllUsers(){
+    public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
-    @PostMapping("/setSpace")
+    @PostMapping("/{id}/setSpace")
     @PreAuthorize("hasRole('ADMIN')")
-    public Long settingSpace(@RequestParam Long sizeSpace, @RequestParam Long userId){
-        return userService.settingSizeOfSpace(sizeSpace, userId);
+    public Long settingSpace(@RequestParam Long sizeSpace, @PathVariable Long id){ //rewrite requestparam id to pathvariable
+        return userService.settingSizeOfSpace(sizeSpace, id);
     }
 
     @PutMapping("/changePassword")
@@ -59,5 +62,10 @@ public class UserController {
         String newPassword = requestPasswords.getNewPassword();
 
         return userService.changePassword(oldPassword,newPassword);
+    }
+
+    @PutMapping("/changeUsername")
+    public User changeUsername(@RequestParam String username){
+        return userService.changeUsername(username);
     }
 }

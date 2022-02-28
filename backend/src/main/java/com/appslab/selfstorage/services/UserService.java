@@ -3,7 +3,7 @@ package com.appslab.selfstorage.services;
 import com.appslab.selfstorage.dto.LocalUser;
 import com.appslab.selfstorage.dto.SignUpRequest;
 import com.appslab.selfstorage.exception.UserAlreadyExistAuthenticationException;
-import com.appslab.selfstorage.models.CustomUser;
+import com.appslab.selfstorage.models.User;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 
@@ -13,17 +13,17 @@ import java.util.Optional;
 
 public interface UserService {
 
-    CustomUser getUser();
+    User getUser();
 
     Long getSpecifyUserId();
 
     String changePassword(String oldPassword, String newPassword);
 
-    CustomUser registerNewUser(SignUpRequest signUpRequest) throws UserAlreadyExistAuthenticationException;
+    User registerNewUser(SignUpRequest signUpRequest) throws UserAlreadyExistAuthenticationException;
 
-    CustomUser findUserByEmail(String email);
+    User findUserByEmail(String email);
 
-    Optional<CustomUser> findUserById(Long id);
+    Optional<User> findUserById(Long id);
 
     LocalUser processUserRegistration(String registrationId, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo);
 
@@ -31,7 +31,9 @@ public interface UserService {
 
     Long settingSizeOfSpace(Long sizeSpace, Long userId);
 
-    List<CustomUser> getAllUsers();
+    List<User> getAllUsers();
 
-    List<CustomUser> getFriends();
+    List<User> getFriends();
+
+    User changeUsername(String username);
 }
