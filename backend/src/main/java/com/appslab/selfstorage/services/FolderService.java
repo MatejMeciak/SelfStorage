@@ -1,5 +1,6 @@
 package com.appslab.selfstorage.services;
 
+import com.appslab.selfstorage.dto.FolderBasicInfo;
 import com.appslab.selfstorage.models.Folder;
 import com.appslab.selfstorage.models.File;
 
@@ -31,5 +32,6 @@ public interface FolderService {
 
     List<Folder> getPublicFolders();
 
-    Folder editFolder(Folder folder);
+    Folder editFolder(FolderBasicInfo folderBasicInfo);
 }
+

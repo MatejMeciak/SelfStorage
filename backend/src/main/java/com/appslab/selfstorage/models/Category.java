@@ -33,6 +33,7 @@ public class Category {
     private List<File> files;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
+    @JsonManagedReference
     private List<Folder> folders;
 
     public Category() {

@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
         Category category = new Category();
         category.setName("Favourite");
-        category.setCreator(user);
+        category.setCreatorId(user.getId());
         categoryRepository.save(category);
 
         return user;
@@ -162,6 +162,13 @@ public class UserServiceImpl implements UserService {
                 .flatMap(file -> file.getFriends().stream())
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public User changeUsername(String username) {
+        User user = getUser();
+        user.setUsername(username);
+        return userRepository.save(user);
     }
 
     private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {

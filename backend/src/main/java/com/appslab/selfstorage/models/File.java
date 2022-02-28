@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -57,10 +58,12 @@ public class File {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "share_files",joinColumns = @JoinColumn(name = "uploadedFile_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
+    @JsonBackReference
     protected List<User> friends;
 
     @JsonIgnore
     @OneToMany(mappedBy = "file")
+    @JsonManagedReference
     private List<Report> reports;
 
     public File(){

@@ -3,6 +3,7 @@ package com.appslab.selfstorage.controllers;
 import com.appslab.selfstorage.config.CurrentUser;
 import com.appslab.selfstorage.dto.LocalUser;
 import com.appslab.selfstorage.dto.RequestPasswords;
+import com.appslab.selfstorage.dto.StorageSpace;
 import com.appslab.selfstorage.models.User;
 import com.appslab.selfstorage.services.ReportService;
 import com.appslab.selfstorage.services.UserService;
@@ -36,8 +37,11 @@ public class UserController {
     }
 
     @GetMapping("/storageSpace")
-    public List<Long> getStorageSpace(){
-        return List.of(userService.usedSpaceOfStorage(),userService.getUser().getSpaceSize()); //return object
+    public StorageSpace getStorageSpace(){
+        StorageSpace storageSpace = new StorageSpace();
+        storageSpace.setSizeSpace(userService.getUser().getSpaceSize());
+        storageSpace.setUsedSpace(userService.usedSpaceOfStorage());
+        return storageSpace; //return object
     }
 
     @GetMapping("/listUsers")
@@ -46,10 +50,10 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/setSpace")
+    @PostMapping("/{id}/setSpace")
     @PreAuthorize("hasRole('ADMIN')")
-    public Long settingSpace(@RequestParam Long sizeSpace, @RequestParam Long userId){ //rewrite requestparam id to pathvariable
-        return userService.settingSizeOfSpace(sizeSpace, userId);
+    public Long settingSpace(@RequestParam Long sizeSpace, @PathVariable Long id){ //rewrite requestparam id to pathvariable
+        return userService.settingSizeOfSpace(sizeSpace, id);
     }
 
     @PutMapping("/changePassword")
@@ -62,6 +66,6 @@ public class UserController {
 
     @PutMapping("/changeUsername")
     public User changeUsername(@RequestParam String username){
-        return null;
+        return userService.changeUsername(username);
     }
 }

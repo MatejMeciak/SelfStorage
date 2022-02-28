@@ -72,12 +72,15 @@ public class User implements UserDetails {
     private List<Folder> folders;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "friends")
+    @JsonManagedReference
     private List<File> sharedFiles;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "friends")
+    @JsonManagedReference
     private List<Folder> sharedFolder;
 
     @OneToMany(mappedBy = "creator")
+    @JsonManagedReference
     private List<Report> reports;
 
     public User() {

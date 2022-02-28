@@ -1,5 +1,6 @@
 package com.appslab.selfstorage.controllers;
 
+import com.appslab.selfstorage.dto.FolderBasicInfo;
 import com.appslab.selfstorage.models.Folder;
 import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
@@ -60,14 +61,14 @@ public class FolderController {
     }
 
     @PutMapping("/{id}/edit")
-    public Folder editFolder(@RequestBody Folder folder){
-        return folderService.editFolder(folder);
+    public Folder editFolder(@RequestBody FolderBasicInfo folderBasicInfo){
+        return folderService.editFolder(folderBasicInfo);//request DTO
     }
 
     @DeleteMapping("/{id}")
     public Folder deleteFolder(@PathVariable Long id){
         return folderService.deleteFolder(id);
-    }
+    }//repair
 
     @DeleteMapping("/{id}/file")
     public File deleteFileFromFolder(@PathVariable Long id, @RequestParam Long fileId){
@@ -88,5 +89,4 @@ public class FolderController {
     public List<Folder> foldersFromFriends(){
         return folderService.getSharedFoldersFromOtherUsers();
     }
-
 }

@@ -34,4 +34,6 @@ public interface UserService {
     List<User> getAllUsers();
 
     List<User> getFriends();
+
+    User changeUsername(String username);
 }

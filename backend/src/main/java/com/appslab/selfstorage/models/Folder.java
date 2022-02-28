@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -30,7 +31,8 @@ public class Folder {
 
     protected Boolean access;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
+    @JsonBackReference
     @JoinTable(name = "folder_category",joinColumns = @JoinColumn(name = "folder_id"),inverseJoinColumns = @JoinColumn(name = "category_id"))
     protected List<Category> categories;
 
@@ -43,6 +45,7 @@ public class Folder {
     protected Long ownerId;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
     @JoinTable(name = "share_folder",joinColumns = @JoinColumn(name = "folder_id"),inverseJoinColumns = @JoinColumn(name = "customUser_id"))
     protected List<User> friends;
 

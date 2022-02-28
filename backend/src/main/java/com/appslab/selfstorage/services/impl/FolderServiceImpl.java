@@ -1,5 +1,6 @@
 package com.appslab.selfstorage.services.impl;
 
+import com.appslab.selfstorage.dto.FolderBasicInfo;
 import com.appslab.selfstorage.models.User;
 import com.appslab.selfstorage.models.Folder;
 import com.appslab.selfstorage.models.File;
@@ -86,12 +87,10 @@ public class FolderServiceImpl implements FolderService {
     public Folder deleteFolder(Long id) {
         Folder folder = folderRepository.findById(id).get();
         if (folder.getOwnerId().equals(userService.getSpecifyUserId())) {
-            List<File> files = folder.getFileList();
-            for(int i = 0;i<files.size();i++){
-                File file = fileRepositoryDB.findById(files.get(i).getId()).get();
-                file.setFolderId(null);
-                fileRepositoryDB.save(file);
-            }
+            folder.setFileList(null);
+            folder.setFriends(null);
+            folder.setOwner(null);
+            folderRepository.save(folder);
             folderRepository.deleteById(id);
             return folder;
         }
@@ -124,7 +123,7 @@ public class FolderServiceImpl implements FolderService {
     @Override
     public List<Folder> getMySharedFolders() {
         User user = userRepository.findById(userService.getSpecifyUserId()).get();
-        List<Folder> getMySharedFolders = folderRepository.findByOwnerId(user.getId()).stream().filter(u -> u.getFriends() != null).collect(Collectors.toList());
+        List<Folder> getMySharedFolders = folderRepository.findByOwnerId(user.getId()).stream().filter(u -> u.getFriends().size() != 0).collect(Collectors.toList());
         return getMySharedFolders;
     }
 
@@ -140,11 +139,11 @@ public class FolderServiceImpl implements FolderService {
     }
 
     @Override
-    public Folder editFolder(Folder folder) {
-        Folder folder1 = folderRepository.findById(folder.getId()).get();
+    public Folder editFolder(FolderBasicInfo folderBasicInfo) {
+        Folder folder1 = folderRepository.findById(folderBasicInfo.getId()).get();
         if(folder1.getOwnerId().equals(userService.getSpecifyUserId())){
-            folder1.setName(folder.getName());
-            folder1.setAccess(folder.getAccess());
+            folder1.setName(folderBasicInfo.getName());
+            folder1.setAccess(folderBasicInfo.isAccess());
             folderRepository.save(folder1);
         }
         return folder1;

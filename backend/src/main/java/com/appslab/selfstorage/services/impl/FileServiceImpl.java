@@ -42,20 +42,26 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileBasicInfo deleteFile(Long id) throws Exception{
-        File uploadedFile = fileRepositoryDB.findById(id).get();
-        if (uploadedFile.getOwnerId().equals(userService.getSpecifyUserId()))
+        File file = fileRepositoryDB.findById(id).get();
+        if (file.getOwnerId().equals(userService.getSpecifyUserId()))
         {
-            if (uploadedFile.getUuid()!= null){
-                Files.delete(pathToSpecificFile(uploadedFile));
+            if (file.getUuid()!= null){
+                Files.delete(pathToSpecificFile(file));
             }
+            file.setFolderId(null);
+            file.setCategories(null);
+            file.setOwner(null);
+            file.setFriends(null);
+            file.setReports(null);
+            fileRepositoryDB.save(file);
             fileRepositoryDB.deleteById(id);
 
-            FileBasicInfo file = new FileBasicInfo();
-            file.setName(uploadedFile.getName());
-            file.setFileSize(uploadedFile.getFileSize());
-            file.setDate(uploadedFile.getDate());
+            FileBasicInfo file1 = new FileBasicInfo();
+            file1.setName(file1.getName());
+            file1.setFileSize(file1.getFileSize());
+            file1.setDate(file1.getDate());
 
-            return file;
+            return file1;
         }
         return null;
     }
@@ -155,7 +161,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<File> getMySharedFiles() {
         User user = userRepository.findById(userService.getSpecifyUserId()).get();
-        List<File> getMySharedFiles = fileRepositoryDB.findByOwnerId(user.getId()).stream().filter(u -> u.getFriends() != null).collect(Collectors.toList());
+        List<File> getMySharedFiles = fileRepositoryDB.findByOwnerId(user.getId()).stream().filter(u -> u.getFriends().size() != 0).collect(Collectors.toList());
         return getMySharedFiles;
     }
 

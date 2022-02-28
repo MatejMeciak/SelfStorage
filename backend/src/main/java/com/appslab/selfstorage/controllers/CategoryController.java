@@ -37,7 +37,7 @@ public class CategoryController {
         Category category = categoryService.getCategory(id);
         CategoryBasicInfo categoryBasicInfo = new CategoryBasicInfo();
         categoryBasicInfo.setCreatorId(category.getCreatorId());
-        categoryBasicInfo.setId(categoryBasicInfo.getId());
+        categoryBasicInfo.setId(category.getId());
         categoryBasicInfo.setName(category.getName());
         return categoryBasicInfo;
     }

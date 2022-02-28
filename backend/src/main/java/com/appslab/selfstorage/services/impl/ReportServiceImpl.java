@@ -42,7 +42,7 @@ public class ReportServiceImpl implements ReportService {
     public Report removeReport(Long id) {
         Report report = reportRepository.findById(id).get();
         Long fileId = report.getFileId();
-        reportRepository.deleteAllByFileId(fileId);
+        reportRepository.delete(report);
         return report;
     }
 
@@ -51,8 +51,9 @@ public class ReportServiceImpl implements ReportService {
         Report report = reportRepository.findById(id).get();
         File file = fileRepositoryDB.findById(report.getFileId()).get();
         file.setAccess(false);
+        fileRepositoryDB.save(file);
         reportRepository.deleteAllByFileId(report.getFileId());
-        return fileRepositoryDB.save(file);
+        return file;
     }
 
     @Override

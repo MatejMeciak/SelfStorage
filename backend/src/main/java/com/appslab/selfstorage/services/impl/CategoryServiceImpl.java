@@ -83,6 +83,9 @@ public class CategoryServiceImpl implements com.appslab.selfstorage.services.Cat
     public Category deleteCategory(Long id){
         Category category = categoryRepository.findById(id).get();
         if (category.getCreatorId().equals(userservice.getSpecifyUserId())) {
+            category.setFolders(null);
+            category.setFiles(null);
+            categoryRepository.save(category);
             categoryRepository.delete(category);
             return category;
         }
