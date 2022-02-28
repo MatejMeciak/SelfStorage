@@ -34,4 +34,3 @@ public interface FolderService {
 
     Folder editFolder(FolderBasicInfo folderBasicInfo);
 }
-

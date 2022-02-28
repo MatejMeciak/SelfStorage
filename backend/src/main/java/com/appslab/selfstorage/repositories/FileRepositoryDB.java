@@ -1,7 +1,8 @@
 package com.appslab.selfstorage.repositories;
 
-import com.appslab.selfstorage.models.File;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.appslab.selfstorage.models.CustomUser;
+import com.appslab.selfstorage.models.UploadedFile;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 

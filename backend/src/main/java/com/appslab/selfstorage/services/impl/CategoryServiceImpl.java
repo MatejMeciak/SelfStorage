@@ -9,6 +9,7 @@ import com.appslab.selfstorage.repositories.FolderRepository;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

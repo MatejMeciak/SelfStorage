@@ -68,7 +68,7 @@ public class FolderController {
     @DeleteMapping("/{id}")
     public Folder deleteFolder(@PathVariable Long id){
         return folderService.deleteFolder(id);
-    }//repair
+    }
 
     @DeleteMapping("/{id}/file")
     public File deleteFileFromFolder(@PathVariable Long id, @RequestParam Long fileId){
