@@ -19,7 +19,7 @@ public interface CategoryService {
 
     Category deleteCategory(Long id);
 
-    List<Category> deleteContentFromCategory(Long categoryId, Long id);
+    Object deleteContentFromCategory(Long categoryId, Long id);
 
     Category getCategory(Long id);
 }
