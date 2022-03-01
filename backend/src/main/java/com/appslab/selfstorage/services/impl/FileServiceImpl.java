@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Email;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,9 +46,6 @@ public class FileServiceImpl implements FileService {
         File file = fileRepositoryDB.findById(id).get();
         if (file.getOwnerId().equals(userService.getSpecifyUserId()))
         {
-            if (file.getUuid()!= null){
-                Files.delete(pathToSpecificFile(file));
-            }
             file.setFolderId(null);
             file.setCategories(null);
             file.setOwner(null);
@@ -55,6 +53,7 @@ public class FileServiceImpl implements FileService {
             file.setReports(null);
             fileRepositoryDB.save(file);
             fileRepositoryDB.deleteById(id);
+            Files.delete(pathToSpecificFile(file));
 
             FileBasicInfo file1 = new FileBasicInfo();
             file1.setName(file1.getName());
@@ -193,5 +192,15 @@ public class FileServiceImpl implements FileService {
     @Override
     public List<Category> categoriesFromFile(Long id) {
         return fileRepositoryDB.findById(id).get().getCategories();
+    }
+
+    @Override
+    public List<File> getMySharedFilesWithCurrentUser(String email) {
+        User friend = userRepository.findByEmail(email);
+        User signInUser = userRepository.findById(userService.getSpecifyUserId()).get();
+
+        return fileRepositoryDB.findByOwnerId(signInUser.getId())
+                .stream().filter(u -> u.getFriends().contains(friend))
+                .collect(Collectors.toList());
     }
 }

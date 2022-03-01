@@ -30,6 +30,8 @@ public interface FolderService {
 
     List<Folder> getSharedFoldersFromOtherUsers();
 
+    List<Folder> getMySharedFoldersWithCurrentUser(String email);
+
     List<Folder> getPublicFolders();
 
     Folder editFolder(FolderBasicInfo folderBasicInfo);

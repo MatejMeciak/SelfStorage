@@ -46,4 +46,6 @@ public interface FileService {
     List<File> getFiles();
 
     List<Category> categoriesFromFile(Long id);
+
+    List<File> getMySharedFilesWithCurrentUser(String email);
 }

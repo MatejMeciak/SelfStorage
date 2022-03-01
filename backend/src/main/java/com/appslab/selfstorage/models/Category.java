@@ -29,7 +29,7 @@ public class Category {
     private Long creatorId;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
-    @JsonManagedReference
+    @JsonBackReference
     private List<File> files;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")

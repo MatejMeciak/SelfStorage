@@ -89,4 +89,9 @@ public class FolderController {
     public List<Folder> foldersFromFriends(){
         return folderService.getSharedFoldersFromOtherUsers();
     }
+
+    @GetMapping("/shared/myFolders/friend")
+    public List<Folder> getMySharedFoldersWithCurrentUser(@RequestParam String email){
+        return folderService.getMySharedFoldersWithCurrentUser(email);
+    }
 }

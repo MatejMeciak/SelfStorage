@@ -53,7 +53,7 @@ public class File {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "file_category",joinColumns = @JoinColumn(name = "uploadedFile_id"),inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @JsonBackReference
+    @JsonManagedReference
     protected List<Category> categories;
 
     @ManyToMany(cascade = CascadeType.ALL)

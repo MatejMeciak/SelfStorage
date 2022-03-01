@@ -71,8 +71,6 @@ public class FolderServiceImpl implements FolderService {
         return null;
     }
 
-
-
     @Override
     public Folder addContentToFolder(Long id, Long fileId ) {
         Folder folder = folderRepository.findById(id).get();
@@ -133,6 +131,16 @@ public class FolderServiceImpl implements FolderService {
     public List<Folder> getSharedFoldersFromOtherUsers() {
         User user = userRepository.findById(userService.getSpecifyUserId()).get();
         return user.getSharedFolder();
+    }
+
+    @Override
+    public List<Folder> getMySharedFoldersWithCurrentUser(String email) {
+        User friend = userRepository.findByEmail(email);
+        User signInUser = userRepository.findById(userService.getSpecifyUserId()).get();
+
+        return folderRepository.findByOwnerId(signInUser.getId())
+                .stream().filter(u -> u.getFriends().contains(friend))
+                .collect(Collectors.toList());
     }
 
     @Override

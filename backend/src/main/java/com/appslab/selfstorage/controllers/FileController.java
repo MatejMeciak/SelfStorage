@@ -67,6 +67,11 @@ public class FileController {
         return fileService.getSharedFilesFromOtherUsers();
     }
 
+    @GetMapping("/shared/myFiles/friend")
+    public List<File> getMySharedFilesWithCurrentUser(@RequestParam String email){
+        return fileService.getMySharedFilesWithCurrentUser(email);
+    }
+
     @GetMapping("/categories")
     public List<Category> fileCategories(@RequestParam Long id){
         return fileService.categoriesFromFile(id);
