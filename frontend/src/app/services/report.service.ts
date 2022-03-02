@@ -22,10 +22,8 @@ export class ReportService {
   }
 
   // POST
-  createReport(file: FileModel, reason: string): Observable<Report> {
-    delete file['owner'];
-    delete file['friends'];
-    return this.http.post<Report>(`${this.reportUrl}/create?reason=${reason}`, file);
+  createReport(fileId: number, reason: string): Observable<Report> {
+    return this.http.post<Report>(`${this.reportUrl}/create?fileId=${fileId}&reason=${reason}`, {});
   }
 
   //DELETE

@@ -15,7 +15,7 @@ import { SidenavService } from "../../../services/sidenav.service";
 export class FilesComponent implements OnInit {
   @Input() content$: Observable<File[]>;
   files$: Observable<File[]>;
-  category: string | null;
+  category: number | null;
 
   constructor(private fileService: FileService,
               private categoryService: CategoryService,
@@ -25,10 +25,10 @@ export class FilesComponent implements OnInit {
 
   ngOnInit(): void {
     this.files$ = this.content$ ? this.content$ : this.route.queryParamMap.pipe(
-      map(queryMap => queryMap.get('category')),
+      map(queryMap => +queryMap.get('category')),
       tap(category => this.category = category),
       mergeMap(category => !!category
-        ? this.categoryService.getCategoryContent(category)
+        ? this.categoryService.getFilesInCategory(category)
         : this.fileService.getFiles()
       )
     );

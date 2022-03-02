@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { map, mergeMap, Observable, tap } from "rxjs";
 import { Folder } from "../../../models/folder";
 import { FolderService } from "../../../services/folder.service";
@@ -11,9 +11,10 @@ import { CategoryService } from "../../../services/category.service";
   styleUrls: ['./folders.component.scss']
 })
 export class FoldersComponent implements OnInit {
+  @Input() content$: Observable<Folder[]>
   folders$:  Observable<Folder[]>;
   image = './assets/images/folder_icon.png';
-  category: string;
+  category: number | null;
 
   constructor(private folderService: FolderService,
               private route: ActivatedRoute,
@@ -21,11 +22,11 @@ export class FoldersComponent implements OnInit {
               private categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.folders$ = this.route.queryParamMap.pipe(
-      map(queryMap => queryMap.get('category')),
+    this.folders$ = this.content$ ? this.content$ : this.route.queryParamMap.pipe(
+      map(queryMap => +queryMap.get('category')),
       tap(category => this.category = category),
       mergeMap(category => !!category
-        ? this.categoryService.getCategoryContent(category)
+        ? this.categoryService.getFoldersInCategory(category)
         : this.folderService.getFolders()
       )
     );

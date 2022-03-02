@@ -70,7 +70,7 @@ export class ContentHeaderComponent implements OnInit, OnDestroy {
   createFolder(): void {
     this.dialogService.createFolderOrCategoryDialog({ name: '' } as Folder, 'folder').subscribe(result => {
       if (result) {
-        this.folderService.createFolder(result).subscribe(() => location.reload());
+        this.folderService.createFolder(result.name).subscribe(() => location.reload());
       }
     });
   }
@@ -91,7 +91,7 @@ export class ContentHeaderComponent implements OnInit, OnDestroy {
   createCategory(): void {
     this.dialogService.createFolderOrCategoryDialog({ name: '' } as Category, 'category').subscribe(result => {
       if (result) {
-        this.categoryService.createCategory(result).subscribe(() => location.reload());
+        this.categoryService.createCategory(result.name).subscribe(() => location.reload());
       }
     });
   }
@@ -99,6 +99,21 @@ export class ContentHeaderComponent implements OnInit, OnDestroy {
     this.dialogService.selectContentDialog({},'category').subscribe((result) => {
       if (result) {
         this.categoryService.addContentToCategory(result.id, this.folder.id).subscribe();
+      }
+    });
+  }
+  shareWithUser(): void {
+    this.dialogService.inputDialog('Enter User Email').subscribe((result) => {
+      if (result) {
+        this.folderService.shareFolderWithFriends(this.folder.id, result).subscribe()
+      }
+    });
+  }
+  publishFile(state: boolean): void {
+    this.dialogService.confirmDialog(this.folder, 'Publish').subscribe((result) => {
+      if (result) {
+        this.folderService.editFolder({ ...this.folder, access: state }
+        ).subscribe(() => location.reload())
       }
     });
   }

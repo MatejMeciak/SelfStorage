@@ -3,7 +3,7 @@ export interface File {
   name: string;
   fileSize: number;
   folderId: number;
-  categories: number[];
+  categories: any[];
   mimeType: string;
   date: number;
   ownerId: number;

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 import { File as FileModel } from '../models/file';
+import { Category } from "../models/category";
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +52,16 @@ export class FileService {
     return this.http.get<FileModel[]>(`${this.fileUrl}/public/search?keyword=${keyword}`);
   }
   getSharedFiles(): Observable<FileModel[]> {
-    return this.http.get<FileModel[]>(`${this.fileUrl}/share/myFiles`);
+    return this.http.get<FileModel[]>(`${this.fileUrl}/shared/myFiles`);
+  }
+  getSharedFilesWith(email: string): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.fileUrl}/shared/myFiles`);
+  }
+  getFilesFromFriends(): Observable<FileModel[]> {
+    return this.http.get<FileModel[]>(`${this.fileUrl}/shared/fromFriends`);
+  }
+  fileCategories(fileId: number): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.fileUrl}/categories?id=${fileId}`);
   }
 
   // POST

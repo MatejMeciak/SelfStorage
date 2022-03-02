@@ -33,7 +33,7 @@
           <div class="item-flex">
             <span>Provider</span>
             <mat-icon>more_vert</mat-icon>
-            <span>local</span> <!--TODO-->
+            <span>{{ user.provider }}</span> <!--TODO-->
           </div>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -41,8 +41,8 @@
           <div class="item-flex" *ngIf="storage">
             <span>Used Space</span>
             <mat-icon>more_vert</mat-icon>
-            <span *ngIf="storage[0] >= 100000000">{{ storage[0]/1000000000 | number: '1.0-2' }} GB</span>
-            <span *ngIf="storage[0] < 100000000">{{ storage[0]/1000000000 | number: '1.0-4' }} GB</span>
+            <span *ngIf="storage.usedSpace >= 100000000">{{ storage.usedSpace/1000000000 | number: '1.0-2' }} GB</span>
+            <span *ngIf="storage.usedSpace < 100000000">{{ storage.usedSpace/1000000000 | number: '1.0-4' }} GB</span>
           </div>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -50,7 +50,7 @@
           <div class="item-flex" *ngIf="storage">
             <span>Storage Space</span>
             <mat-icon>more_vert</mat-icon>
-            <span>{{ storage[1]/1000000000 }} GB</span>
+            <span>{{ storage.sizeSpace/1000000000 }} GB</span>
           </div>
         </mat-list-item>
       </mat-list>
@@ -67,7 +67,17 @@
               Edit profile
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <p>I'm visible because I am open</p>
+          <form [formGroup]="usernameFormGroup" (ngSubmit)="changeUsername()">
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="New Username" formControlName="username" required>
+              <mat-error *ngIf="loginFormGroup.hasError('required')">
+                Error
+              </mat-error>
+            </mat-form-field>
+            <mat-action-row>
+              <button mat-button type="submit" color="accent" [disabled]="!usernameFormGroup.valid">Change</button>
+            </mat-action-row>
+          </form>
         </mat-expansion-panel>
 
         <mat-expansion-panel>

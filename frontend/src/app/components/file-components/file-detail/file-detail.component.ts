@@ -88,7 +88,7 @@ export class FileDetailComponent implements OnInit, OnDestroy {
         this.fileService.deleteFile(this.file.id).pipe(
           takeUntil(this.unsubscribe$)
         ).subscribe(() => {
-          this.router.navigate(['storage']);
+          location.reload();
         });
       }
     });
@@ -121,7 +121,7 @@ export class FileDetailComponent implements OnInit, OnDestroy {
   addCategory(): void {
     this.dialogService.selectContentDialog({}, 'category').subscribe((result) => {
       if (result) {
-        this.categoryService.addContentToCategory(result.id, this.file.id).subscribe();
+        this.categoryService.addContentToCategory(result.id, this.file.id).subscribe(() => location.reload());
       }
     });
   }
@@ -129,13 +129,13 @@ export class FileDetailComponent implements OnInit, OnDestroy {
     this.dialogService.selectContentDialog(this.file,'remove',).pipe(
       takeUntil(this.unsubscribe$),
       filter(result => !!result),
-      mergeMap(result => this.categoryService.deleteContentFromCategory(result)),
+      mergeMap(result => this.categoryService.deleteContentFromCategory(result.id, this.file.id)),
     ).subscribe();
   }
   reportFile(): void {
     this.dialogService.inputDialog('Enter Report Reason').subscribe((result) => {
       if (result) {
-        this.reportService.createReport(this.file, result).subscribe();
+        this.reportService.createReport(this.file.id, result).subscribe();
       }
     });
   }

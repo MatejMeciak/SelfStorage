@@ -46,6 +46,9 @@ export class AuthService {
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
     return this.http.put(this.userUrl + '/changePassword' , { oldPassword: oldPassword, newPassword: newPassword })
   }
+  changeUsername(username: string): Observable<User> {
+    return this.http.put<User>(this.userUrl + '/changeUsername' +`?username=${username}`, {});
+  }
   getUserFriends(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl + '/friends');
   }
@@ -53,10 +56,10 @@ export class AuthService {
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.userUrl + '/listUsers');
   }
-  getUserSpace(): Observable<any[]> {
-    return this.http.get<any[]>(this.userUrl + '/storageSpace');
+  getUserSpace(): Observable<any> {
+    return this.http.get<any>(this.userUrl + '/storageSpace');
   }
   setUserSpace(spaceSize: number, userId: number): Observable<User[]> {
-    return this.http.post<User[]>(this.userUrl + '/setSpace' +`?sizeSpace=${spaceSize}&userId=${userId}`, {});
+    return this.http.post<User[]>(`${this.userUrl}/${userId}` + '/setSpace' +`?sizeSpace=${spaceSize}`, {});
   }
 }
