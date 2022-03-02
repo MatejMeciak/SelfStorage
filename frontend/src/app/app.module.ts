@@ -44,6 +44,7 @@ import { FilesPlusDetailComponent } from './components/file-components/files-plu
 import { OnlyFilesComponent } from './components/file-components/only-files/only-files.component';
 import { OnlyFoldersComponent } from './components/file-components/only-folders/only-folders.component';
 import { SharedPageComponent } from './components/shared-page/shared-page.component';
+import { CategoriesComponent } from "./components/categories/categories.component";
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { SharedPageComponent } from './components/shared-page/shared-page.compon
     OnlyFilesComponent,
     OnlyFoldersComponent,
     SharedPageComponent,
+    CategoriesComponent
   ],
   imports: [
     MaterialModule,

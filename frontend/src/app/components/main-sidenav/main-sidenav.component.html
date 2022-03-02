@@ -44,7 +44,7 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="flex">
-                <div *ngFor="let subList of this.categories$|async" [routerLink]="['categories']" [queryParams]="{category: subList.name}" routerLinkActive="active" class="column highlight">
+                <div *ngFor="let subList of this.categories$|async" [routerLink]="['categories']" [queryParams]="{category: subList.id}" routerLinkActive="active" class="column highlight">
                   <mat-icon *ngIf="subList.name === 'Favourite'; else elseBlock">favorite</mat-icon>
                   <ng-template #elseBlock>
                     <mat-icon>star</mat-icon>
@@ -64,11 +64,11 @@
       <div class="spacer"></div>
       <div class="storage-size" *ngIf="storage">
         <p>Used Storage</p>
-        <mat-progress-bar color="accent" [value]="storage[0]*100/storage[1]"></mat-progress-bar>
+        <mat-progress-bar color="accent" [value]="storage.usedSpace*100/storage.sizeSpace"></mat-progress-bar>
         <div class="storage-values">
-          <span *ngIf="storage[0] >= 100000000">{{ storage[0]/1000000000 | number: '1.0-2' }}</span>
-          <span *ngIf="storage[0] < 100000000">{{ storage[0]/1000000000 | number: '1.0-4' }}</span>
-          <span>{{ storage[1]/1000000000 }} GB</span>
+          <span *ngIf="storage.usedSpace >= 100000000">{{ storage.usedSpace/1000000000 | number: '1.0-2' }}</span>
+          <span *ngIf="storage.usedSpace < 100000000">{{ storage.usedSpace/1000000000 | number: '1.0-4' }}</span>
+          <span>{{ storage.sizeSpace/1000000000 }} GB</span>
         </div>
       </div>
     </div>

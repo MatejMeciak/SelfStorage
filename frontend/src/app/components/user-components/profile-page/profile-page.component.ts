@@ -23,7 +23,10 @@ export class ProfilePageComponent implements OnInit {
   loginFormGroup = new FormGroup({
     oldPassword: new FormControl('', Validators.required)
   });
-  storage: any[];
+  usernameFormGroup = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.maxLength(25)])
+  });
+  storage: any;
   errorMessage: string;
   matcher = new CustomErrorStateMatcher();
 
@@ -41,7 +44,7 @@ export class ProfilePageComponent implements OnInit {
         this.friends = new MatTableDataSource<any>(friendList);
       });
       this.friends.paginator = this.paginator;
-      this.authService.getUserSpace().subscribe(list => this.storage = list);
+      this.authService.getUserSpace().subscribe(storage => this.storage = storage);
     });
   }
   checkPasswords(group: FormGroup) {
@@ -69,4 +72,12 @@ export class ProfilePageComponent implements OnInit {
       );
     }
   }
+  changeUsername(): void {
+    if (this.usernameFormGroup.valid) {
+      this.authService.changeUsername(this.usernameFormGroup.value.username).subscribe(() => {
+        location.reload();
+      });
+    }
+  }
 }
+

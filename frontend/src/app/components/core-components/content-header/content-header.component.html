@@ -36,6 +36,20 @@
           <mat-icon>add_circle</mat-icon>
           <span>Add Folder to Category</span>
         </button>
+        <button mat-menu-item [matMenuTriggerFor]="shareOptions">
+          <mat-icon>share</mat-icon>
+          <span>Share</span>
+        </button>
+        <mat-menu #shareOptions="matMenu">
+          <button mat-menu-item (click)="shareWithUser()">
+            <mat-icon>folder_shared</mat-icon>
+            Share with user
+          </button>
+          <button mat-menu-item (click)="publishFile(true)">
+            <mat-icon>public</mat-icon>
+            Make content public
+          </button>
+        </mat-menu>
         <button mat-menu-item (click)="editFolder()">
           <mat-icon>edit</mat-icon>
           <span>Edit Folder Name</span>

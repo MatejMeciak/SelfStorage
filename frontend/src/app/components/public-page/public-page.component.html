@@ -98,7 +98,7 @@
       <div class="content-container">
         <div class="file-grid">
           <app-content-card *ngFor="let file of files$ | async" (clickEvent)="openFileDetail($event)"
-                            [content]="file" [image]="getImage(file) | async" [category]="''">
+                            [content]="file" [image]="getImage(file) | async" [category]="null">
           </app-content-card>
         </div>
       </div>

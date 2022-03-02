@@ -1,1 +1,6 @@
-<p>shared-page works!</p>
+<app-files-plus-detail [content$]="files$">
+  <h1>Shared</h1>
+  <div class="spacer"></div>
+  <app-folders [content$]="folders$"></app-folders>
+  <div class="spacer"></div>
+</app-files-plus-detail>

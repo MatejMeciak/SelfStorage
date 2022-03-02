@@ -11,6 +11,8 @@ import { ProfilePageComponent } from './components/user-components/profile-page/
 import { OnlyFilesComponent } from "./components/file-components/only-files/only-files.component";
 import { OnlyFoldersComponent } from "./components/file-components/only-folders/only-folders.component";
 import { SharedPageComponent } from "./components/shared-page/shared-page.component";
+import { CategoriesComponent } from "./components/categories/categories.component";
+import { LoginGuard } from "./auth/guard/login.guard";
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -18,10 +20,10 @@ const routes: Routes = [
   { path: 'allFiles', component: OnlyFilesComponent, canActivate: [AuthGuardService] },
   { path: 'folders', component: OnlyFoldersComponent, canActivate: [AuthGuardService] },
   { path: 'folder/:id', component: FolderComponent, canActivate: [AuthGuardService] },
-  { path: 'categories', component: ContentPageComponent, canActivate: [AuthGuardService] },
+  { path: 'categories', component: CategoriesComponent, canActivate: [AuthGuardService] },
   { path: 'public', component: PublicPageComponent },
   { path: 'shared', component: SharedPageComponent, canActivate: [AuthGuardService] },
-  { path: 'login', component: LoginFormComponent },
+  { path: 'login', component: LoginFormComponent, canActivate: [LoginGuard] },
   { path: 'registration', component: RegistrationFormComponent },
   { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuardService] },
 ];

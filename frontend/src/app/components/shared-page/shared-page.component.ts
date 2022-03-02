@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { map, mergeMap, Observable, tap } from "rxjs";
+import { File } from "../../models/file";
+import { FileService } from "../../services/file.service";
+import { FolderService } from "../../services/folder.service";
+import { Folder } from "../../models/folder";
 
 @Component({
   selector: 'app-shared-page',
@@ -7,9 +12,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SharedPageComponent implements OnInit {
 
-  constructor() { }
+  files$: Observable<File[]>;
+  folders$: Observable<Folder[]>;
+  constructor(private fileService: FileService,
+              private folderService: FolderService) { }
 
   ngOnInit(): void {
+    this.files$ = this.fileService.getSharedFiles();
+    this.folders$ = this.folderService.getSharedFolders();
   }
 
 }

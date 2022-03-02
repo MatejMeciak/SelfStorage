@@ -31,9 +31,9 @@ export class AdminComponent implements OnInit {
     });
   }
   dismissReport(id: number): void {
-    this.reportService.dismissReport(id).subscribe();
+    this.reportService.dismissReport(id).subscribe(()=>location.reload());
   }
   submitReport(id: number): void {
-    this.reportService.submitReport(id).subscribe();
+    this.reportService.submitReport(id).subscribe(()=>location.reload());
   }
 }

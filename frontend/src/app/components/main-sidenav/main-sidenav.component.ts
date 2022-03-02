@@ -23,7 +23,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   showAdminBoard = false;
   homeUlr = '/';
-  storage: any[];
+  storage: any;
 
   unsubscribe$ = new Subject();
 
@@ -33,7 +33,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
     { title: 'All files', link: 'allFiles', matIcon: 'file_copy' },
     { title: 'Folders', link: 'folders', matIcon: 'folder' },
     { title: 'Category', link: '', matIcon: 'category', sub: [] },
-    { title: 'Shared with', link: 'search', matIcon: 'folder_shared' },
+    { title: 'Shared with', link: 'shared', matIcon: 'folder_shared' },
   ];
 
   constructor(private fileService: FileService,
@@ -56,7 +56,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
         this.homeUlr = 'storage';
         this.showAdminBoard = user.roles.includes('ROLE_ADMIN');
         if (!this.showAdminBoard) {
-          this.authService.getUserSpace().subscribe(list => this.storage = list);
+          this.authService.getUserSpace().subscribe(storage => this.storage = storage);
         }
       });
     }
@@ -77,7 +77,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
   createFolder(): void {
     this.dialogService.createFolderOrCategoryDialog({ name: '' } as Folder, 'folder').subscribe(result => {
       if (result) {
-        this.folderService.createFolder(result).subscribe(() => location.reload());
+        this.folderService.createFolder(result.name).subscribe(() => location.reload());
       }
     });
   }

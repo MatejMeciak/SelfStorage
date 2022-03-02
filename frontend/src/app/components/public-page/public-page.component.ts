@@ -142,13 +142,13 @@ export class PublicPageComponent implements OnInit, AfterViewInit {
   removeCategory(): void {
     this.dialogService.selectContentDialog(this.file,'remove',).pipe(
       filter(result => !!result),
-      mergeMap(result => this.categoryService.deleteContentFromCategory(result)),
+      mergeMap(result => this.categoryService.deleteContentFromCategory(this.file.id, result.id)),
     ).subscribe();
   }
   reportFile(): void {
     this.dialogService.inputDialog('Enter Report Reason').subscribe((result) => {
       if (result) {
-        this.reportService.createReport(this.file, result).subscribe();
+        this.reportService.createReport(this.file.id, result).subscribe();
       }
     });
   }

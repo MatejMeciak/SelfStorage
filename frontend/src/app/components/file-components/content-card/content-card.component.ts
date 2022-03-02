@@ -10,7 +10,7 @@ import { File } from "../../../models/file";
 export class ContentCardComponent implements OnInit {
   @Input() content: File | Folder;
   @Input() image: string;
-  @Input() category: string;
+  @Input() category: number;
   @Output() clickEvent = new EventEmitter<File | Folder>()
 
   constructor() { }

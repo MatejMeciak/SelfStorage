@@ -1,19 +1,14 @@
-.container {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-  height: 100%;
-}
 h1 {
-  width: 40%;
+  width: 70%;
   min-width: 6ch;
-  font-size: 42px;
-  font-weight: 400;
+  font-size: 156px;
+  font-weight: 500;
   line-height: 120%;
 }
 .bc-image {
-  width: 100%;
-  background-image: url("../../../assets/images/landing-page-image.jpg");
+  height: 100%;
+  background-image: url("../../../assets/images/Cloud_Computing.png");
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center bottom;
 }
