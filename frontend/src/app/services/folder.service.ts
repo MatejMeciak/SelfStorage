@@ -49,8 +49,8 @@ export class FolderService {
   getSharedFolders(): Observable<Folder[]> {
     return this.http.get<Folder[]>(`${this.folderUrl}/shared/myFolders`, {});
   }
-  getFoldersFromFriends(): Observable<Folder[]> {
-    return this.http.get<Folder[]>(`${this.folderUrl}/shared/fromFriends`, {});
+  getFoldersFromFriends(email: string): Observable<Folder[]> {
+    return this.http.get<Folder[]>(`${this.folderUrl}/shared/myFolders/friend?email=${email}`, {});
   }
 
   //DELETE

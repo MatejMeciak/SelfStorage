@@ -141,7 +141,9 @@
 
         <ng-container matColumnDef="action">
           <th mat-header-cell class="center" *matHeaderCellDef>Action</th>
-          <td mat-cell class="center" *matCellDef="let element"><button mat-stroked-button>Sharing files</button></td>
+          <td mat-cell class="center" *matCellDef="let element">
+            <button mat-stroked-button [routerLink]="['/shared']" [queryParams]="{email: element.email}">Sharing files</button>
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

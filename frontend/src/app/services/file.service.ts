@@ -55,7 +55,7 @@ export class FileService {
     return this.http.get<FileModel[]>(`${this.fileUrl}/shared/myFiles`);
   }
   getSharedFilesWith(email: string): Observable<FileModel[]> {
-    return this.http.get<FileModel[]>(`${this.fileUrl}/shared/myFiles`);
+    return this.http.get<FileModel[]>(`${this.fileUrl}/shared/myFiles/friend?email=${email}`);
   }
   getFilesFromFriends(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/shared/fromFriends`);
