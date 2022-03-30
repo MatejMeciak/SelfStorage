@@ -83,6 +83,10 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Report> reports;
 
+    @OneToOne
+    @JsonManagedReference
+    private File profilePicture;
+
     public User() {
     }
 

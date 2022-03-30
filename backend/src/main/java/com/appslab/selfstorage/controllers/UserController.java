@@ -44,18 +44,6 @@ public class UserController {
         return storageSpace; //return object
     }
 
-    @GetMapping("/listUsers")
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
-    }
-
-    @PostMapping("/{id}/setSpace")
-    @PreAuthorize("hasRole('ADMIN')")
-    public Long settingSpace(@RequestParam Long sizeSpace, @PathVariable Long id){ //rewrite requestparam id to pathvariable
-        return userService.settingSizeOfSpace(sizeSpace, id);
-    }
-
     @PutMapping("/changePassword")
     public String changePassword(@RequestBody RequestPasswords requestPasswords){
         String oldPassword = requestPasswords.getOldPassword();
@@ -67,5 +55,19 @@ public class UserController {
     @PutMapping("/changeUsername")
     public User changeUsername(@RequestParam String username){
         return userService.changeUsername(username);
+    }
+
+
+    //ADMIN
+    @GetMapping("/listUsers")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
+    @PostMapping("/{id}/setSpace")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Long settingSpace(@RequestParam Long sizeSpace, @PathVariable Long id){ //rewrite requestparam id to pathvariable
+        return userService.settingSizeOfSpace(sizeSpace, id);
     }
 }

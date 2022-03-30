@@ -66,6 +66,10 @@ public class File {
     @JsonManagedReference
     private List<Report> reports;
 
+    @OneToOne
+    @JsonBackReference
+    private User ownerProfilePicture;
+
     public File(){
     }
 

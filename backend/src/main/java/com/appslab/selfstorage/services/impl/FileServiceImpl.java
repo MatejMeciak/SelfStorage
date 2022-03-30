@@ -41,6 +41,26 @@ public class FileServiceImpl implements FileService {
         this.userRepository = userRepository;
     }
 
+    public Path pathToSpecificFile(File file) {
+        return docStorageLocation.resolve(file.getUuid().toString());
+    }
+
+    @Override
+    public File uploadedFile(MultipartFile multipartFile, Boolean access) {
+        File file = new File();
+        file.setName(multipartFile.getOriginalFilename());
+        file.setFileSize(multipartFile.getSize());
+        file.setMimeType(multipartFile.getContentType());
+        file.setDate();
+        file.setOwnerId(userService.getSpecifyUserId());
+        file.setUuid();
+        if (access!=null){
+            file.setAccess(access);
+        }
+        return file;
+    }
+
+
     @Override
     public FileBasicInfo deleteFile(Long id) throws Exception{
         File file = fileRepositoryDB.findById(id).get();
@@ -71,21 +91,6 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public File uploadedFile(MultipartFile multipartFile, Boolean access) {
-            File file = new File();
-            file.setName(multipartFile.getOriginalFilename());
-            file.setFileSize(multipartFile.getSize());
-            file.setMimeType(multipartFile.getContentType());
-            file.setDate();
-            file.setOwnerId(userService.getSpecifyUserId());
-            file.setUuid();
-            if (access!=null){
-                file.setAccess(access);
-            }
-            return file;
-    }
-
-    @Override
     public void saveUploadedFileToDB(File file){
         fileRepositoryDB.save(file);
     }
@@ -93,11 +98,6 @@ public class FileServiceImpl implements FileService {
     @Override
     public Optional<File> findFileById(Long fileID) {
         return fileRepositoryDB.findById(fileID);
-    }
-
-    @Override
-    public Path pathToSpecificFile(File file) {
-        return docStorageLocation.resolve(file.getUuid().toString());
     }
 
     @Override
@@ -202,5 +202,38 @@ public class FileServiceImpl implements FileService {
         return fileRepositoryDB.findByOwnerId(signInUser.getId())
                 .stream().filter(u -> u.getFriends().contains(friend))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public User updateProfilePicture(MultipartFile multipartFile) throws Exception {
+        File file = uploadedFile(multipartFile,false);
+        User user = userService.getUser();
+        user.setProfilePicture(file);
+        file.setOwnerProfilePicture(user);
+
+//        if(userService.getUser().getProfilePicture()!=null){
+//            Files.delete(docStorageLocation.resolve(userService.getUser().getProfilePicture().getUuid().toString()));}
+
+        saveFileToStorage(file,multipartFile);
+        fileRepositoryDB.save(file);
+        userRepository.save(user);
+        return userService.getUser();
+    }
+
+    @Override
+    public ResponseEntity<InputStreamResource> getProfilePicture() throws Exception {
+        File file = userService.getUser().getProfilePicture();
+        FileSystemResource view = new FileSystemResource(docStorageLocation.resolve(file.getUuid().toString()));
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(file.getMimeType())).body(new InputStreamResource(view.getInputStream()));
+    }
+
+    @Override
+    public User deleteProfilePicture() throws Exception{
+        Files.delete(docStorageLocation.resolve(userService.getUser().getProfilePicture().getUuid().toString()));
+        User currentUser = userService.getUser();
+        currentUser.setProfilePicture(null);
+
+        userRepository.save(currentUser);
+        return currentUser;
     }
 }
