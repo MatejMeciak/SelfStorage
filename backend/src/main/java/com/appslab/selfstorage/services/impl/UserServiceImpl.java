@@ -5,14 +5,8 @@ import com.appslab.selfstorage.dto.SignUpRequest;
 import com.appslab.selfstorage.dto.SocialProvider;
 import com.appslab.selfstorage.exception.OAuth2AuthenticationProcessingException;
 import com.appslab.selfstorage.exception.UserAlreadyExistAuthenticationException;
-import com.appslab.selfstorage.models.Category;
-import com.appslab.selfstorage.models.User;
-import com.appslab.selfstorage.models.Role;
-import com.appslab.selfstorage.models.File;
-import com.appslab.selfstorage.repositories.CategoryRepository;
-import com.appslab.selfstorage.repositories.FileRepositoryDB;
-import com.appslab.selfstorage.repositories.RoleRepository;
-import com.appslab.selfstorage.repositories.UserRepository;
+import com.appslab.selfstorage.models.*;
+import com.appslab.selfstorage.repositories.*;
 import com.appslab.selfstorage.security.oauth2.user.OAuth2UserInfo;
 import com.appslab.selfstorage.security.oauth2.user.OAuth2UserInfoFactory;
 import com.appslab.selfstorage.services.UserService;
@@ -37,7 +31,6 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     private FileRepositoryDB fileRepositoryDB;
     private CategoryRepository categoryRepository;
-
 
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, FileRepositoryDB fileRepositoryDB, CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
@@ -142,7 +135,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long settingSizeOfSpace(Long sizeSpace, Long userId) {
         User user = userRepository.findById(userId).get();
-        if(sizeSpace!=null){
+        if(sizeSpace!=null&&usedSpaceOfStorage()<sizeSpace){
             user.setSpaceSize(sizeSpace);
             userRepository.save(user);
         }

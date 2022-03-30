@@ -29,7 +29,7 @@ public class Folder {
     @JsonManagedReference
     protected List<File> fileList;
 
-    protected Boolean access;
+    protected Boolean access=false;
 
     @ManyToMany
     @JsonBackReference

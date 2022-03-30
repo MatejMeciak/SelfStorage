@@ -77,6 +77,16 @@ public class FileController {
         return fileService.categoriesFromFile(id);
     }
 
+    @GetMapping("/profilePicture/show")
+    public Object getProfilePicture() throws Exception{
+        return fileService.getProfilePicture();
+    }
+
+    @PutMapping("/profilePicture/update")
+    public User updateProfilePicture(@RequestBody MultipartFile multipartFile) throws Exception{
+        return fileService.updateProfilePicture(multipartFile);
+    }
+
     @PutMapping("/edit")
     public File saveEditFile(@RequestBody FileBasicInfo fileBasicInfo){ // in requestBody file or dto
         return fileService.saveEditFile(fileBasicInfo);
@@ -102,5 +112,10 @@ public class FileController {
     @DeleteMapping("/{id}")
     public FileBasicInfo deleteFile(@PathVariable Long id) throws Exception{
         return fileService.deleteFile(id);
+    }
+
+    @DeleteMapping("/profilePicture/delete")
+    public User deletePicture() throws Exception{
+        return fileService.deleteProfilePicture();
     }
 }
