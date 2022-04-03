@@ -5,6 +5,8 @@ import com.appslab.selfstorage.models.User;
 import com.appslab.selfstorage.models.Role;
 import com.appslab.selfstorage.repositories.RoleRepository;
 import com.appslab.selfstorage.repositories.UserRepository;
+import com.appslab.selfstorage.services.UserService;
+import lombok.SneakyThrows;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -20,16 +22,18 @@ public class SetupDataLoader implements CommandLineRunner {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private UserService userService;
 
-    public SetupDataLoader(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public SetupDataLoader(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, UserService userService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @Transactional
     @Override
-    public void run(String... args){
+    public void run(String... args) {
         Role userRole = createRoleIfNotFound(Role.ROLE_USER);
         Role adminRole = createRoleIfNotFound(Role.ROLE_ADMIN);
         createUserIfNotFound("admin@admin.com", Set.of(userRole, adminRole));

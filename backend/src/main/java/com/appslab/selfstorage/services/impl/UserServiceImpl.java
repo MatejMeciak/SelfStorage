@@ -7,6 +7,7 @@ import com.appslab.selfstorage.dto.SocialProvider;
 import com.appslab.selfstorage.exception.OAuth2AuthenticationProcessingException;
 import com.appslab.selfstorage.exception.UserAlreadyExistAuthenticationException;
 import com.appslab.selfstorage.models.*;
+import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.repositories.*;
 import com.appslab.selfstorage.security.oauth2.user.OAuth2UserInfo;
 import com.appslab.selfstorage.security.oauth2.user.OAuth2UserInfoFactory;
@@ -23,10 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -210,13 +208,13 @@ public class UserServiceImpl implements UserService {
         return user.getId();
     }
 
-    public File setDefaultProfilePicture(User user) throws Exception{
+    @Override
+    public File setDefaultProfilePicture(User user) throws IOException {
         java.io.File defaultPicture = new java.io.File("frontend/src/assets/images/default_profile_picture.png");
         File picture = new File();
         picture.setName("default_profile_picture.png");
         picture.setMimeType("image/png");
         picture.setDate();
-        picture.setOwnerId(user.getId());
         picture.setUuid();
 
         java.io.File file = docStorageLocation.resolve(picture.getUuid().toString()).toFile();

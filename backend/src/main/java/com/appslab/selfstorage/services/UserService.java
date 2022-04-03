@@ -3,6 +3,7 @@ package com.appslab.selfstorage.services;
 import com.appslab.selfstorage.dto.LocalUser;
 import com.appslab.selfstorage.dto.SignUpRequest;
 import com.appslab.selfstorage.exception.UserAlreadyExistAuthenticationException;
+import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.models.User;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
@@ -36,4 +37,6 @@ public interface UserService {
     List<User> getFriends();
 
     User changeUsername(String username);
+
+    File setDefaultProfilePicture(User user) throws Exception;
 }

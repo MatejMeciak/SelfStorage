@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -86,7 +87,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<File> getListOfMyFiles() {
-        return fileRepositoryDB.findByOwnerId(userService.getSpecifyUserId());
+        return fileRepositoryDB.findByOwnerId(userService.getSpecifyUserId()).stream().filter(y -> y.getOwnerProfilePicture()==null).collect(Collectors.toList());
     }
 
     @Override
@@ -204,15 +205,30 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public List<File> getSharedFilesFromSpecificFriend(String email) {
+        User user = userRepository.findByEmail(email);
+        Long currentUserId = userService.getUser().getId();
+
+        return user.getSharedFiles().stream()
+                .filter(y ->
+                        y.getFriends().stream()
+                                .map(User::getId)
+                                .anyMatch(id -> Objects.equals(currentUserId, id))
+                )
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public User updateProfilePicture(MultipartFile multipartFile) throws Exception {
         File file = uploadedFile(multipartFile,false);
+        file.setOwnerId(null);
         User user = userService.getUser();
+        fileRepositoryDB.deleteById(user.getProfilePicture().getId());
+
+        Files.delete(docStorageLocation.resolve(userService.getUser().getProfilePicture().getUuid().toString()));
+
         user.setProfilePicture(file);
         file.setOwnerProfilePicture(user);
-
-//        if(userService.getUser().getProfilePicture()!=null){
-//            Files.delete(docStorageLocation.resolve(userService.getUser().getProfilePicture().getUuid().toString()));}
-
         saveFileToStorage(file,multipartFile);
         fileRepositoryDB.save(file);
         userRepository.save(user);
@@ -229,10 +245,9 @@ public class FileServiceImpl implements FileService {
     @Override
     public User deleteProfilePicture() throws Exception{
         Files.delete(docStorageLocation.resolve(userService.getUser().getProfilePicture().getUuid().toString()));
+        fileRepositoryDB.delete(userService.getUser().getProfilePicture());
         User currentUser = userService.getUser();
-        currentUser.setProfilePicture(null);
-
-        userRepository.save(currentUser);
+        userService.setDefaultProfilePicture(currentUser);
         return currentUser;
     }
 }
