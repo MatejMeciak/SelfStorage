@@ -6,6 +6,7 @@ import com.appslab.selfstorage.models.User;
 import com.appslab.selfstorage.services.FileService;
 import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.services.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
@@ -62,14 +63,19 @@ public class FileController {
         return fileService.getMySharedFiles();
     }
 
+    @GetMapping("/shared/myFiles/friend")
+    public List<File> getMySharedFilesWithCurrentUser(@RequestParam String email){
+        return fileService.getMySharedFilesWithCurrentUser(email);
+    }
+
     @GetMapping("/shared/fromFriends")
     public List<File> getFilesFromFriends(){
         return fileService.getSharedFilesFromOtherUsers();
     }
 
-    @GetMapping("/shared/myFiles/friend")
-    public List<File> getMySharedFilesWithCurrentUser(@RequestParam String email){
-        return fileService.getMySharedFilesWithCurrentUser(email);
+    @GetMapping("shared/fromFriends/friend")
+    public List<File> getSharedFilesFromSpecificFriend(@RequestParam String email){
+        return fileService.getSharedFilesFromSpecificFriend(email);
     }
 
     @GetMapping("/categories")
@@ -117,5 +123,14 @@ public class FileController {
     @DeleteMapping("/profilePicture/delete")
     public User deletePicture() throws Exception{
         return fileService.deleteProfilePicture();
+    }
+
+    //ADMIN
+    @GetMapping("/setProfilePicture")
+    @PreAuthorize("hasRole('ADMIN')")
+    public User setDefaultPictureForAdmin() throws Exception {
+        User admin = userService.getUser();
+        userService.setDefaultProfilePicture(admin);
+        return admin;
     }
 }

@@ -47,6 +47,8 @@ public interface FileService {
 
     List<File> getMySharedFilesWithCurrentUser(String email);
 
+    List<File> getSharedFilesFromSpecificFriend(String email);
+
     User updateProfilePicture(MultipartFile multipartFile) throws Exception;
 
     ResponseEntity<InputStreamResource> getProfilePicture() throws Exception;
