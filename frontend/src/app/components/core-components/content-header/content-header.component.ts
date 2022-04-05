@@ -1,4 +1,13 @@
-import { AfterContentInit, AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import { map, mergeMap, of, Subject, takeUntil, tap } from "rxjs";
 import { FileService } from "../../../services/file.service";
 import { DialogService } from "../../../services/dialog.service";
@@ -17,6 +26,7 @@ export class ContentHeaderComponent implements OnInit, OnDestroy {
   @Input() title: string;
   @Input() actions: boolean = true;
   @Input() component: string;
+  @Output() searchOptions = new EventEmitter<any>();
 
   id: number | null;
   unsubscribe$ = new Subject();

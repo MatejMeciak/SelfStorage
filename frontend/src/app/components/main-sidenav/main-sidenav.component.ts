@@ -12,6 +12,7 @@ import { Router } from "@angular/router";
 import { DialogService } from "../../services/dialog.service";
 import { Folder } from "../../models/folder";
 import { FolderService } from "../../services/folder.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: 'app-main-sidenav',
@@ -33,7 +34,8 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
     { title: 'All files', link: 'allFiles', matIcon: 'file_copy' },
     { title: 'Folders', link: 'folders', matIcon: 'folder' },
     { title: 'Category', link: '', matIcon: 'category', sub: [] },
-    { title: 'Shared with', link: 'shared', matIcon: 'folder_shared' },
+    { title: 'Shared', link: 'sharedFrom', matIcon: 'folder_shared' },
+    //{ title: 'Shared to', link: 'sharedTo', matIcon: 'folder_shared' },
   ];
 
   constructor(private fileService: FileService,
@@ -42,6 +44,7 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
               private categoryService: CategoryService,
               private sidenavService: SidenavService,
               private authService: AuthService,
+              private userService: UserService,
               private dialogService: DialogService,
               private router: Router) { }
 
@@ -50,13 +53,13 @@ export class MainSidenavComponent implements OnInit, OnDestroy {
     this.sidenavService.setMainSidenav(this.sideNav);
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
-      this.authService.getCurrentUser().pipe(
+      this.userService.getCurrentUser().pipe(
         takeUntil(this.unsubscribe$)
       ).subscribe(user => {
         this.homeUlr = 'storage';
         this.showAdminBoard = user.roles.includes('ROLE_ADMIN');
         if (!this.showAdminBoard) {
-          this.authService.getUserSpace().subscribe(storage => this.storage = storage);
+          this.userService.getUserSpace().subscribe(storage => this.storage = storage);
         }
       });
     }

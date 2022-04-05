@@ -77,4 +77,10 @@ mat-tab-group {
   padding: 0 3rem;
   width: 100%;
 }
+.picture-frame {
+  width: 8rem;
+  object-fit: cover;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
 

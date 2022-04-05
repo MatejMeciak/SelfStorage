@@ -13,6 +13,7 @@ import { AuthService } from "../../../services/auth.service";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { TokenStorageService } from "../../../services/token-storage.service";
 import { ReportService } from "../../../services/report.service";
+import { UserService } from "../../../services/user.service";
 
 @Component({
   selector: 'app-file-detail',
@@ -33,12 +34,13 @@ export class FileDetailComponent implements OnInit, OnDestroy {
               private sidenavService: SidenavService,
               private dialogService: DialogService,
               private authService: AuthService,
+              private userService: UserService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
     if (!!this.tokenStorageService.getToken()) {
-      this.authService.getCurrentUser().pipe(
+      this.userService.getCurrentUser().pipe(
         takeUntil(this.unsubscribe$)
       ).subscribe(user => this.user = user);
     }

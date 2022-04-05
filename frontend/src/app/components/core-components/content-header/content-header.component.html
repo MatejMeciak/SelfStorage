@@ -2,6 +2,11 @@
   <div class="files-header">
     <h1 *ngIf="title">{{ title }}</h1>
     <h1 *ngIf="!title">Your Storage</h1>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of (searchOptions | async)" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
     <div class="search" *ngIf="actions">
       <mat-icon>search</mat-icon>
       <p>Search in content</p>

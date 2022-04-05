@@ -8,9 +8,9 @@
       </div>
     </div>
     <div class="account-button highlight" *ngIf="isLoggedIn" [matMenuTriggerFor]="menu">
-      <mat-icon>account_circle</mat-icon>
+      <img [src]="userProfilePicture" class="picture-frame" alt="profilePicture">
       <div class="account-text">
-        <span>{{ user ? user.username : 'no user' }}</span>
+        <span>{{ (user$ | async) ? username$ : 'no user' }}</span>
         <mat-icon fontSet="material-icons-round" class="expand-icon">expand_more</mat-icon>
       </div>
     </div>

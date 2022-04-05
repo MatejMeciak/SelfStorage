@@ -10,22 +10,24 @@ import { FolderComponent } from './components/file-components/folder/folder.comp
 import { ProfilePageComponent } from './components/user-components/profile-page/profile-page.component';
 import { OnlyFilesComponent } from "./components/file-components/only-files/only-files.component";
 import { OnlyFoldersComponent } from "./components/file-components/only-folders/only-folders.component";
-import { SharedPageComponent } from "./components/shared-page/shared-page.component";
+import { SharedFromPageComponent } from "./components/shared-from-page/shared-from-page.component";
 import { CategoriesComponent } from "./components/categories/categories.component";
 import { LoginGuard } from "./auth/guard/login.guard";
+import { SharedToPageComponent } from "./components/shared-to-page/shared-to-page.component";
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
+  { path: 'public', component: PublicPageComponent },
   { path: 'storage', component: ContentPageComponent, canActivate: [AuthGuardService] },
   { path: 'allFiles', component: OnlyFilesComponent, canActivate: [AuthGuardService] },
   { path: 'folders', component: OnlyFoldersComponent, canActivate: [AuthGuardService] },
   { path: 'folder/:id', component: FolderComponent, canActivate: [AuthGuardService] },
   { path: 'categories', component: CategoriesComponent, canActivate: [AuthGuardService] },
-  { path: 'public', component: PublicPageComponent },
-  { path: 'shared', component: SharedPageComponent, canActivate: [AuthGuardService] },
-  { path: 'login', component: LoginFormComponent, canActivate: [LoginGuard] },
-  { path: 'registration', component: RegistrationFormComponent },
+  { path: 'sharedFrom', component: SharedFromPageComponent, canActivate: [AuthGuardService] },
+  { path: 'sharedTo', component: SharedToPageComponent, canActivate: [AuthGuardService] },
   { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuardService] },
+  { path: 'login', component: LoginFormComponent, canActivate: [LoginGuard] },
+  { path: 'registration', component: RegistrationFormComponent, canActivate: [LoginGuard] },
 ];
 
 @NgModule({

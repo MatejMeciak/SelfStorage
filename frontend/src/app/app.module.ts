@@ -43,8 +43,9 @@ import { ContentHeaderComponent } from './components/core-components/content-hea
 import { FilesPlusDetailComponent } from './components/file-components/files-plus-detail/files-plus-detail.component';
 import { OnlyFilesComponent } from './components/file-components/only-files/only-files.component';
 import { OnlyFoldersComponent } from './components/file-components/only-folders/only-folders.component';
-import { SharedPageComponent } from './components/shared-page/shared-page.component';
+import { SharedFromPageComponent } from './components/shared-from-page/shared-from-page.component';
 import { CategoriesComponent } from "./components/categories/categories.component";
+import { SharedToPageComponent } from './components/shared-to-page/shared-to-page.component';
 
 @NgModule({
   declarations: [
@@ -75,8 +76,9 @@ import { CategoriesComponent } from "./components/categories/categories.componen
     FilesPlusDetailComponent,
     OnlyFilesComponent,
     OnlyFoldersComponent,
-    SharedPageComponent,
-    CategoriesComponent
+    SharedFromPageComponent,
+    CategoriesComponent,
+    SharedToPageComponent
   ],
   imports: [
     MaterialModule,

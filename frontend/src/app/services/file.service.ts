@@ -60,6 +60,9 @@ export class FileService {
   getFilesFromFriends(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.fileUrl}/shared/fromFriends`);
   }
+  // getFileFromFriend(email): Observable<FileModel[]> {
+  //   return this.http.get<FileModel[]>(`${this.fileUrl}/shared/fromFriends?email=${email}`);
+  // }
   fileCategories(fileId: number): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.fileUrl}/categories?id=${fileId}`);
   }
@@ -84,5 +87,8 @@ export class FileService {
   }
   shareFileWithUser(email: string, file:FileModel): Observable<FileModel> {
     return this.http.put<FileModel>(`${this.fileUrl}/${file.id}/share?email=${email}`, {})
+  }
+  setAdmin() {
+    return this.http.get(`${this.fileUrl}/setProfilePicture`);
   }
 }

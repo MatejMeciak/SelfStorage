@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SharedPageComponent } from './shared-page.component';
+import { SharedFromPageComponent } from './shared-from-page.component';
 
 describe('SharedPageComponent', () => {
-  let component: SharedPageComponent;
-  let fixture: ComponentFixture<SharedPageComponent>;
+  let component: SharedFromPageComponent;
+  let fixture: ComponentFixture<SharedFromPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SharedPageComponent ]
+      declarations: [ SharedFromPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SharedPageComponent);
+    fixture = TestBed.createComponent(SharedFromPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

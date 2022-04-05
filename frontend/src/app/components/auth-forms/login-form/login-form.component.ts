@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from "../../../../environments/environment";
 import { TokenStorageService } from "../../../services/token-storage.service";
+import { UserService } from "../../../services/user.service";
 
 @Component({
   selector: 'app-login-form',
@@ -27,6 +28,7 @@ export class LoginFormComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private route: ActivatedRoute,
     private readonly authService: AuthService,
+    private readonly userService: UserService,
     private readonly router: Router
   ) { }
 
@@ -40,7 +42,7 @@ export class LoginFormComponent implements OnInit {
     }
     else if(token){
       this.tokenStorage.saveToken(token);
-      this.authService.getCurrentUser().subscribe(
+      this.userService.getCurrentUser().subscribe(
         data => {
           this.login(data);
         },

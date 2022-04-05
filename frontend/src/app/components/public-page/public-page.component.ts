@@ -15,6 +15,7 @@ import { AuthService } from "../../services/auth.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { User } from "../../models/user";
 import * as fileSaver from 'file-saver';
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: 'app-search-page',
@@ -36,12 +37,13 @@ export class PublicPageComponent implements OnInit, AfterViewInit {
               private sidenavService: SidenavService,
               private dialogService: DialogService,
               private authService: AuthService,
+              private userService: UserService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
     if (!!this.tokenStorageService.getToken()) {
-      this.authService.getCurrentUser().subscribe(user => this.user = user);
+      this.userService.getCurrentUser().subscribe(user => this.user = user);
     }
     this.sidenavService.setDetailSidenav(this.detailSidenav);
     this.files$ = this.searchKeyword.pipe(

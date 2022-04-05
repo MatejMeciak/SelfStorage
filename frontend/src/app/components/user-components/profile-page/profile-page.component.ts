@@ -6,6 +6,10 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { CustomErrorStateMatcher } from "../../../CustomErrorStateMatcher";
+import { UserService } from "../../../services/user.service";
+import { fromEvent, map, mergeMap, Observable, of, shareReplay, take, takeUntil, tap } from "rxjs";
+import { ImageService } from "../../../services/image.service";
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 
 
 @Component({
@@ -19,6 +23,7 @@ export class ProfilePageComponent implements OnInit {
   friends = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   user: User;
+  userProfilePicture: any;
   passwordFormGroup: FormGroup;
   loginFormGroup = new FormGroup({
     oldPassword: new FormControl('', Validators.required)
@@ -31,21 +36,32 @@ export class ProfilePageComponent implements OnInit {
   matcher = new CustomErrorStateMatcher();
 
   constructor(private authService: AuthService,
-              private formBuilder: FormBuilder) {
+              private userService: UserService,
+              private imageService: ImageService,
+              private formBuilder: FormBuilder,
+              private sanitizer: DomSanitizer) {
     this.passwordFormGroup = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['']
     }, { validator: this.checkPasswords });
   }
   ngOnInit(): void {
-    this.authService.getCurrentUser().subscribe(user => {
+    this.userService.getCurrentUser().subscribe(user => {
       this.user = user;
-      this.authService.getUserFriends().subscribe(friendList => {
+      this.userService.getProfilePicture().subscribe(blob => {
+        let objectURL = URL.createObjectURL(blob);
+        this.userProfilePicture = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      });
+      this.userService.getUserFriends().subscribe(friendList => {
         this.friends = new MatTableDataSource<any>(friendList);
       });
       this.friends.paginator = this.paginator;
-      this.authService.getUserSpace().subscribe(storage => this.storage = storage);
+      this.userService.getUserSpace().subscribe(storage => this.storage = storage);
     });
+  }
+  setProfilePicture(file: File): void {
+      this.userService.setProfilePicture(file).subscribe(() => {
+        location.reload();});
   }
   checkPasswords(group: FormGroup) {
     let pass = group.controls['password'].value;
@@ -62,7 +78,7 @@ export class ProfilePageComponent implements OnInit {
         email: this.user.email, password: oldPassword
       }).subscribe(
         data => {
-          this.authService.changePassword(oldPassword, newPassword).subscribe(() => {
+          this.userService.changePassword(oldPassword, newPassword).subscribe(() => {
             location.reload();
           })
         },
@@ -74,7 +90,7 @@ export class ProfilePageComponent implements OnInit {
   }
   changeUsername(): void {
     if (this.usernameFormGroup.valid) {
-      this.authService.changeUsername(this.usernameFormGroup.value.username).subscribe(() => {
+      this.userService.changeUsername(this.usernameFormGroup.value.username).subscribe(() => {
         location.reload();
       });
     }

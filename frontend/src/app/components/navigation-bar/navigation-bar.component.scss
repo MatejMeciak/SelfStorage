@@ -49,6 +49,13 @@ mat-toolbar {
     font-size: 32px;
   }
 }
+.picture-frame {
+  width: 34px;
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
 
 
 

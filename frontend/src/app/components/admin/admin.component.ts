@@ -7,6 +7,7 @@ import { FileService } from "../../services/file.service";
 import { ImageService } from "../../services/image.service";
 import { User } from "../../models/user";
 import { AuthService } from "../../services/auth.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: 'app-admin',
@@ -19,14 +20,18 @@ export class AdminComponent implements OnInit {
   spaceNumber:number = 2;
 
   constructor(private reportService: ReportService,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private file: FileService,
+              private userService: UserService,
+  ) { }
 
   ngOnInit(): void {
     this.reports$ = this.reportService.getReports();
-    this.users$ = this.authService.getAllUsers();
+    this.users$ = this.userService.getAllUsers();
+    //this.file.setAdmin().subscribe();
   }
   changeStorageSpace(spaceSize: number, userId: number) {
-    this.authService.setUserSpace(spaceSize*1000000000, userId).subscribe(() => {
+    this.userService.setUserSpace(spaceSize*1000000000, userId).subscribe(() => {
       location.reload();
     });
   }

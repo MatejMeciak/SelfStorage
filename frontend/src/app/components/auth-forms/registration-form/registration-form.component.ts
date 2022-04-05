@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { environment } from "../../../../environments/environment";
+import { TokenStorageService } from "../../../services/token-storage.service";
 
 @Component({
   selector: 'app-registration-form',
@@ -26,6 +27,7 @@ export class RegistrationFormComponent implements OnInit {
   });
   constructor(
     private readonly authService: AuthService,
+    private tokenStorage: TokenStorageService,
     private readonly router: Router
   ) { }
 
@@ -39,6 +41,13 @@ export class RegistrationFormComponent implements OnInit {
       this.form = { username, password, email };
       this.authService.register(this.form).subscribe(
         data => {
+          this.authService.login(this.form).subscribe(
+            data => {
+              console.log(data)
+            this.tokenStorage.saveToken(data.accessToken);
+            this.tokenStorage.saveUser(data.user);
+            location.reload();
+          });
           this.isSuccessful = true;
           this.isSignUpFailed = false;
         },
