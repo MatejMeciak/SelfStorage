@@ -28,12 +28,12 @@ public class Category {
     @Column(name = "creator_id")
     private Long creatorId;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories")
     @JsonBackReference
     private List<File> files;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
-    @JsonManagedReference
+    @ManyToMany(mappedBy = "categories")
+    @JsonBackReference
     private List<Folder> folders;
 
     public Category() {

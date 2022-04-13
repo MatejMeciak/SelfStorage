@@ -32,7 +32,7 @@ public class Folder {
     protected Boolean access=false;
 
     @ManyToMany
-    @JsonBackReference
+    @JsonManagedReference
     @JoinTable(name = "folder_category",joinColumns = @JoinColumn(name = "folder_id"),inverseJoinColumns = @JoinColumn(name = "category_id"))
     protected List<Category> categories;
 

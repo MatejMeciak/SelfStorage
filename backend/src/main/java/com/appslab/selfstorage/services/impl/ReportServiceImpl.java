@@ -7,6 +7,7 @@ import com.appslab.selfstorage.repositories.ReportRepository;
 import com.appslab.selfstorage.services.ReportService;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.List;
@@ -47,12 +48,13 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    @Transactional
     public File submitReport(Long id) {
         Report report = reportRepository.findById(id).get();
         File file = fileRepositoryDB.findById(report.getFileId()).get();
         file.setAccess(false);
         fileRepositoryDB.save(file);
-        reportRepository.deleteAllByFileId(report.getFileId());
+        reportRepository.deleteReportsByFileId(file.getId());
         return file;
     }
 
