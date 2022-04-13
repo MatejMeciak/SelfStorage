@@ -64,13 +64,19 @@ public class FileServiceImpl implements FileService {
     @Override
     public FileBasicInfo deleteFile(Long id) throws Exception{
         File file = fileRepositoryDB.findById(id).get();
+        List<User> friends = file.getFriends();
+
         if (file.getOwnerId().equals(userService.getSpecifyUserId()))
         {
-            file.setFolderId(null);
+            if(file.getFolder()!= null){
+            file.setFolder(null);}
             file.setCategories(null);
             file.setOwner(null);
-            file.setFriends(null);
+            file.setOwnerId(null);
+            friends.removeAll(friends);
+            file.setFriends(friends);
             file.setReports(null);
+
             fileRepositoryDB.save(file);
             fileRepositoryDB.deleteById(id);
             Files.delete(pathToSpecificFile(file));
@@ -143,6 +149,11 @@ public class FileServiceImpl implements FileService {
             FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
             return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
         }
+
+        else if(userService.getSpecifyUserId().equals(userRepository.findByEmail("admin@admin.com").getId())) {
+            FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
+        }
         return null;
     }
 
@@ -152,7 +163,9 @@ public class FileServiceImpl implements FileService {
         File file = fileRepositoryDB.findById(id).get();
         if(!file.getFriends().contains(user))
         {
-            file.setFriends(user);
+            List<User> friends = file.getFriends();
+            friends.add(user);
+            file.setFriends(friends);
             fileRepositoryDB.save(file);
         }
     }

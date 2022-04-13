@@ -80,8 +80,4 @@ public class File {
     public void setUuid() {
         this.uuid = UUID.randomUUID();
     }
-
-    public void setFriends(User friend) {
-        this.friends.add(friend);
-    }
 }
