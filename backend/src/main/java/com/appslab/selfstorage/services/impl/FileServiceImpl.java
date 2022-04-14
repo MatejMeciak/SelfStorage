@@ -3,17 +3,21 @@ package com.appslab.selfstorage.services.impl;
 import com.appslab.selfstorage.config.DocumentStorageProperty;
 import com.appslab.selfstorage.dto.FileBasicInfo;
 import com.appslab.selfstorage.models.Category;
+import com.appslab.selfstorage.models.Report;
 import com.appslab.selfstorage.models.User;
 import com.appslab.selfstorage.models.File;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
+import com.appslab.selfstorage.repositories.ReportRepository;
 import com.appslab.selfstorage.repositories.UserRepository;
 import com.appslab.selfstorage.services.FileService;
+import com.appslab.selfstorage.services.ReportService;
 import com.appslab.selfstorage.services.UserService;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileOutputStream;
@@ -31,14 +35,16 @@ public class FileServiceImpl implements FileService {
     private Path docStorageLocation;
     private UserService userService;
     private UserRepository userRepository;
+    private ReportRepository reportRepository;
 
 
-    public FileServiceImpl(FileRepositoryDB fileRepositoryDB, DocumentStorageProperty documentStorageProperty, UserService userService, UserRepository userRepository) throws Exception {
+    public FileServiceImpl(FileRepositoryDB fileRepositoryDB, DocumentStorageProperty documentStorageProperty, UserService userService, UserRepository userRepository, ReportRepository reportRepository) throws Exception {
         this.fileRepositoryDB = fileRepositoryDB;
         this.userService = userService;
         this.docStorageLocation = Paths.get(documentStorageProperty.getUploadDirectory()).toAbsolutePath().normalize();
         Files.createDirectories(this.docStorageLocation);
         this.userRepository = userRepository;
+        this.reportRepository = reportRepository;
     }
 
     public Path pathToSpecificFile(File file) {
@@ -60,23 +66,20 @@ public class FileServiceImpl implements FileService {
         return file;
     }
 
-
+    @Transactional
     @Override
     public FileBasicInfo deleteFile(Long id) throws Exception{
         File file = fileRepositoryDB.findById(id).get();
-        List<User> friends = file.getFriends();
 
         if (file.getOwnerId().equals(userService.getSpecifyUserId()))
         {
-            if(file.getFolder()!= null){
-            file.setFolder(null);}
+            file.setFolder(null);
             file.setCategories(null);
             file.setOwner(null);
-            file.setOwnerId(null);
-            friends.removeAll(friends);
-            file.setFriends(friends);
+            file.setFriends(null);
             file.setReports(null);
 
+            reportRepository.deleteReportsByFileId(id);
             fileRepositoryDB.save(file);
             fileRepositoryDB.deleteById(id);
             Files.delete(pathToSpecificFile(file));

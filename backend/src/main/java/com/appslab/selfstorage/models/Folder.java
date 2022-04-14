@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -56,8 +55,4 @@ public class Folder {
         this.date = Calendar.getInstance().getTime().getTime();
     }
 
-
-    public void setFriends(User friend) {
-        this.friends.add(friend);
-    }
 }

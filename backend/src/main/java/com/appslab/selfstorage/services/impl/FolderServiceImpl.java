@@ -90,6 +90,7 @@ public class FolderServiceImpl implements FolderService {
             folder.setFileList(null);
             folder.setFriends(null);
             folder.setOwner(null);
+
             folderRepository.save(folder);
             folderRepository.deleteById(id);
             return folder;
@@ -114,7 +115,9 @@ public class FolderServiceImpl implements FolderService {
         Folder folder = folderRepository.findById(id).get();
         if(!folder.getFriends().contains(user))
         {
-            folder.setFriends(user);
+            List<User> friends = folder.getFriends();
+            friends.add(user);
+            folder.setFriends(friends);
             return folderRepository.save(folder);
         }
         return null;
