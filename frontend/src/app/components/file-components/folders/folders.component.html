@@ -3,6 +3,7 @@
   <div class="file-grid">
     <app-content-card *ngFor="let folder of folders$ | async" (clickEvent)="openFolder($event)"
                       [content]="folder" [image]="image" [category]="category">
+      <div class="drop-box" cdkDropList (cdkDropListDropped)="moveToFolder($event)" [cdkDropListData]="folder"></div>
     </app-content-card>
   </div>
 </div>

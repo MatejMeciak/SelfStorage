@@ -1,8 +1,8 @@
 <div class="content-container">
   <h2>Files</h2>
-  <div class="file-grid">
+  <div class="file-grid" *ngIf="files$ | async as files" cdkDropList cdkDropListSortingDisabled>
     <app-content-card *ngFor="let file of files$ | async" (clickEvent)="openFileDetail($event)"
-                      [content]="file" [image]="getImage(file) | async" [category]="category">
+                      [content]="file" [image]="getImage(file) | async" [category]="category" cdkDrag [cdkDragData]="file">
     </app-content-card>
   </div>
 </div>
