@@ -4,6 +4,8 @@ import { Folder } from "../../../models/folder";
 import { FolderService } from "../../../services/folder.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CategoryService } from "../../../services/category.service";
+import { CdkDragDrop, CdkDragEnter } from "@angular/cdk/drag-drop";
+import { File } from "../../../models/file";
 
 @Component({
   selector: 'app-folders',
@@ -33,5 +35,11 @@ export class FoldersComponent implements OnInit {
   }
   openFolder(folder: Folder): void {
     this.router.navigate([`folder/${folder.id}`]);
+  }
+  moveToFolder(event?: CdkDragDrop<File|Folder>): void {
+    console.log(event)
+    const folder = event.container.data.id;
+    const file = event.item.data.id;
+    this.folderService.addFileToFolder(folder, file).subscribe(() => location.reload())
   }
 }
