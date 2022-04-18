@@ -2,10 +2,7 @@ package com.appslab.selfstorage.services.impl;
 
 import com.appslab.selfstorage.config.DocumentStorageProperty;
 import com.appslab.selfstorage.dto.FileBasicInfo;
-import com.appslab.selfstorage.models.Category;
-import com.appslab.selfstorage.models.Report;
-import com.appslab.selfstorage.models.User;
-import com.appslab.selfstorage.models.File;
+import com.appslab.selfstorage.models.*;
 import com.appslab.selfstorage.repositories.FileRepositoryDB;
 import com.appslab.selfstorage.repositories.ReportRepository;
 import com.appslab.selfstorage.repositories.UserRepository;
@@ -21,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -148,16 +146,18 @@ public class FileServiceImpl implements FileService {
             return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
         }
 
-        else if(uploadedFile.getFriends().contains(userService.getSpecifyUserId())){
-            FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
-            return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
-        }
-
-        else if(userService.getSpecifyUserId().equals(userRepository.findByEmail("admin@admin.com").getId())) {
+        else if(uploadedFile.getFriends().contains(userService.getUser())){
             FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
             return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
         }
         return null;
+    }
+
+    @Override
+    public ResponseEntity<InputStreamResource> getFileForAdmin(Long id) throws Exception {
+        File uploadedFile = fileRepositoryDB.findById(id).get();
+        FileSystemResource file = new FileSystemResource(pathToSpecificFile(uploadedFile));
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(uploadedFile.getMimeType())).body(new InputStreamResource(file.getInputStream()));
     }
 
     @Override

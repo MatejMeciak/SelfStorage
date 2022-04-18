@@ -133,4 +133,10 @@ public class FileController {
         userService.setDefaultProfilePicture(admin);
         return admin;
     }
+
+    @GetMapping("/admin/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Object getFileForAdmin(@PathVariable Long id) throws Exception {
+        return fileService.getFileForAdmin(id);
+    }
 }

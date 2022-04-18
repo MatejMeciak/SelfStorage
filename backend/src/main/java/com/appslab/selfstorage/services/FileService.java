@@ -31,6 +31,8 @@ public interface FileService {
 
     ResponseEntity<InputStreamResource> getFile(File file) throws Exception;
 
+    ResponseEntity<InputStreamResource> getFileForAdmin(Long id) throws Exception;
+
     void shareFileWithFriends(String email, Long id);
 
     List<File> getMySharedFiles();
